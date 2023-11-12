@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './ui/App';
 import reportWebVitals from './ui/reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Header from './ui/Component/Header';
+import Location from './ui/Component/Location';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Header />
+    <Location />
   </React.StrictMode>
 );
 

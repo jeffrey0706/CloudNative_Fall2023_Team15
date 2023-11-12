@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import App from '../ui/App';
+import Header from '../ui/Component/Header';
 
 test('renders learn react link', () => {
-  render(<App />);
+  render(<Header />);
   const linkElement = screen.getByText(/Quick/i);
   const linkElement3 = screen.getByText(/Parking/i);
   const linkElement2 = screen.queryByText(/lasdaearn react/i);

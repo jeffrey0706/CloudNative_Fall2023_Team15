@@ -1,0 +1,25 @@
+.location {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+}
+
+.badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.now-location {
+    font-size: 14px;
+    width: 100%;
+    height: 40px;
+    background-color: #F7F7F7 !important;
+}
+
+.map-icon {
+    width: 44px;
+    height: 40px;
+}
