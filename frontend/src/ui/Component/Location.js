@@ -9,6 +9,7 @@ import { FiMap } from 'react-icons/fi';
 
 function Header() {
 
+  // eslint-disable-next-line
   const [currentPlace, setCurrentPlace] = useState("Parking Lot 1");
 
   return (
