@@ -4,14 +4,12 @@ import './index.css';
 import reportWebVitals from './ui/reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Header from './ui/Component/Header';
-import Location from './ui/Component/Location';
+import MainPage from './ui/Page/MainPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Header />
-    <Location />
+    <MainPage />
   </React.StrictMode>
 );
 
