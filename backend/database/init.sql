@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS test;
+
+USE test;
+
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255),
