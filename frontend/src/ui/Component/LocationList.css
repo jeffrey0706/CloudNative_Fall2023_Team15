@@ -29,12 +29,7 @@
     color: rgb(146, 146, 146);
 }
 
-/* .loc-list-col {
+.loc-list-col {
     max-height: 300px;
-} */
-
-/* .loc-list-table {
-    max-height: 300px;
-} */
-
-/* TODO: Add Scrollbar */
+    overflow-y: scroll;
+}

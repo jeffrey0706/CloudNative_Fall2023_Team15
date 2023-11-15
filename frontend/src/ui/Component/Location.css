@@ -47,7 +47,7 @@
 }
 
 .target-icon {
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .map-icon-col {
@@ -58,5 +58,3 @@
     width: 44px;
     height: 40px;
 }
-
-body {background-color: aqua;}

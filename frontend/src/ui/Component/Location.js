@@ -4,15 +4,11 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import React, { useState } from 'react';
+import React from 'react';
 import { FiMap } from 'react-icons/fi';
 import { SlTarget } from "react-icons/sl";
 
-function Location() {
-
-  // eslint-disable-next-line
-  const [currentPlace, setCurrentPlace] = useState("Parking Lot 1");
-
+function Location({currentPlace}) {
   return (
     <div className='loc-div'>
       <Row className='location'>
