@@ -9,7 +9,7 @@ CREATE TABLE ParkingLots (
     PRIMARY KEY (ParkingLotID)
 );
 
-CREATE TABLE Area (
+CREATE TABLE Areas (
     AreaID int AUTO_INCREMENT,
     ParkingLotID int NOT NULL,
     Name varchar(255) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE Cars (
     PRIMARY KEY (CarID)
 );
 
-CREATE TABLE Reservation (
+CREATE TABLE Reservations (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
@@ -56,7 +56,7 @@ CREATE TABLE Reservation (
     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
 );
 
-CREATE TABLE Record (
+CREATE TABLE Records (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
