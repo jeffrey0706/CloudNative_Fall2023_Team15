@@ -1,6 +1,6 @@
 import './MainPage.css';
 import React from 'react';
-import Header from '../Component/Header';
+import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
 import ReserveButton from '../Component/ReserveButton';
@@ -8,7 +8,7 @@ import ReserveButton from '../Component/ReserveButton';
 function MainPage() {
   return (
     <>
-        <Header />
+        <Header togglerType={TOGGLER_TYPE.COLLAPSE}/>
         <Location currentPlace='Parking Lot 1'/>
         <LocationList />
         <ReserveButton text='Reserve' color='danger'/>
