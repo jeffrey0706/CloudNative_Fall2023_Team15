@@ -20,3 +20,32 @@
     padding-right: 10px;
     margin-right: 15px;
 }
+
+.close-btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.header-modal .modal-content ul {
+    position: relative;
+    top: 3%;
+    justify-content: center;
+    gap: 20px;
+}
+
+.header-modal .nav-link {
+    color: #777E90;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    padding-left: 40px;
+}
+
+/* TODO: Hover doesn't work on mobile */
+.header-modal .nav-link:hover {
+    color: black;
+    border-left: black 3px solid;
+}

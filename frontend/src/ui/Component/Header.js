@@ -1,17 +1,18 @@
 import './Header.css';
-import { 
-  Collapse,
+import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
   NavLink,
-  Button
+  Button,
+  Modal,
 } from 'reactstrap';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
+import { IoMdClose } from "react-icons/io";
 
 export const TOGGLER_TYPE = {
   COLLAPSE: 0,
@@ -20,39 +21,49 @@ export const TOGGLER_TYPE = {
 
 function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
 
-  const [collapsed, setCollapsed] = useState(true);
-  const togglerClicked = () => setCollapsed(!collapsed);
-
-  useLayoutEffect(() => {
-    const toggler = document.getElementsByClassName('navbar-toggler')[0];
-    const collapse = document.getElementsByClassName('navbar-collapse')[0];
-    const navItems = document.getElementsByClassName('nav-item');
-    if (toggler && toggler.style.display !== 'none') {
-      for (let item of navItems) {
-        collapse.style.marginTop = '0px';
-        item.style.paddingLeft = '30px';
-      }
+  const [modal, setModal] = useState(false);
+  const togglerClicked = () => {
+    setModal(!modal);
+  }
+  const lowerBackground = () => {
+    const modalItem = document.getElementsByClassName('header-modal')[0];
+    const back = modalItem.parentElement;
+    if (back) {
+      back.style.top = '110px';
     }
-  })
+  }
+  const showCloseBtn = () => {
+    if (modal) {
+      return (
+        <Button color='none' className='close-btn' onClick={togglerClicked}>
+          <IoMdClose size={32}/>
+        </Button>
+      )
+    }
+    else {
+      return (<NavbarToggler onClick={togglerClicked} className="me-2" />)
+    }
+  } // TODO: Consider the web version
 
   const render = (togglerType) => {
     switch (togglerType) {
       case TOGGLER_TYPE.COLLAPSE:
         return (
           <>
-            <NavbarToggler onClick={togglerClicked} className="me-2" />
-            <Collapse isOpen={!collapsed} navbar>
+            {showCloseBtn()}
+            <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink href="/components/">Components</NavLink>
+                  <NavLink href="#Home">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
-                    GitHub
-                  </NavLink>
+                  <NavLink href="#MyCar">My Car</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="#MyReservation">My Reservation</NavLink>
                 </NavItem>
               </Nav>
-            </Collapse>
+            </Modal>
           </>
         )
       case TOGGLER_TYPE.EXIT:
@@ -78,3 +89,4 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
 }
 
 export default Header;
+// TODO: Speed up the animation of the modal
