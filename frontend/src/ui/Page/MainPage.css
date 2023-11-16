@@ -1,0 +1,9 @@
+.loc-div {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.reserve-button-container {
+    position: fixed;
+    bottom: 8%;
+}

@@ -1,3 +1,4 @@
+import './MainPage.css';
 import React from 'react';
 import Header from '../Component/Header';
 import Location from '../Component/Location';
@@ -8,9 +9,9 @@ function MainPage() {
   return (
     <>
         <Header />
-        <Location currentPlace={"Parking Lot 1"}/>
+        <Location currentPlace='Parking Lot 1'/>
         <LocationList />
-        <ReserveButton text="Reserve"/>
+        <ReserveButton text='Reserve' color='danger'/>
     </>
   );
 }

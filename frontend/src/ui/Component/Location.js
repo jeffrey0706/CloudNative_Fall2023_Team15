@@ -2,7 +2,8 @@ import './Location.css';
 import { 
   Badge,
   Row,
-  Col
+  Col,
+  Container
 } from 'reactstrap';
 import React from 'react';
 import { FiMap } from 'react-icons/fi';
@@ -10,7 +11,7 @@ import { SlTarget } from "react-icons/sl";
 
 function Location({currentPlace}) {
   return (
-    <div className='loc-div'>
+    <Container className='loc-div'>
       <Row className='location'>
           <Col xs={{ size: 8 }} className='location-col'><Badge className='text-dark now-location'>{currentPlace}</Badge></Col>
           <Col xs={{ size: 2 }} className='map-icon-col'><Badge color='dark' className='map-icon'><FiMap size={20}/></Badge></Col>
@@ -21,7 +22,7 @@ function Location({currentPlace}) {
           <span className='hint-span'>Automatically select the closest space</span>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 }
 
