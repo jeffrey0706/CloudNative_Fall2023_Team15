@@ -1,6 +1,5 @@
 import './Header.css';
-import { 
-  Collapse,
+import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -8,15 +7,9 @@ import {
   NavItem,
   NavLink,
   Button,
-  Offcanvas,
-  OffcanvasHeader,
-  OffcanvasBody,
   Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
 } from 'reactstrap';
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
@@ -30,7 +23,6 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
 
   const [modal, setModal] = useState(false);
   const togglerClicked = () => {
-    console.log('Cl', modal);
     setModal(!modal);
   }
   const lowerBackground = () => {
