@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import React from 'react';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
+import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { v4 as uuidv4 } from 'uuid';
 import ChangingProgressProvider from "./utils/ChangingProgressProvider";
@@ -12,7 +13,6 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import './DashBoard.css';
 
-import analysisImage from './utils/Analysis.svg';
 
 
 function ProgressBar() {
@@ -56,13 +56,7 @@ function ProgressBar() {
   return (
     <div className="DashBoard-Container" >
       <Header togglerType={TOGGLER_TYPE.EXIT} />
-
-      <div className="DashBoard-header">
-        <div className="DashBoard-Title">Dashboard</div>
-        <div className="DashBoard-Subtitle">
-          <img className='AnalysisImg' src={analysisImage} alt="" />
-        </div>
-      </div >
+      <SubHeader BACK_ICON={false} LEFT_STR="Dashboard" RHS_INFO={INFO_TYPE.ANALYSIS} />
 
       <div className="ProgressBar-Container-Outer">
         <div className="ProgressBar-Container">
