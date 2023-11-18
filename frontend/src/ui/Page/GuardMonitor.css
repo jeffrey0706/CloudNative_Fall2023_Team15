@@ -49,7 +49,7 @@
     padding: 0 20px;
 }
 
-.floors-container>div {
+.floors-container>.floor {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -61,7 +61,7 @@
     cursor: pointer;
 }
 
-.floor:nth-child(1) {
-    background-color: #353945;
-    color: #fff;
+.clicked_floor  {
+    background-color: #353945 !important;
+    color: #fff !important;
 }
