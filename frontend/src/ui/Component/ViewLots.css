@@ -5,8 +5,7 @@
     text-align: center;
     width: 80%;
     height: 70%;
-    border-radius: 15%;
-    padding: 5px;
+    border-radius: 10px;
 }
 
 .approaching {
@@ -16,8 +15,7 @@
     text-align: center;
     width: 80%;
     height: 70%;
-    border-radius: 15%;
-    padding: 4px;
+    border-radius: 10px;
 }
 
 .lots-container {
@@ -31,9 +29,13 @@
 .grid-item {
     border: 0.1px solid #A3A3A4;
     display: flex;
+    font-size: 12px;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+}
+
+.grid-item > div{
+    display: flex;
     align-items: center;
     justify-content: center;
 }
