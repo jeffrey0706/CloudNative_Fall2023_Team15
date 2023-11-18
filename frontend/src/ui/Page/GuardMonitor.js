@@ -1,13 +1,11 @@
 import {
-  Table,
-  Row,
-  Col
+  Button,
 } from 'reactstrap';
-import React from 'react';
+import React, { useState } from 'react';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import ViewLots, { CARS_STATUS } from '../Component/ViewLots';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 import './GuardMonitor.css';
 // import autos from './utils/Autos_6x.svg';
@@ -16,6 +14,12 @@ import RoadLineHorizontal from './utils/RoadLineHorizontal.svg';
 
 
 function GuardMonitor() {
+
+  const floors = ['1F', '2F', '3F', '4F'];
+  const [clicked_floor, setFloor] = useState('1F');
+  const togglerClicked = (event) => {
+    setFloor(event.target.textContent);
+  }
 
   const render_lots = (sect) => {
     let array = [];
@@ -53,11 +57,17 @@ function GuardMonitor() {
 
 
       <div className="floors-container">
-        <div className="floor">1F</div>
-        <div className="floor">2F</div>
-        <div className="floor">3F</div>
-        <div className="floor">4F</div>
-      </div>
+        {floors.map((floor, index) => (
+          <Button
+            key={index}
+            color='none'
+            className={`floor ${clicked_floor === floor ? 'clicked_floor' : ''}`}
+            onClick={(e) => togglerClicked(e)}
+          >
+            {floor}
+          </Button>
+        ))}
+      </div >
 
     </>
   );
