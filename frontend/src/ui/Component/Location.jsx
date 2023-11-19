@@ -13,7 +13,7 @@ function Location({currentPlace}) {
   return (
     <Container className='loc-div'>
       <Row className='location'>
-          <Col xs={{ size: 8 }} className='location-col'><Badge className='text-dark now-location'>{currentPlace}</Badge></Col>
+          <Col xs={{ size: 8 }} className='location-col'><Badge className='text-dark now-location'>{currentPlace || <i>Failed to load location</i>}</Badge></Col>
           <Col xs={{ size: 2 }} className='map-icon-col'><Badge color='dark' className='map-icon'><FiMap size={20}/></Badge></Col>
       </Row>
       <Row>
