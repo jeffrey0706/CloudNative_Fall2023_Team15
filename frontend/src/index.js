@@ -1,15 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import './index.css';
 import reportWebVitals from './ui/reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MainPage from './ui/Page/MainPage';
+import GuardMonitor from './ui/Page/GuardMonitor';
+import DashBoard from './ui/Page/DashBoard';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainPage />,
+    errorElement: <MainPage />,
+  },
+  {
+    path: "guard/",
+    element: <GuardMonitor />,
+  },
+  {
+    path: "dashboard/",
+    element: <DashBoard />,
+  },
+]);
+// TODO: Update all the hyperlinks to <Link> element provided by react-router-dom
+// E.g. <a href="/guard/">Guard</a> ==> <Link to="/guard/">Guard</Link>
+// S.t. it won't need another request to the server to update the page
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <MainPage />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
