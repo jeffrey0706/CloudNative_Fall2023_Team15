@@ -1,0 +1,34 @@
+.wrap-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parking-status {
+    display: flex;
+    justify-content: flex-start;
+    /* border: 1px solid #ddd;
+    background-color: #f9f9f9; */
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 5vh;
+    width: 414px;
+    align-items: center;
+}
+
+.keys-container,
+.values-container {
+    padding: 5px;
+    margin: 10px;
+    color: #141416;}
+
+.item-key {
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.item-value {
+    font-weight: 400;
+    margin-bottom: 15px;
+}

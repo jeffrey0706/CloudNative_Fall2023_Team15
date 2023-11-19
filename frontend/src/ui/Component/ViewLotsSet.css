@@ -1,0 +1,36 @@
+.wrap-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap-lots-container {
+    margin-bottom: 3vh;
+    width: 414px;
+    height: 210px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background-color: aliceblue; */
+    /* flex-direction: column; */
+}
+
+.wrap-dir-container {
+    width: 42px;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.View-Lots-container {
+    width: 260px;
+    height: 100%;
+}
+
+.divider {
+    height: 1px;
+    background-color: #E6E8EC;
+    margin: 20px 0;
+}
