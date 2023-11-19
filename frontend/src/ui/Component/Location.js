@@ -19,7 +19,7 @@ function Location({currentPlace}) {
       <Row>
         <Col xs={{ offset: 1, size: 8 }}>
           <SlTarget size={12} color='#52585e' className='target-icon'/>
-          <span className='hint-span'>Automatically select the closest space</span>
+          <span className='hint-span'>Automatically select the preferred space</span>
         </Col>
       </Row>
     </Container>
