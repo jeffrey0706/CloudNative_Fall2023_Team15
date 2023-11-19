@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MainPage from './ui/Page/MainPage';
 import GuardMonitor from './ui/Page/GuardMonitor';
 import DashBoard from './ui/Page/DashBoard';
+import ReserveExpired from './ui/Page/ReserveExpired';
+import ReserveSuccess from './ui/Page/ReserveSuccess';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
   {
     path: "dashboard/",
     element: <DashBoard />,
+  },
+  {
+    path: "reserved_expired/",
+    element: <ReserveExpired />,
+  },
+  {
+    path: "reserved_success/",
+    element: <ReserveSuccess />,
   },
 ]);
 // TODO: Update all the hyperlinks to <Link> element provided by react-router-dom
