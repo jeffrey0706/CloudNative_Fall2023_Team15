@@ -7,7 +7,7 @@ import ReserveButton from '../Component/ReserveButton';
 import axios from 'axios';
 
 const userId = 1;
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000'; // TODO: Move to constants
 
 function MainPage() {
 
@@ -16,15 +16,23 @@ function MainPage() {
     axios
       .get(BASE_URL + '/profile/' + userId)
       .then((res) => axios.get(BASE_URL + '/parking_lot/' + res.data.preference))
-      .then((res) =>  setCurrentPlace(res.data.name))
+      .then((res) => setCurrentPlace(res.data.name))
       .catch(() => setCurrentPlace(''));
+  }, []);
+
+  const [locations, setLocations] = React.useState([]);
+  useEffect(() => {
+    axios
+      .get(BASE_URL + '/parking_lots')
+      .then((res) => setLocations(res.data))
+      .catch(() => setLocations([]));
   }, []);
 
   return (
     <>
         <Header togglerType={TOGGLER_TYPE.COLLAPSE}/>
         <Location currentPlace={currentPlace}/>
-        <LocationList />
+        <LocationList locations={locations}/>
         <ReserveButton text='Reserve' color='danger'/>
     </>
   );
