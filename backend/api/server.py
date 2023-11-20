@@ -4,6 +4,8 @@ from sqlalchemy.exc import IntegrityError
 
 from database import *
 
+import datatime
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
@@ -135,7 +137,8 @@ def reservation(uuid):
     {
         user_id: int, ?
         car_id: int,
-        parking_spot_id: int, We need this?
+        parking_spot_id: int, We need this or auto assign by preference?
+        start_time: timestamp, we need start time
     }
     // response
     {
@@ -174,8 +177,8 @@ def reservation(uuid):
         reservation: Reservation = Reservation(
             car_id=data.get('car_id'),
             parking_spot_id=data.get('parking_spot_id'),
-            start_time=data.get('start_time'), # Backend or Frontend?
-            end_time=data.get('end_time'),
+            start_time=data.get('start_time'), 
+            end_time=data.get('end_time'), # Backend or Frontend?
         )
 
         try:
@@ -215,13 +218,24 @@ def user_status(uuid):
         status: string, // NONE, RESERVED, PARKED, EXPIRED
     }
     '''
-    user: User = User.query.get(uuid)
-    if user:
-        return jsonify({
-            'status': user.status,
-        })
+    car_id = Car.query.filter_by(user_id=uuid).first().car_id
+    
+    # Check reservation or record by car_id
+    reservation = Reservation.query.filter_by(car_id=car_id).first()
+    record = Record.query.filter_by(car_id=car_id).first()
+    
+    if reservation:
+        if reservation.end_time < datatime.datetime.now():
+            return jsonify({'status': 'EXPIRED'})
+        else:
+            return jsonify({'status': 'RESERVED'})
+    elif record:
+        if record.end_time < datatime.datetime.now():
+            return jsonify({'status': 'EXPIRED'})
+        else:
+            return jsonify({'status': 'PARKED'})
     else:
-        return jsonify({'message': 'User not found'})
+        return jsonify({'status': 'NONE'})
 
 if __name__ == '__main__':
     app.run()
