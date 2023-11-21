@@ -28,12 +28,8 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
-    path: "reserved_expired/",
-    element: <ReservePage isExpired={true}/>,
-  },
-  {
-    path: "reserved_success/",
-    element: <ReservePage isExpired={false}/>,
+    path: "reservation/",
+    element: <ReservePage />,
   },
 ]);
 // TODO: Update all the hyperlinks to <Link> element provided by react-router-dom

@@ -6,8 +6,10 @@ import LocationList from '../Component/LocationList';
 import ReserveButton from '../Component/ReserveButton';
 import axios from 'axios';
 
-const userId = 1;
-const BASE_URL = 'http://localhost:5000'; // TODO: Move to constants
+// Production constants
+import { BASE_URL } from '../Constants';
+// Testing constants
+import { userId } from '../Constants';
 
 function MainPage() {
 
