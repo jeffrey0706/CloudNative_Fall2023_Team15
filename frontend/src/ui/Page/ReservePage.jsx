@@ -41,8 +41,10 @@ function ReservePage() {
 
     useEffect(() => {
         const reservation = axios.get(BASE_URL + '/reservation/' + reservationId);
-        const car = reservation.then((res) => axios.get(BASE_URL + '/my_car/' + res.data.car_id));
-        Promise.all([reservation, car]).then(([reservation, car]) => {
+        const parkingSpot = reservation.then((res) => axios.get(BASE_URL + '/parking_spot/' + res.data.parking_spot_id));
+        const area = parkingSpot.then((res) => axios.get(BASE_URL + '/area/' + res.data.area_id));
+        const parkingLot = area.then((res) => axios.get(BASE_URL + '/parking_lot/' + res.data.parking_lot_id));
+        Promise.all([reservation, parkingSpot, area, parkingLot]).then(([reservation, parkingSpot, area, parkingLot]) => {
             const now = new Date();
             const expire = new Date(reservation.data.end_time);
             if (now > expire) {
@@ -54,9 +56,9 @@ function ReservePage() {
                 setLayout(LAYOUT_TYPE.NONE);
             }
             setParkingData({
-                License_plate: car.data.license_plate,
-                Location: reservation.data.parking_lot,
-                Parking_spot: reservation.data.parking_spot,
+                License_plate: reservation.data.car_id,
+                Location: parkingLot.data.name,
+                Parking_spot: area.data.name + parkingSpot.data.number + ' (Floor ' + area.data.floor + ')',
                 Expired_time: reservation.data.end_time,
             });
         }).catch(() => {
@@ -65,7 +67,7 @@ function ReservePage() {
             setLayout(LAYOUT_TYPE.EXPIRE);
             setParkingData(INITIAL_PARKING_DATA);
         });
-    }, []);
+    }, []); // TODO: Modify this after changing the API
     
     const [array, setArray] = useState([]);
     useEffect(() => {

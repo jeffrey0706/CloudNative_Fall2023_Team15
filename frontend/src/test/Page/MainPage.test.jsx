@@ -1,27 +1,18 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import '@testing-library/jest-dom';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MainPage from '../../ui/Page/MainPage';
 import { expect } from '@jest/globals';
+import { API_PATTERNS, getApiType } from '../../ui/Constants';
 
 jest.mock('axios');
 
 const setup = () => {
     render(<MainPage />);
-};
-
-const URL_PATTERNS = {
-    PROFILE_URL: /profile\/[0-9]+/,
-    PARKING_LOT_URL: /parking_lot\/[0-9]+/,
-    PARKING_LOTS_URL: /parking_lots/,
-}; // TODO: Move to constants
-const getUrlType = (url) => {
-    for (const [key, value] of Object.entries(URL_PATTERNS)) {
-        if (value.test(url)) {
-            return key;
-        }
-    }
-    return undefined;
 };
 
 afterEach(() => {
@@ -32,13 +23,13 @@ test('Fetching correct data', async () => {
     // Setup
     await act(() => {
         axios.get.mockImplementation((url) => {
-            const urlType = getUrlType(url);
-            switch(URL_PATTERNS[urlType]) {
-                case URL_PATTERNS.PROFILE_URL:
+            const apiType = getApiType(url);
+            switch(API_PATTERNS[apiType]) {
+                case API_PATTERNS.PROFILE:
                     return Promise.resolve({ data: { preference: 3 } });
-                case URL_PATTERNS.PARKING_LOT_URL:
+                case API_PATTERNS.PARKING_LOT:
                     return Promise.resolve({ data: { name: 'Test Parking Lot 3' } });
-                case URL_PATTERNS.PARKING_LOTS_URL:
+                case API_PATTERNS.PARKING_LOTS:
                     return Promise.resolve({ data: [
                         { name: 'Test Location 1', remain: 34, priority: true },
                         { name: 'Test Location 2', remain: 32 },
