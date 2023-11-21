@@ -3,6 +3,7 @@
     width: 100%;
     max-width: 100%;
     display: inline-flex;
+    padding: 0;
 }
 
 .reserve-button-container .row {

@@ -33,7 +33,7 @@ function MainPage() {
         <Header togglerType={TOGGLER_TYPE.COLLAPSE}/>
         <Location currentPlace={currentPlace}/>
         <LocationList locations={locations}/>
-        <ReserveButton text='Reserve' color='danger'/>
+        <ReserveButton text='Reserve' color='danger' outline={false}/>
     </>
   );
 }

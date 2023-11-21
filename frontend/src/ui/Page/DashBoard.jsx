@@ -11,11 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
 import ChangingProgressProvider from "./utils/ChangingProgressProvider";
 import 'react-circular-progressbar/dist/styles.css';
 
-import './DashBoard.css';
+import './Dashboard.css';
 
 
 
-function ProgressBar() {
+function Dashboard() {
 
   let locations = [
     {
@@ -54,7 +54,7 @@ function ProgressBar() {
   const percentage = Math.round(available / capacity * 100);
 
   return (
-    <div className="DashBoard-Container" >
+    <div className="Dashboard-Container" >
       <Header togglerType={TOGGLER_TYPE.EXIT} />
       <SubHeader BACK_ICON={false} LEFT_STR="Dashboard" RHS_INFO={INFO_TYPE.ANALYSIS} />
 
@@ -92,4 +92,4 @@ function ProgressBar() {
   );
 }
 
-export default ProgressBar;
+export default Dashboard;
