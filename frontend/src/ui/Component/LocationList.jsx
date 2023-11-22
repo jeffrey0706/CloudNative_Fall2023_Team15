@@ -7,56 +7,52 @@ import {
 import React from 'react';
 import { PiWheelchairFill } from "react-icons/pi";
 
-const LOCATIONS = [
-    {
-        name: 'Parking Lot 2',
-        remain: 34,
-        priority: true
-    },
-    {
-        name: 'Parking Lot 3',
-        remain: 32
-    },
-    {
-        name: 'Parking Lot 4',
-        remain: 30
-    },
-    {
-        name: 'Parking Lot 5',
-        remain: 28,
-        priority: true
-    },
-    {
-        name: 'Parking Lot 6',
-        remain: 22
-    },
-    {
-        name: 'Parking Lot 7',
-        remain: 20
-    },
-    {
-        name: 'Parking Lot 8',
-        remain: 3,
-        priority: true
-    },
-]
+export const LOCATION_LIST_MODE = {
+    REMAIN: 0,
+    FRACTION: 1,
+}
 
-function LocationList({locations=[]}) {
+function LocationList({mode=LOCATION_LIST_MODE.REMAIN, locations=[]}) {
 
-    // This is for testing only
-    if (locations === undefined || locations.length === 0)
-        locations = LOCATIONS
+    const getClassName = (mode) => {
+        if (mode === LOCATION_LIST_MODE.REMAIN)
+            return ' remain-loc-list'
+        else if (mode === LOCATION_LIST_MODE.FRACTION)
+            return ' fraction-loc-list'
+        else
+            return ' '
+    }
+
+    const showInfo = (mode, location) => {
+        if (mode === LOCATION_LIST_MODE.REMAIN) {
+            return (
+                <td className='remain-td'>
+                    <b className='remain-span'>{location.remain}</b>spots
+                </td>
+            )
+        }
+        else if (mode === LOCATION_LIST_MODE.FRACTION) {
+            return (
+                <td className='fraction-td'>
+                    <b className='fraction-span'> {`${location.remain} / ${location.capacity}`}</b>spots
+                </td>
+            )
+        }
+        else {
+            return (<></>)
+        }
+    }
 
     return (
-        <Row>
+        <Row className={'loc-list-comp' + getClassName(mode)}>
             <Col xs={{ size: 10, offset: 1 }} className='loc-list-col'>
                 <Table hover className='loc-list-table'>
                     <tbody>
                         {
                             locations.map((location, index) => (
                                 <tr className='loc-list-tr' key={'location' + index}>
-                                    <td className='name-td'>{location.name} {location.priority && <PiWheelchairFill className='disable-icon' size={16}/>}</td>
-                                    <td className='remain-td'><b className='count-span'>{location.remain}</b>spots</td>
+                                    <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && location.priority && <PiWheelchairFill className='disable-icon' size={16}/>}</td>
+                                    {showInfo(mode, location)}
                                 </tr>
                             ))
                         }

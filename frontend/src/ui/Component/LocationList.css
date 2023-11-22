@@ -1,4 +1,33 @@
-.count-span {
+.loc-list-comp .loc-list-tr {
+    height: 50px;
+}
+
+.loc-list-comp .loc-list-tr * {
+    vertical-align: middle;
+}
+
+.loc-list-comp .disable-icon {
+    margin-left: 5px;
+    color: rgb(146, 146, 146);
+}
+
+.loc-list-comp .loc-list-col {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+/** CSS for remain mode **/
+
+.remain-loc-list .name-td {
+    width: 70%;
+}
+
+.remain-loc-list .remain-td {
+    width: 30%;
+    text-align: right;
+}
+
+.remain-loc-list .remain-span {
     font-family: Poppins, sans-serif;
     font-size: 25px;
     font-weight: 600;
@@ -7,29 +36,24 @@
     margin-right: 5px;
 }
 
-.name-td {
-    width: 70%;
+/** CSS for fraction mode **/
+
+.fraction-loc-list .name-td {
+    width: 50%;
 }
 
-.remain-td {
+.fraction-loc-list .fraction-td {
+    font-size: 12px;
+    font-weight: 300;
     width: 30%;
     text-align: right;
 }
 
-.loc-list-tr {
-    height: 50px;
-}
-
-.loc-list-tr * {
-    vertical-align: middle;
-}
-
-.disable-icon {
-    margin-left: 5px;
-    color: rgb(146, 146, 146);
-}
-
-.loc-list-col {
-    max-height: 300px;
-    overflow-y: scroll;
+.fraction-loc-list .fraction-span {
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 0px;
+    letter-spacing: 0px;
+    margin-right: 5px;
 }

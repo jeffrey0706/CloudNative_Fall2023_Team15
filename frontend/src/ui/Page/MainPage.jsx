@@ -9,7 +9,7 @@ import axios from 'axios';
 // Production constants
 import { BASE_URL } from '../Constants';
 // Testing constants
-import { userId } from '../Constants';
+import { userId, fakeLocations } from '../Constants';
 
 function MainPage() {
 
@@ -27,7 +27,7 @@ function MainPage() {
     axios
       .get(BASE_URL + '/parking_lots')
       .then((res) => setLocations(res.data))
-      .catch(() => setLocations([]));
+      .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);
 
   return (
