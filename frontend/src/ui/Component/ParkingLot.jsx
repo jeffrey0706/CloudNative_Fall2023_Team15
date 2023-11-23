@@ -10,7 +10,7 @@ import RoadLineVertical from '../../assets/RoadLineVertical.svg';
 import RoadLineHorizontal from '../../assets/RoadLineHorizontal.svg';
 
 
-function ParkingLot({ layout=[[]] }) {
+function ParkingLot({ layout = [['A', 'B'], ['C', 'D']] }) {
 
   if (layout.length === 0) {
     throw new Error('Layout error, it should be a 2D array');

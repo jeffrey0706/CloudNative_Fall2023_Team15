@@ -67,7 +67,7 @@ function ReservePage() {
             setParkingData(INITIAL_PARKING_DATA);
         });
     }, []); // TODO: Modify this after changing the API
-    
+
     const [array, setArray] = useState([]);
     useEffect(() => {
         let tmpArray = [];
@@ -84,7 +84,7 @@ function ReservePage() {
             <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={infoType} />
             <ViewLotsSet SECTION={'A'} LOTs_STATUS={array} />
             <ParkingStatus parking_status={parkingData} />
-            <ReserveButton text={layout.text} color={layout.color} outline={layout.outline}/>
+            <ReserveButton text={layout.text} color={layout.color} outline={layout.outline} />
         </>
     );
 }
