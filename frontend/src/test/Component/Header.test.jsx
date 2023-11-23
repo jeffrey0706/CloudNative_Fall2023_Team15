@@ -18,7 +18,7 @@ describe('`COLLAPSE` mode', () => {
         const exitBtn = document.querySelector('.exit-btn');
 
         // Assertion
-        expect(toggler).toBeInTheDocument('display: inline-block;');
+        expect(toggler).toHaveStyle('display: inline-block;');
         expect(exitBtn).not.toBeInTheDocument();
     });
 

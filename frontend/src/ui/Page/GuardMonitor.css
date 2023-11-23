@@ -50,18 +50,9 @@
 }
 
 .floors-container>.floor {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     height: 38px;
     width: 65px;
     border-radius: 19px;
     font-size: 14px;
-    border: 2px solid #7A828A;
     cursor: pointer;
-}
-
-.clicked_floor  {
-    background-color: #353945 !important;
-    color: #fff !important;
 }

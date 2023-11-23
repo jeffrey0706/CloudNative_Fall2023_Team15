@@ -1,6 +1,6 @@
 import './ViewLots.css';
 import React from 'react';
-import CarImg from './utils/Car.svg';
+import CarImg from '../../assets/Car.svg';
 
 export const LOT_STATUS = {
     EMPTY: 0,

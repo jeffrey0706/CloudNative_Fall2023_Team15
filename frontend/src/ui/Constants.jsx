@@ -42,8 +42,7 @@ export const fakeLocations = [
     },
 ]
 
-// Production constants, which may still need to be changed
-export const BASE_URL = 'http://localhost:5000';
+// Testcase setup constants
 export const API_PATTERNS = {
     PROFILE: /profile/,
     PARKING_LOT: /parking_lot[^s]/,
@@ -62,3 +61,6 @@ export const getApiType = (url) => {
     }
     return undefined;
 };
+
+// Production constants, which may still need to be changed
+export const BASE_URL = 'http://localhost:5000';

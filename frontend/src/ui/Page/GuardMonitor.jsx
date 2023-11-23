@@ -1,16 +1,11 @@
-import {
-  Button,
-} from 'reactstrap';
+import './GuardMonitor.css';
+import { Button } from 'reactstrap';
 import React, { useState } from 'react';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import ViewLots, { CARS_STATUS } from '../Component/ViewLots';
-// import { v4 as uuidv4 } from 'uuid';
-
-import './GuardMonitor.css';
-// import autos from './utils/Autos_6x.svg';
-import RoadLineVertical from './utils/RoadLineVertical.svg';
-import RoadLineHorizontal from './utils/RoadLineHorizontal.svg';
+import RoadLineVertical from '../../assets/RoadLineVertical.svg';
+import RoadLineHorizontal from '../../assets/RoadLineHorizontal.svg';
 
 
 function GuardMonitor() {
@@ -60,7 +55,8 @@ function GuardMonitor() {
         {floors.map((floor, index) => (
           <Button
             key={index}
-            color='none'
+            outline={clicked_floor !== floor}
+            color='dark'
             className={`floor ${clicked_floor === floor ? 'clicked_floor' : ''}`}
             onClick={(e) => togglerClicked(e)}
           >

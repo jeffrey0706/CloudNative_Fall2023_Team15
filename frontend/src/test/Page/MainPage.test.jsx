@@ -1,9 +1,6 @@
-/**
- * @jest-environment jsdom
- */
-
 import '@testing-library/jest-dom';
 import { render, screen, act, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import MainPage from '../../ui/Page/MainPage';
 import { expect } from '@jest/globals';
@@ -12,7 +9,8 @@ import { API_PATTERNS, getApiType } from '../../ui/Constants';
 jest.mock('axios');
 
 const setup = () => {
-    render(<MainPage />);
+    // Wrap MainPage with BrowserRouter to avoid error caused by useNavigate
+    render(<BrowserRouter><MainPage /></BrowserRouter>);
 };
 
 afterEach(() => {
@@ -58,3 +56,5 @@ test('Fetching correct data', async () => {
         expect(locations[i]).toHaveTextContent('Test Location ' + (i + 1));
     }
 });
+
+// TODO: Add test for `useNavigate` after it is implemented

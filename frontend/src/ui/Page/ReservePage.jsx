@@ -80,13 +80,13 @@ function ReservePage() {
     }, []);
 
     return (
-        <div className="DashBoard-Container" >
+        <>
             <Header togglerType={TOGGLER_TYPE.EXIT} />
             <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={infoType} />
             <ViewLotsSet SECTION={'A'} LOTs_STATUS={array} />
             <ParkingStatus parking_status={parkingData} />
             <ReserveButton text={layout.text} color={layout.color} outline={layout.outline}/>
-        </div >
+        </>
     );
 }
 

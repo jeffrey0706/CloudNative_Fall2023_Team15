@@ -1,7 +1,7 @@
 import './ViewLotsSet.css';
 import React from 'react';
 import ViewLots from './ViewLots';
-import RoadLineDirection from './utils/RoadLineDirection.svg';
+import RoadLineDirection from '../../assets/RoadLineDirection.svg'
 
 function ViewLotsSet({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }) {
     return (

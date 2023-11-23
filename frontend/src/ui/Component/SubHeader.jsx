@@ -1,7 +1,7 @@
 import './SubHeader.css';
 import React from 'react';
 import { CiCalendar } from "react-icons/ci";
-import analysisImage from './utils/Analysis.svg';
+import analysisImage from '../../assets/Analysis.svg';
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 export const INFO_TYPE = {
