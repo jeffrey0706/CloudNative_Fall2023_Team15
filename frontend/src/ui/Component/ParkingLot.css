@@ -1,0 +1,37 @@
+.wrap-lots-container-4x {
+    margin-bottom: 12vh;
+    width: 100%;
+    height: 312px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wrap-lots-container-2x {
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrap-lots-container-1x img{
+    max-width: 160px;   
+}
+
+.wrap-lots-container-1x {
+    width: 156px;
+    height: 132px;
+}
+
+.RoadLineVertical {
+    position: absolute;
+    top: 270px;
+    left: calc(50% - 14px);
+}
+
+.RoadLineHorizontal {
+    position: absolute;
+    top: 418px;
+    left: calc(50% - 158px);
+}
