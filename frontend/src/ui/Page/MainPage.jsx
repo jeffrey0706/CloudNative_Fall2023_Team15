@@ -1,5 +1,6 @@
 import './MainPage.css';
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
@@ -12,6 +13,8 @@ import { BASE_URL } from '../Constants';
 import { userId, fakeLocations } from '../Constants';
 
 function MainPage() {
+
+  const navigate = useNavigate();
 
   const [currentPlace, setCurrentPlace] = React.useState('');
   useEffect(() => {
@@ -30,12 +33,14 @@ function MainPage() {
       .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);
 
+  const reserveBtnClick = () => navigate('/reservation');
+
   return (
     <>
         <Header togglerType={TOGGLER_TYPE.COLLAPSE}/>
         <Location currentPlace={currentPlace}/>
         <LocationList locations={locations}/>
-        <ReserveButton text='Reserve' color='danger' outline={false}/>
+        <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick}/>
     </>
   );
 }
