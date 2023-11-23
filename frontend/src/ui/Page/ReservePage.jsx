@@ -32,7 +32,6 @@ const INITIAL_PARKING_DATA = {
     Expired_time: '',
 }
 
-// The props isExpired is for testing only
 function ReservePage() {
 
     const [parkingData, setParkingData] = useState(INITIAL_PARKING_DATA);

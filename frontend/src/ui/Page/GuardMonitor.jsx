@@ -9,6 +9,7 @@ import Floors from '../Component/Floors';
 function GuardMonitor() {
 
   const floors = ['1F', '2F', '3F', '4F'];
+  const layout = [['A', 'B'], ['C', 'D']];
   const [currentFloor, setCurrentFloor] = useState(floors[0]);
   const onClick = (event) => {
     setCurrentFloor(event.target.innerText);
@@ -18,7 +19,7 @@ function GuardMonitor() {
     <>
       <Header togglerType={TOGGLER_TYPE.EXIT} />
       <SubHeader BACK_ICON={true} LEFT_STR="Parking Slot 1" RHS_INFO={INFO_TYPE.NONE} />
-      <ParkingLot />
+      <ParkingLot layout={layout}/>
       <Floors floors={floors} currentFloor={currentFloor} onClick={onClick}/>
     </>
   );

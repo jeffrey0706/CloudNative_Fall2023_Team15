@@ -4,13 +4,13 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import React, { useState } from 'react';
+import React from 'react';
 import ViewLots, { LOT_STATUS } from '../Component/ViewLots';
 import RoadLineVertical from '../../assets/RoadLineVertical.svg';
 import RoadLineHorizontal from '../../assets/RoadLineHorizontal.svg';
 
 
-function ParkingLot({ layout=[['A', 'B'], ['C', 'D']] }) {
+function ParkingLot({ layout=[[]] }) {
 
   if (layout.length === 0) {
     throw new Error('Layout error, it should be a 2D array');
