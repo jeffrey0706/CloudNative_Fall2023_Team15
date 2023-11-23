@@ -2,6 +2,14 @@ CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
+DROP TABLE IF EXISTS Records;
+DROP TABLE IF EXISTS Reservations;
+DROP TABLE IF EXISTS Cars;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS ParkingSpots;
+DROP TABLE IF EXISTS Areas;
+DROP TABLE IF EXISTS ParkingLots;
+
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255),
@@ -26,7 +34,7 @@ CREATE TABLE ParkingSpots (
     Available Boolean,
     Priority varchar(255),
     PRIMARY KEY (ParkingSpotID),
-    FOREIGN KEY (AreaID) REFERENCES Area(AreaID)
+    FOREIGN KEY (AreaID) REFERENCES Areas(AreaID)
 );
 
 CREATE TABLE Users (
@@ -36,7 +44,7 @@ CREATE TABLE Users (
     Priority varchar(255),
     Expired DATETIME,
     PRIMARY KEY (UserID),
-    FOREIGN KEY (Preference) REFERENCES Area(AreaID)
+    FOREIGN KEY (Preference) REFERENCES Areas(AreaID)
 );
 
 CREATE TABLE Cars (
@@ -47,21 +55,23 @@ CREATE TABLE Cars (
 );
 
 CREATE TABLE Reservations (
+    ReservationID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
     ExitTime DATETIME,
+    PRIMARY KEY (ReservationID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
 );
 
 CREATE TABLE Records (
+    RecordID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
     ExitTime DATETIME,
+    PRIMARY KEY (RecordID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
 );
