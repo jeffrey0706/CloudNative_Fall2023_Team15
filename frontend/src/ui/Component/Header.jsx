@@ -81,7 +81,7 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
     <Navbar light expand="md" className='header-nav'>
       <NavbarBrand>
         <FaCarSide size={20}/>
-        <div className='home-nav'>Quick<br/>Parking</div>
+        <div className='home-nav'>Quick Parking</div>
       </NavbarBrand>
       {render(togglerType)}
     </Navbar>

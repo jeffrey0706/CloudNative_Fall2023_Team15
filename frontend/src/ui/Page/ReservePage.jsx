@@ -1,3 +1,4 @@
+import './ReservePage.css'
 import React, { useEffect, useState } from 'react';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';

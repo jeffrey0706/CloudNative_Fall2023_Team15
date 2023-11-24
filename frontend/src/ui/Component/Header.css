@@ -4,9 +4,9 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 1rem 6vw;
     gap: 0.75rem;
-    min-height: 7rem;
+    min-height: 13vh;
 }
 
 .home-nav {
@@ -15,6 +15,32 @@
     font-style: normal;
     font-weight: 700;
     line-height: 1.125rem;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    min-height: 2.3rem;
+    width: 15vw;
+    text-wrap: wrap;
+}
+
+/* @media screen and (min-width: 576px) {
+    .home-nav {
+        font-size: 200rem;
+    }
+} */
+
+.home-nav {
+    font-size: 1rem;
+    font-family: "DM", "Sans";
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.125rem;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    min-height: 2.3rem;
+    width: 15vw;
+    text-wrap: wrap;
 }
 
 .exit-btn {

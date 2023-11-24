@@ -1,20 +1,18 @@
 .DashBoard-Header {
     margin-bottom: 2vh;
-    margin-top: 1vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 39px;
-    height: 110px;
+    padding: 0 10vw;
+    height: 10vh;
     background-color: #fff;
 }
 
 .DashBoard-Title {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-top: 0;
     width: 65%;
-    margin-bottom: 0.5rem;
     line-height: 1.2;
     position: relative;
 }
@@ -22,8 +20,7 @@
 .DashBoard-Subtitle {
     width: 100px;
     text-align: right;
-    font-size: 12px;
-    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
 }
 
 .AnalysisImg{
@@ -35,8 +32,8 @@
 }
 
 .DashBoard-Title svg {
-    width: 42px;
-    height: 42px;
+    width: 2.625rem;
+    height: 2.625rem;
     margin-right: 5px;
     margin-bottom: 0.25rem;
     max-width: 100%;
