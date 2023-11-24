@@ -2,17 +2,9 @@ CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
-DROP TABLE IF EXISTS Records;
-DROP TABLE IF EXISTS Reservations;
-DROP TABLE IF EXISTS Cars;
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS ParkingSpots;
-DROP TABLE IF EXISTS Areas;
-DROP TABLE IF EXISTS ParkingLots;
-
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
-    Name varchar(255),
+    Name varchar(255) UNIQUE,
     SpotCounts int,
     PRIMARY KEY (ParkingLotID)
 );
@@ -24,7 +16,8 @@ CREATE TABLE Areas (
     Floor int,
     Preference int,
     PRIMARY KEY (AreaID),
-    FOREIGN KEY (ParkingLotID) REFERENCES ParkingLots(ParkingLotID)
+    FOREIGN KEY (ParkingLotID) REFERENCES ParkingLots(ParkingLotID),
+    UNIQUE UniqueArea(`ParkingLotID`, `Name`, `Floor`)
 );
 
 CREATE TABLE ParkingSpots (
@@ -34,7 +27,8 @@ CREATE TABLE ParkingSpots (
     Available Boolean,
     Priority varchar(255),
     PRIMARY KEY (ParkingSpotID),
-    FOREIGN KEY (AreaID) REFERENCES Areas(AreaID)
+    FOREIGN KEY (AreaID) REFERENCES Areas(AreaID),
+    UNIQUE UniqueParkingSpot(`AreaID`, `Number`)
 );
 
 CREATE TABLE Users (
@@ -55,23 +49,21 @@ CREATE TABLE Cars (
 );
 
 CREATE TABLE Reservations (
-    ReservationID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
     ExitTime DATETIME,
-    PRIMARY KEY (ReservationID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
+    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
 );
 
 CREATE TABLE Records (
-    RecordID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     StartTime DATETIME,
     ExitTime DATETIME,
-    PRIMARY KEY (RecordID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
+    CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
 );

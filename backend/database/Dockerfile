@@ -10,6 +10,7 @@ ENV MYSQL_ROOT_PASSWORD iamgroot
 
 COPY ./setup.sh setup.sh
 COPY ./init.sql /docker-entrypoint-initdb.d
+COPY ./initData.sql /docker-entrypoint-initdb.d
 # COPY ./createTable.sql createTable.sql
 
 # RUN mysql -u root -p

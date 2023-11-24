@@ -16,6 +16,7 @@ db = SQLAlchemy(app)
 @app.route('/profile/<int:uuid>', methods=['POST', 'GET', 'PUT'])
 def profile(uuid):
     if request.method == 'GET':
+        
         user: User = User.query.get(uuid)
 
         if user:
