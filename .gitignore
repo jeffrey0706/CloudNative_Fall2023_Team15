@@ -55,4 +55,4 @@ backend/build/
 backend/dist/
 backend/*.egg-info/
 
-*__pycache__
+__pycache__/
