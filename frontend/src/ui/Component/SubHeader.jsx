@@ -11,7 +11,7 @@ export const INFO_TYPE = {
   ANALYSIS: 3,
 };
 
-function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE.NONE }) {
+function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE.NONE, onBackIconClick=()=>{} }) {
 
   const render_right = (RHS_INFO) => {
     switch (RHS_INFO) {
@@ -56,7 +56,7 @@ function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE
     if (BACK_ICON) {
       return (
         <div className="DashBoard-Title">
-          <IoIosArrowRoundBack />
+          <IoIosArrowRoundBack onClick={onBackIconClick}/>
           {LEFT_STR}
         </div>
       )
