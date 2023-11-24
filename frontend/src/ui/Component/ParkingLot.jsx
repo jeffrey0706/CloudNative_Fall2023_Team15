@@ -37,7 +37,7 @@ function ParkingLot({ layout = [['A', 'B'], ['C', 'D']] }) {
   }
 
   return (
-    <div>
+    <div className='parking-lot-root'>
       <img className='RoadLineVertical' src={RoadLineVertical} alt="" />
       <img className='RoadLineHorizontal' src={RoadLineHorizontal} alt="" />
       <Container className="wrap-lots-container-4x">

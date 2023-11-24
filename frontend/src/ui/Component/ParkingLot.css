@@ -1,7 +1,7 @@
 .wrap-lots-container-4x {
     margin-bottom: 12vh;
-    width: 100%;
-    height: 312px;
+    /* width: 100%; */
+    height: 80vmin;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,9 +9,9 @@
 }
 
 .wrap-lots-container-2x {
-    width: 360px;
+    width: 90vmin;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -20,18 +20,20 @@
 }
 
 .wrap-lots-container-1x {
-    width: 156px;
-    height: 132px;
+    width: 40vmin;
+    height: 35vmin;
 }
 
 .RoadLineVertical {
     position: absolute;
-    top: 270px;
-    left: calc(50% - 14px);
+    transform: translate(46.8vmin, 4vmin);
+    width: 7.1vmin;
 }
 
 .RoadLineHorizontal {
     position: absolute;
-    top: 418px;
-    left: calc(50% - 158px);
+    transform: translate(8.5vmin, 40vmin);
+    /* top: 50px; */
+    width: 84vmin;
+    /* left: calc(50% - 158px); */
 }
