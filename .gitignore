@@ -54,3 +54,5 @@ replay_pid*
 backend/build/
 backend/dist/
 backend/*.egg-info/
+
+*__pyche__*
