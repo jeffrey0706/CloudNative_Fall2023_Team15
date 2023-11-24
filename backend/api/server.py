@@ -1,23 +1,27 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
+import datetime
 
 from database.models import *
 
-import datatime
+class Base(DeclarativeBase, MappedAsDataclass):
+    pass
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:iamgroot@localhost:3307/test'
+# SQLALCHEMY_DATABASE_URI -> user_name:password@host:port/db_name
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:iamgroot@127.0.0.1:3307/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
 
 @app.route('/profile/<int:uuid>', methods=['POST', 'GET', 'PUT'])
 def profile(uuid):
     if request.method == 'GET':
-        
-        user: User = User.query.get(uuid)
+        user = db.get_or_404(User, uuid)
 
         if user:
             return jsonify({
@@ -56,21 +60,21 @@ def profile(uuid):
         data = request.get_json()
 
         user: User = User(
-            # TODO
-            # default value set ?
-            preference=data.get('preference'),
-            role=data.get('role'),
-            priority=data.get('priority'),
+            UserID=uuid,
+            Preference=data.get('preference'),
+            Role=data.get('role'),
+            Priority=data.get('priority'),
         )
 
         try:
             db.session.add(user)
             db.session.commit()
 
-            user_id = user.user_id
+            user_id = user.UserID
 
             return jsonify({'id': user_id})
-        except IntegrityError:
+        except IntegrityError as e:
+            print(e)
             db.session.rollback()
             return jsonify({'message': 'Failed to create new profile'})
 
@@ -211,7 +215,7 @@ def cars(car_id):
     else:
         return jsonify({'message': 'Car not found'})
 
-@app.route('/user_status/<int: uuid>', methods=['GET'])
+@app.route('/user_status/<int:uuid>', methods=['GET'])
 def user_status(uuid):
     '''
     // GET: /user_status/{user_id}
@@ -226,12 +230,12 @@ def user_status(uuid):
     record = Record.query.filter_by(car_id=car_id).first()
     
     if reservation:
-        if reservation.end_time < datatime.datetime.now():
+        if reservation.end_time < datetime.datetime.now():
             return jsonify({'status': 'EXPIRED'})
         else:
             return jsonify({'status': 'RESERVED'})
     elif record:
-        if record.end_time < datatime.datetime.now():
+        if record.end_time < datetime.datetime.now():
             return jsonify({'status': 'EXPIRED'})
         else:
             return jsonify({'status': 'PARKED'})
