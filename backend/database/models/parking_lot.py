@@ -1,6 +1,7 @@
 from api import db
 
 class ParkingLot(db.Model):
-    parking_lot_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(255))
-    spot_counts = db.Column(db.Integer)
+    __tablename__ = 'ParkingLots'
+    ParkingLotID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Name = db.Column(db.String(255))
+    SpotCounts = db.Column(db.Integer)

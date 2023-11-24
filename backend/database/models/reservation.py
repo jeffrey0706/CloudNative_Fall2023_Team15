@@ -1,7 +1,9 @@
 from api import db
 
 class Reservation(db.Model):
-    car_id = db.Column(db.Integer, db.ForeignKey('car.car_id'), nullable=False)
-    parking_spot_id = db.Column(db.Integer, db.foreignKey('parking_spot.parking_spot_id'), nullable=False)
-    start_time = db.Column(db.DateTime)
-    end_time = db.Column(db.DateTime)
+    __tablename__ = 'Reservations'
+    ReservationID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    CarID = db.Column(db.Integer, db.ForeignKey('Cars.CarID'), nullable=False)
+    ParkingSpotID = db.Column(db.Integer, db.ForeignKey('ParkingSpots.ParkingSpotID'), nullable=False)
+    StartTime = db.Column(db.DateTime)
+    EndTime = db.Column(db.DateTime)
