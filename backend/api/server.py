@@ -1,13 +1,10 @@
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
+import sqlalchemy
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
-import datetime
+from datetime import datetime
 
+from api import db
 from database.models import *
-
-class Base(DeclarativeBase, MappedAsDataclass):
-    pass
 
 app = Flask(__name__)
 
@@ -15,68 +12,82 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:iamgroot@127.0.0.1:3307/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(model_class=Base)
-db.init_app(app)
+# db = SQLAlchemy(model_class=Base)
 
 @app.route('/profile/<int:uuid>', methods=['POST', 'GET', 'PUT'])
 def profile(uuid):
     if request.method == 'GET':
-        user = db.get_or_404(User, uuid)
+        # user: User = db.session.execute(db.select(User).filter_by(UserID=uuid)).scalar_one()
+        try:
+            user: User = User.query.filter_by(UserID=uuid).one_or_none()
 
-        if user:
-            return jsonify({
-                'id': user.user_id,
-                'preference': user.preference,
-                'role': user.role,
-                'priority': user.priority,
-                'expired': user.expired,
-            })
-        else:
-            return jsonify({'message': 'Profile not found'})
+            if user:
+                return jsonify({
+                    'id': user.UserID,
+                    'preference': user.Preference,
+                    'role': user.Role,
+                    'priority': user.Priority,
+                    'expired': user.Expired,
+                })
+            else:
+                return jsonify({'message': 'Profile not found'})
+        except sqlalchemy.orm.exc.MultipleResultsFound:
+            return jsonify({'message': 'duplicate uuid, please check database'})
         
     elif request.method == 'PUT':
-        data = request.get_json()
+        try:
+            data = request.get_json()
 
-        user: User = User.query.get(uuid)
+            user: User = User.query.filter_by(UserID=uuid).one_or_none()
 
-        if user:
-            user.preference = data.get('preference', user.preference)
-            user.role = data.get('role', user.role)
-            user.priority = data.get('priority', user.priority)
+            if user:
+                user.Preference = data.get('preference', user.Preference)
+                user.Role = data.get('role', user.Role)
+                user.Priority = data.get('priority', user.Priority)
+                # user.Expired = data.get('expired', user.Expired)
+                if 'expired' in data:
+                    user.Expired = datetime.strptime(data['expired'], '%Y-%m-%d %H:%M:%S')
 
-            db.session.commit()
+                db.session.commit()
 
-            return jsonify({
-                'id': user.user_id,
-                'preference': user.preference,
-                'role': user.role,
-                'priority': user.priority,
-                'expired': user.expired,
-            })
-        else :
-            return jsonify({'message': 'Profile not found'})
+                return jsonify({
+                    'id': user.UserID,
+                    'preference': user.Preference,
+                    'role': user.Role,
+                    'priority': user.Priority,
+                    'expired': user.Expired,
+                })
+            else :
+                return jsonify({'message': 'Profile not found'})
+        except sqlalchemy.orm.exc.MultipleResultsFound:
+            return jsonify({'message': 'duplicate uuid, please check database'})
+        except (ValueError, TypeError):
+            return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'})
         
     elif request.method == 'POST':
-        data = request.get_json()
-
-        user: User = User(
-            UserID=uuid,
-            Preference=data.get('preference'),
-            Role=data.get('role'),
-            Priority=data.get('priority'),
-        )
-
         try:
+            data = request.get_json()
+
+            user: User = User(
+                UserID=uuid,
+                Preference=data.get('preference'),
+                Role=data.get('role'),
+                Priority=data.get('priority'),
+            )
+            if 'expired' in data:
+                user.Expired = datetime.strptime(data['expired'], '%Y-%m-%d %H:%M:%S')
+
             db.session.add(user)
             db.session.commit()
 
-            user_id = user.UserID
-
-            return jsonify({'id': user_id})
+            return jsonify({'id': user.UserID})
         except IntegrityError as e:
-            print(e)
+            # print(e.orig)
             db.session.rollback()
-            return jsonify({'message': 'Failed to create new profile'})
+            return jsonify({'message': f'Failed to create new profile, caused by {e.orig}'})
+        except (ValueError, TypeError) as e:
+            # print(e)
+            return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'})
 
 
 @app.route('/parkinglots', methods=['GET'])
@@ -243,4 +254,5 @@ def user_status(uuid):
         return jsonify({'status': 'NONE'})
 
 if __name__ == '__main__':
+    db.init_app(app)
     app.run()
