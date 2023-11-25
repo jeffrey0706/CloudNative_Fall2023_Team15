@@ -7,3 +7,6 @@ class User(db.Model):
     Role = db.Column(db.String(255))
     Priority = db.Column(db.String(255))
     Expired = db.Column(db.DateTime, nullable=True)
+
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)

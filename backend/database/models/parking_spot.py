@@ -7,4 +7,7 @@ class ParkingSpot(db.Model):
     Number = db.Column(db.Integer, nullable=False)
     Available = db.Column(db.Boolean)
     Priority = db.Column(db.String(255))
+
+    def __init__(self, **kwargs):
+        super(ParkingSpot, self).__init__(**kwargs)
     

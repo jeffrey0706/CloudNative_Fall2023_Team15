@@ -7,3 +7,6 @@ class Reservation(db.Model):
     ParkingSpotID = db.Column(db.Integer, db.ForeignKey('ParkingSpots.ParkingSpotID'), nullable=False)
     StartTime = db.Column(db.DateTime)
     EndTime = db.Column(db.DateTime)
+
+    def __init__(self, **kwargs):
+        super(Reservation, self).__init__(**kwargs)
