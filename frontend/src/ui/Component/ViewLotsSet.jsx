@@ -8,15 +8,8 @@ function ViewLotsSet({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }) {
     const [sectionImg, setSectionImg] = useState(null);
 
     useEffect(() => {
-        async function loadSectionImage() {
-            try {
-                const sectionImgPath = await import(`../../assets/section${SECTION}.svg`);
-                setSectionImg(sectionImgPath.default); // Assuming default export
-            } catch (error) {
-                console.error("Import failed", error);
-            }
-        }
-        loadSectionImage();
+        import(`../../assets/section${SECTION}.svg`)
+            .then((sectionImgPath) => setSectionImg(sectionImgPath.default))
     }, [SECTION]);
 
     return (
