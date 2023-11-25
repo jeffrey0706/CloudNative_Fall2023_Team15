@@ -51,19 +51,31 @@ CREATE TABLE Cars (
 CREATE TABLE Reservations (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
-    StartTime DATETIME,
-    ExitTime DATETIME,
+    ReservationTime DATETIME,
+    ExpiredTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
 );
 
-CREATE TABLE Records (
+CREATE TABLE Attendances (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
-    StartTime DATETIME,
+    ParkTime DATETIME,
     ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
+    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+)
+
+CREATE TABLE Records (
+    RecordID int AUTO_INCREMENT,
+    CarID int NOT NULL,
+    ParkingSpotID int NOT NULL,
+    ParkTime DATETIME,
+    ExitTime DATETIME,
+    PRIMARY KEY (RecordID),
+    FOREIGN KEY (CarID) REFERENCES Cars(CarID),
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
+    -- CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
 );
