@@ -3,21 +3,17 @@ import sqlalchemy
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 
-from api import db
+from api import *
 from database.models import *
 
 app = Flask(__name__)
-
 # SQLALCHEMY_DATABASE_URI -> user_name:password@host:port/db_name
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:iamgroot@127.0.0.1:3307/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# db = SQLAlchemy(model_class=Base)
-
 @app.route('/profile/<int:uuid>', methods=['POST', 'GET', 'PUT'])
 def profile(uuid):
     if request.method == 'GET':
-        # user: User = db.session.execute(db.select(User).filter_by(UserID=uuid)).scalar_one()
         try:
             user: User = User.query.filter_by(UserID=uuid).one_or_none()
 
@@ -35,9 +31,9 @@ def profile(uuid):
             return jsonify({'message': 'duplicate uuid, please check database'})
         
     elif request.method == 'PUT':
+        data = request.get_json()
+        
         try:
-            data = request.get_json()
-
             user: User = User.query.filter_by(UserID=uuid).one_or_none()
 
             if user:
@@ -65,9 +61,9 @@ def profile(uuid):
             return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'})
         
     elif request.method == 'POST':
-        try:
-            data = request.get_json()
+        data = request.get_json()
 
+        try:
             user: User = User(
                 UserID=uuid,
                 Preference=data.get('preference'),
@@ -130,51 +126,75 @@ def parking_spot(lot_id):
 
 @app.route('/reservation', methods=['POST'])
 def create_reservation():
-    #TODO
-    # Not sure what to do here
-    pass
-
-@app.route('/reservation/<int:uuid>', methods=['DELETE', 'GET', 'POST'])
-def reservation(uuid):
     '''
-    // GET: /reservation/{reservation_id}
+    POST /reservation
     {
         car_id: int,
         parking_spot_id: int,
-        start_time: timestamp,
-        end_time: timestamp,
     }
+    '''
+    data = request.get_json()
 
-    // DELETE: /reservation/{reservation_id}
-    -> None
+    reservation: Reservation = Reservation(
+        CarID=data.get('car_id'),
+        ParkingSpotID=data.get('parking_spot_id'),
+        StartTime=datetime.now(),
+        EndTIme=datetime.now() + RESERVATION_TIME,
+    )
 
-    // POST: /reservation
-    // request
+    try:
+        db.session.add(reservation)
+        db.session.commit()
+
+        reservation_id = reservation.reservation_id
+
+        return jsonify({'id': reservation_id})
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({'message': f'Failed to create new reservation, caused by {e.orig}'})  
+
+
+@app.route('/reservation/<int:car_id>', methods=['DELETE', 'GET'])
+def reservation(car_id):
+    '''
+    // GET: /reservation/{car_id}
     {
-        user_id: int, ?
         car_id: int,
-        parking_spot_id: int, We need this or auto assign by preference?
-        start_time: timestamp, we need start time
+        parking_spot_number: int,
+        area_name: string,
+        area_floor: int,
+        parking_lot_name: string,
+        reservation_time: datetime,
+        expired_time: datetime, 
     }
-    // response
+
+    // DELETE: /reservation/{car_id}
     {
-        id: int,
+        message: string,
     }
     '''
     if request.method == 'GET':
-        reservation: Reservation = Reservation.query.get(uuid)
+        reservation: Reservation = Reservation.query.get(car_id)
 
         if reservation:
+
+            parking_spot: ParkingSpot = ParkingSpot.query.get(reservation.ParkingSpotID)
+            area: Area = Area.query.get(parking_spot.AreaID)
+            parking_lot: ParkingLot = ParkingLot.query.get(area.ParkingLotID)
+
             return jsonify({
-                'car_id': reservation.car_id,
-                'parking_spot_id': reservation.parking_spot_id,
-                'start_time': reservation.start_time,
-                'end_time': reservation.end_time,
+                'car_id': reservation.CarID,
+                'parking_spot_number': parking_spot.Number,
+                'area_name': area.Name,
+                'area_floor': area.Floor,
+                'parking_lot_name': parking_lot.Name,
+                'reservation_time': reservation.ReservationTime,
+                'expired_time': reservation.ExpiredTime,
             })
         else:
             return jsonify({'message': 'Reservation not found'})
     elif request.method == 'DELETE':
-        reservation: Reservation = Reservation.query.get(uuid)
+        reservation: Reservation = Reservation.query.get(car_id)
 
         if reservation:
             try:
@@ -182,31 +202,12 @@ def reservation(uuid):
                 db.session.commit()
 
                 return jsonify({'message': 'Reservation deleted'})
-            except IntegrityError:
+            except IntegrityError as e:
                 db.session.rollback()
-                return jsonify({'message': 'Failed to delete reservation'})
+                return jsonify({'message': f'Failed to delete reservation, caused by {e.orig}'})
         else:
             return jsonify({'message': 'Reservation not found'})
-    elif request.method == 'POST':
-        data = request.get_json()
 
-        reservation: Reservation = Reservation(
-            car_id=data.get('car_id'),
-            parking_spot_id=data.get('parking_spot_id'),
-            start_time=data.get('start_time'), 
-            end_time=data.get('end_time'), # Backend or Frontend?
-        )
-
-        try:
-            db.session.add(reservation)
-            db.session.commit()
-
-            reservation_id = reservation.reservation_id
-
-            return jsonify({'id': reservation_id})
-        except IntegrityError:
-            db.session.rollback()
-            return jsonify({'message': 'Failed to create new reservation'})  
 
 @app.route('/mycar/<int:car_id>', methods=['GET'])
 def cars(car_id):
