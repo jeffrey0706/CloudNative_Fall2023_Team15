@@ -8,9 +8,9 @@ class Reservation(db.Model):
     ReservationTime = db.Column(db.DateTime)
     ExpiredTime = db.Column(db.DateTime)
 
-    __table_args__ = (
-        db.PrimaryKeyConstraint('CarID', 'ParkingSpotID')
-    )
+    # __table_args__ = (
+    #     db.PrimaryKeyConstraint(['CarID'], ['ParkingSpotID'])
+    # )
 
     def __init__(self, **kwargs):
         super(Reservation, self).__init__(**kwargs)

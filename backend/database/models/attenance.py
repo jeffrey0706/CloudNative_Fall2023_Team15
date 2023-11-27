@@ -9,9 +9,9 @@ class Attendance(db.Model):
     ParkTime = db.Column(db.DateTime)
     ExitTime = db.Column(db.DateTime)
 
-    __table_args__ = (
-        db.PrimaryKeyConstraint('CarID', 'ParkingSpotID')
-    )
+    # __table_args__ = (
+    #     db.PrimaryKeyConstraint('CarID', 'ParkingSpotID')
+    # )
 
     def __init__(self, **kwargs):
         super(Attendance, self).__init__(**kwargs)
