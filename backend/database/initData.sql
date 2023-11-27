@@ -54,13 +54,16 @@ VALUES
 (6, 5, 1, 'General'),
 (6, 6, 0, 'General');
 
--- INSERT INTO Users (Preference, Role, Priority, Expired)
--- VALUES
--- ();
+INSERT INTO Users (Preference, Role, Priority, Expired)
+VALUES
+(1, 'Employee', 'Top', NULL),
+(1, 'Employee', 'Normal', NULL),
+(2, 'Attendant', 'Normal', NULL);
 
--- INSERT INTO Cars (UserID, Role)
--- VALUES
--- ();
+INSERT INTO Cars (UserID, Lisence)
+VALUES
+(1, 'AGE-6277'),
+(2, 'GFD-8542');
 
 -- INSERT INTO Reservations (CarID, ParkingSpotID, StartTime, ExitTime)
 -- VALUES

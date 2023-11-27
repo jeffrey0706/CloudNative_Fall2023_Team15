@@ -5,7 +5,7 @@ USE test;
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255) UNIQUE,
-    SpotCounts int,
+    SpotCounts int,  -- total spot, not available spot
     PRIMARY KEY (ParkingLotID)
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE ParkingSpots (
 );
 
 CREATE TABLE Users (
-    UserID int NOT NULL,
+    UserID int AUTO_INCREMENT,
     Preference int,
     Role varchar(255),
     Priority varchar(255),
@@ -42,7 +42,8 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Cars (
-    CarID int NOT NULL,
+    CarID int AUTO_INCREMENT,
+    Lisence varchar(255) not NULL,
     UserID int,
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     PRIMARY KEY (CarID)
@@ -66,7 +67,7 @@ CREATE TABLE Attendances (
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
-)
+);
 
 CREATE TABLE Records (
     RecordID int AUTO_INCREMENT,
@@ -76,6 +77,6 @@ CREATE TABLE Records (
     ExitTime DATETIME,
     PRIMARY KEY (RecordID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    -- CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
+    CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
 );
