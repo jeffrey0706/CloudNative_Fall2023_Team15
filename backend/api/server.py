@@ -111,19 +111,29 @@ def parking_lots():
 
     # query current reservation and compute current capacity
     reservations: List[Reservation] = Reservation.query.all()
-    area_ids = [r.AreaID for r in reservations]
+    # area_ids = [r.AreaID for r in reservations]
+    # areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
+    # parking_lot_ids = [a.ParkingLotID for a in areas]
+    # parking_lot_counts = dict(Counter(parking_lot_ids))
+    parking_spot_ids = [r.ParkingSpotID for r in reservations]
+    parking_spot: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
+    area_ids = [p.AreaID for p in parking_spot]
     areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
     parking_lot_ids = [a.ParkingLotID for a in areas]
-    # parking_lot_counts = dict(Counter(parking_lot_ids))
     for ids in parking_lot_ids:
         current_capacity[ids] += 1
 
     # query current attendance and compute current capacity
     attendances: List[Attendance] = Attendance.query.all()
-    area_ids = [r.AreaID for r in attendances]
+    # area_ids = [r.AreaID for r in attendances]
+    # areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
+    # parking_lot_ids = [a.ParkingLotID for a in areas]
+    # parking_lot_counts = dict(Counter(parking_lot_ids))
+    parking_spot_ids = [r.ParkingSpotID for r in attendances]
+    parking_spot: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
+    area_ids = [p.AreaID for p in parking_spot]
     areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
     parking_lot_ids = [a.ParkingLotID for a in areas]
-    # parking_lot_counts = dict(Counter(parking_lot_ids))
     for ids in parking_lot_ids:
         current_capacity[ids] += 1
 
@@ -214,14 +224,20 @@ def reservation(car_id):
         message: string,
     }
     '''
+    # Check if car_id exist
+    car: Car = Car.query.filter_by(CarID=car_id).first()
+
+    if not car:
+        return jsonify({'message': 'Car not found'})
+
     if request.method == 'GET':
-        reservation: Reservation = Reservation.query.get(car_id)
+        reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
 
         if reservation:
 
-            parking_spot: ParkingSpot = ParkingSpot.query.get(reservation.ParkingSpotID)
-            area: Area = Area.query.get(parking_spot.AreaID)
-            parking_lot: ParkingLot = ParkingLot.query.get(area.ParkingLotID)
+            parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=reservation.ParkingSpotID).first()
+            area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
+            parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
 
             return jsonify({
                 'car_id': reservation.CarID,
@@ -235,7 +251,7 @@ def reservation(car_id):
         else:
             return jsonify({'message': 'Reservation not found'})
     elif request.method == 'DELETE':
-        reservation: Reservation = Reservation.query.get(car_id)
+        reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
 
         if reservation:
             try:
@@ -250,10 +266,10 @@ def reservation(car_id):
             return jsonify({'message': 'Reservation not found'})
 
 
-@app.route('/mycar/<int:car_id>', methods=['GET'])
-def cars(car_id):
+@app.route('/mycar/<int:user_id>', methods=['GET'])
+def cars(user_id):
     '''
-    // GET: /my_car/{user_id}
+    // GET: /mycar/{user_id}
     {
         car_id: int,
         parking_spot_number: int,
@@ -263,11 +279,19 @@ def cars(car_id):
         start_time: datetime,
     }
     '''
-    attendance: Attendance = Attendance.query.get(car_id)
-    parking_spot: ParkingSpot = ParkingSpot.query.get(attendance.ParkingSpotID)
-    area: Area = Area.query.get(parking_spot.AreaID)
-    parking_lot: ParkingLot = ParkingLot.query.get(area.ParkingLotID)
-    if car:
+    if not User.query.filter_by(UserID=user_id).first():
+        return jsonify({'message': 'User not found'})
+
+    car = Car.query.filter_by(UserID=user_id).first()
+    if not car:
+        return jsonify({'message': 'This user does not have a car'})
+    car_id = car.CarID
+
+    attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
+    if attendance:
+        parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=attendance.ParkingSpotID).first()
+        area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
+        parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
         return jsonify({
             'car_id': attendance.CarID,
             'parking_spot_number': parking_spot.Number,
@@ -277,7 +301,7 @@ def cars(car_id):
             'start_time': attendance.ParkTime,
         })
     else:
-        return jsonify({'message': 'Car not found'})
+        return jsonify({'message': 'Car not parked'})
 
 @app.route('/user_status/<int:uuid>', methods=['GET'])
 def user_status(uuid):
@@ -287,22 +311,28 @@ def user_status(uuid):
         status: string, // NONE, RESERVED, PARKED, EXPIRED
     }
     '''
-    car_id = Car.query.filter_by(user_id=uuid).first().car_id
+    # if user not exist, return NONE
+    user: User = User.query.filter_by(UserID=uuid).first()
+
+    if not user:
+        return jsonify({'message': 'User not found'})
+
+    car = Car.query.filter_by(UserID=uuid).first()
+    if not car:
+        return jsonify({'message': 'This user does not have a car'})
+    car_id = car.CarID
     
-    # Check reservation or record by car_id
-    reservation: Reservation = Reservation.query.get(car_id)
-    attendance: Attendance = Attendance.query.get(car_id)
+    # Check reservation or Attendance by car_id
+    reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
+    attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
     
-    if reservation:
-        if reservation.ExpiredTime < datetime.datetime.now():
+    if attendance:
+        return jsonify({'status': 'PARKED'})
+    elif reservation:
+        if reservation.ExpiredTime < datetime.now():
             return jsonify({'status': 'EXPIRED'})
         else:
             return jsonify({'status': 'RESERVED'})
-    elif attendance:
-        if attendance.ExitTime < datetime.datetime.now():
-            return jsonify({'status': 'EXPIRED'})
-        else:
-            return jsonify({'status': 'PARKED'})
     else:
         return jsonify({'status': 'NONE'})
 

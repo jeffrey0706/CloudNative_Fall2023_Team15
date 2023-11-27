@@ -70,13 +70,11 @@ CREATE TABLE Attendances (
 );
 
 CREATE TABLE Records (
-    RecordID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     ParkTime DATETIME,
     ExitTime DATETIME,
-    PRIMARY KEY (RecordID),
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID)
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
 );
