@@ -1,7 +1,10 @@
 from flask import Flask, jsonify, request
 import sqlalchemy
 from sqlalchemy.exc import IntegrityError
+
 from datetime import datetime
+from typing import List
+from collections import Counter
 
 from api import *
 from database.models import *
@@ -89,66 +92,104 @@ def profile(uuid):
 @app.route('/parkinglots', methods=['GET'])
 def parking_lots():
     '''
-    // GET: /parking_lot
-    {
-        id: int,
-        name: string,
-        spot_count: int,
-    }
-    '''
-    parking_lots: parking_lots = ParkingLot.query.all()
-    return jsonify([{
-        'id': parking_lot.parking_lot,
-        'name': parking_lot.name,
-        'spot_count': parking_lot.spot_counts,
-    } for parking_lot in parking_lots])
+    Request
+        GET: /parkinglots
+    Response
+        [
+            {
+                parkinglot_id: int,
+                name: string,
+                current_capacity: int,
+                maximum_capacity: int,
+            }
+        ]
 
-@app.route('/parkinglot/<int:lot_id>', methods=['GET'])
-def parking_spot(lot_id):
+    TODO handicap, coordinate and address should be add into database
     '''
-    Get all parking spots in a parking lot?
-    // GET: /parking_lot/<int:lot_id>
-    {
-        id: int,
-        name: string,
-        spot_count: int,
-    }
-    '''
-    parking_lot: parking_lot = ParkingLot.query.get(lot_id)
-    if parking_lot:
-        return jsonify({
-            'id': parking_lot.parking_lot,
-            'name': parking_lot.name,
-            'spot_count': parking_lot.spot_counts,
-        })
-    else:
-        return jsonify({'message': 'Parking lot not found'})
+    all_parking_lots: List[ParkingLot] = ParkingLot.query.all()
+    current_capacity = {p.ParkingLotID: 0 for p in all_parking_lots}
+
+    # query current reservation and compute current capacity
+    reservations: List[Reservation] = Reservation.query.all()
+    area_ids = [r.AreaID for r in reservations]
+    areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
+    parking_lot_ids = [a.ParkingLotID for a in areas]
+    # parking_lot_counts = dict(Counter(parking_lot_ids))
+    for ids in parking_lot_ids:
+        current_capacity[ids] += 1
+
+    # query current attendance and compute current capacity
+    attendances: List[Attendance] = Attendance.query.all()
+    area_ids = [r.AreaID for r in attendances]
+    areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
+    parking_lot_ids = [a.ParkingLotID for a in areas]
+    # parking_lot_counts = dict(Counter(parking_lot_ids))
+    for ids in parking_lot_ids:
+        current_capacity[ids] += 1
+
+    results = []
+    for parking_lot in all_parking_lots:
+        status = {
+            'parkinglot_id': parking_lot.ParkingLotID,
+            'name': parking_lot.Name,
+            'current_capacity': parking_lot.SpotCounts - current_capacity[parking_lot.ParkingLotID],
+            'maximum_capacity': parking_lot.SpotCounts,
+        }
+        results.append(status)
+
+    return results
+
+# @app.route('/parkinglot/<int:lot_id>', methods=['GET'])
+# def parking_spot(lot_id):
+#     '''
+#     Get all parking spots in a parking lot?
+#     // GET: /parking_lot/<int:lot_id>
+#     {
+#         id: int,
+#         name: string,
+#         spot_count: int,
+#     }
+#     '''
+#     parking_lot: ParkingLot = ParkingLot.query.get(lot_id)
+#     if parking_lot:
+#         return jsonify({
+#             'id': parking_lot.parking_lot,
+#             'name': parking_lot.name,
+#             'spot_count': parking_lot.spot_counts,
+#         })
+#     else:
+#         return jsonify({'message': 'Parking lot not found'})
 
 @app.route('/reservation', methods=['POST'])
 def create_reservation():
     '''
-    POST /reservation
-    {
-        car_id: int,
-        parking_spot_id: int,
-    }
+    Request
+        POST /reservation
+        {
+            car_id: int,
+            parking_spot_id: int,
+        }
+    Response
+        {
+            reservation_id: int
+        }
     '''
     data = request.get_json()
 
     reservation: Reservation = Reservation(
         CarID=data.get('car_id'),
         ParkingSpotID=data.get('parking_spot_id'),
-        StartTime=datetime.now(),
-        EndTIme=datetime.now() + RESERVATION_TIME,
+        ReservationTime=datetime.now(),
+        ExpiredTime=datetime.now() + RESERVATION_TIME,
     )
 
     try:
         db.session.add(reservation)
         db.session.commit()
 
-        reservation_id = reservation.reservation_id
+        reservation_id = f'({reservation.CarID}, {reservation.ParkingSpotID})'
 
-        return jsonify({'id': reservation_id})
+        return jsonify({'reservation_id': reservation_id})
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({'message': f'Failed to create new reservation, caused by {e.orig}'})  
