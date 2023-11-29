@@ -111,10 +111,6 @@ def parking_lots():
 
     # query current reservation and compute current capacity
     reservations: List[Reservation] = Reservation.query.all()
-    # area_ids = [r.AreaID for r in reservations]
-    # areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
-    # parking_lot_ids = [a.ParkingLotID for a in areas]
-    # parking_lot_counts = dict(Counter(parking_lot_ids))
     parking_spot_ids = [r.ParkingSpotID for r in reservations]
     parking_spot: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
     area_ids = [p.AreaID for p in parking_spot]
@@ -125,10 +121,6 @@ def parking_lots():
 
     # query current attendance and compute current capacity
     attendances: List[Attendance] = Attendance.query.all()
-    # area_ids = [r.AreaID for r in attendances]
-    # areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
-    # parking_lot_ids = [a.ParkingLotID for a in areas]
-    # parking_lot_counts = dict(Counter(parking_lot_ids))
     parking_spot_ids = [r.ParkingSpotID for r in attendances]
     parking_spot: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
     area_ids = [p.AreaID for p in parking_spot]
@@ -148,27 +140,6 @@ def parking_lots():
         results.append(status)
 
     return results
-
-# @app.route('/parkinglot/<int:lot_id>', methods=['GET'])
-# def parking_spot(lot_id):
-#     '''
-#     Get all parking spots in a parking lot?
-#     // GET: /parking_lot/<int:lot_id>
-#     {
-#         id: int,
-#         name: string,
-#         spot_count: int,
-#     }
-#     '''
-#     parking_lot: ParkingLot = ParkingLot.query.get(lot_id)
-#     if parking_lot:
-#         return jsonify({
-#             'id': parking_lot.parking_lot,
-#             'name': parking_lot.name,
-#             'spot_count': parking_lot.spot_counts,
-#         })
-#     else:
-#         return jsonify({'message': 'Parking lot not found'})
 
 @app.route('/reservation', methods=['POST'])
 def create_reservation():
@@ -335,6 +306,65 @@ def user_status(uuid):
             return jsonify({'status': 'RESERVED'})
     else:
         return jsonify({'status': 'NONE'})
+    
+@app.route('/history/<int:spot_id>', methods=['GET'])
+def spot_history(spot_id):
+    '''
+    // GET /history/{spot_id}
+    [
+        {
+            type: string,       // ATTENDANCE, RECORD
+            user_id: int,
+            license: string,
+            start_time: datetime,
+            end_time: datetime,
+        }
+    ]
+    '''
+    try:
+        parking_spot: ParkingSpot = ParkingSpot.query.get(spot_id)
+        
+        if parking_spot is None:
+            return jsonify({'message': 'spot id does not exist'})
+
+        results = []
+
+        records: List[Record] = Record.query.filter_by(ParkingSpotID=spot_id).all()
+        car_ids = [r.CarID for r in records]
+        cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
+
+        assert len(cars) == len(records)
+
+        records = [
+            {
+                'type': 'RECORD',
+                'user_id': c.UserID,
+                'license': c.Lisence,
+                'start_time': r.ParkTime,
+                'end_time': r.ExitTime,
+            } for c, r in zip(cars, records)
+        ]
+
+        attenances: List[Attendance] = Attendance.query.filter_by(ParkingSpotID=spot_id).all()
+        car_ids = [r.CarID for r in attenances]
+        cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
+
+        assert len(cars) == len(attenances)
+
+        attenances = [
+            {
+                'type': 'ATTENDANCE',
+                'user_id': c.UserID,
+                'license': c.Lisence,
+                'start_time': a.ParkTime,
+                'end_time': a.ExitTime,
+            } for c, a in zip(cars, attenances)
+        ]
+
+        results = records + attenances
+        return jsonify(results)
+    except AssertionError as e:
+        return jsonify({'message': 'length of cars is not same as length records'})
 
 if __name__ == '__main__':
     db.init_app(app)
