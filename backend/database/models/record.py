@@ -3,9 +3,9 @@ from api import db
 class Record(db.Model):
     __tablename__ = 'Records'
 
-    RecordID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    CarID = db.Column(db.Integer, db.ForeignKey('Cars.CarID'), nullable=False)
-    ParkingSpotID = db.Column(db.Integer, db.ForeignKey('ParkingSpots.ParkingSpotID'), nullable=False)
+    # RecordID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    CarID = db.Column(db.Integer, db.ForeignKey('Cars.CarID'), nullable=False, primary_key=True)
+    ParkingSpotID = db.Column(db.Integer, db.ForeignKey('ParkingSpots.ParkingSpotID'), nullable=False, primary_key=True)
     ParkTime = db.Column(db.DateTime)
     ExitTime = db.Column(db.DateTime)
 
