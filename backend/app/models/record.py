@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class Record(db.Model):
     __tablename__ = 'Records'

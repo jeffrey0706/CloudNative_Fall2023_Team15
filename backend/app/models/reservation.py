@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class Reservation(db.Model):
     __tablename__ = 'Reservations'

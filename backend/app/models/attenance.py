@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class Attendance(db.Model):
     __tablename__ = 'Attendances'

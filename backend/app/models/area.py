@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class Area(db.Model):
     __tablename__ = 'Areas'

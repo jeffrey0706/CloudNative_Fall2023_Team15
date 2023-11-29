@@ -6,8 +6,8 @@ from datetime import datetime
 from typing import List
 from collections import Counter
 
-from api import *
-from database.models import *
+from app import db 
+from app.models import *
 
 app = Flask(__name__)
 # SQLALCHEMY_DATABASE_URI -> user_name:password@host:port/db_name
@@ -366,6 +366,18 @@ def spot_history(spot_id):
     except AssertionError as e:
         return jsonify({'message': 'length of cars is not same as length records'})
 
+@app.cli.command()
+def test():
+    import unittest
+    import sys
+
+    tests = unittest.TestLoader.discover('tests')
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+
+    if result.errors or result.failures:
+        sys.exit(1)
+
 if __name__ == '__main__':
     db.init_app(app)
     app.run()
+
