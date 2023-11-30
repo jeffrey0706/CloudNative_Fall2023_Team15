@@ -3,7 +3,12 @@
     margin-bottom: 2.5rem;
 }
 
-.reserve-button-container {
+.body-wrapper {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* .reserve-button-container {
     position: fixed;
     bottom: 7vh;
-}
+} */

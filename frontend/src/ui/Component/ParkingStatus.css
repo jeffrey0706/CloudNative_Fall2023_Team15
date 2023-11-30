@@ -29,7 +29,8 @@
 }
 
 .item-key {
-    font-weight: 550;
+    font-weight: 500;
+    font-size: 0.8rem;
     /* margin-bottom: 15px; */
 }
 

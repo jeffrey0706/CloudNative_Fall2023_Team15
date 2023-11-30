@@ -1,3 +1,7 @@
+.loc-list-comp {
+    width: 100%;
+}
+
 .loc-list-comp .loc-list-tr {
     height: 3.125rem;
 }
@@ -19,17 +23,21 @@
 /** CSS for remain mode **/
 
 .remain-loc-list .name-td {
+    font-family: Inter;
     width: 70%;
+    font-size: 0.8rem;
 }
 
 .remain-loc-list .remain-td {
+    font-family: Poppins;
     width: 30%;
+    font-size: 0.8rem;
     text-align: right;
 }
 
 .remain-loc-list .remain-span {
-    font-family: Poppins, sans-serif;
-    font-size: 1.5rem;
+    font-family: Poppins ;
+    font-size: 1rem;
     font-weight: 600;
     line-height: 0;
     letter-spacing: 0;

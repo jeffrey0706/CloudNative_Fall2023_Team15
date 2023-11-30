@@ -1,5 +1,11 @@
 /** 1rem = 16px */
 
+.header-nav {
+    padding-top: 0;
+    margin-bottom: 40px;
+    background-color: #FCFCFD;
+}
+
 .header-nav .navbar-brand {
     display: inline-flex;
     justify-content: center;
@@ -19,21 +25,7 @@
     align-items: center;
     max-width: fit-content;
     min-height: 2.3rem;
-    width: 15vw;
-    text-wrap: wrap;
-}
-
-.home-nav {
-    font-size: 1rem;
-    font-family: "DM", "Sans";
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.125rem;
-    display: flex;
-    align-items: center;
-    max-width: fit-content;
-    min-height: 2.3rem;
-    width: 15vw;
+    width: 64px;
     text-wrap: wrap;
 }
 
@@ -47,6 +39,7 @@
     padding-left: 0.625rem;
     padding-right: 0.625rem;
     margin-right: 0.625rem;
+    color: rgba(0, 0, 0, 0.65);
 }
 
 .header-modal .modal-content ul {
@@ -70,4 +63,13 @@
 .header-modal .nav-link:hover {
     color: black;
     border-left: black 0.1875rem solid;
+}
+
+.header-nav button.navbar-toggler {
+    border: none;
+}
+
+.header-nav .navbar-toggler-icon {
+    width: 1.2rem;
+    height: 1.2rem;
 }

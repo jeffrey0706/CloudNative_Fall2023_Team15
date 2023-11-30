@@ -1,4 +1,5 @@
 .reserve-button-container {
     position: fixed;
     bottom: 7vh;
+    left: 0;
 }

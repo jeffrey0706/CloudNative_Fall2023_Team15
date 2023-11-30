@@ -36,7 +36,7 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
     if (modal) {
       return (
         <Button color='none' className='close-btn' onClick={togglerClicked}>
-          <IoMdClose size={32}/>
+          <IoMdClose size={24}/>
         </Button>
       )
     }

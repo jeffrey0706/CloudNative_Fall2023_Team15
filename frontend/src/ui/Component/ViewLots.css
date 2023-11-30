@@ -1,21 +1,35 @@
 
 .parked {
-    background-color: #FFD700;
+    background-color: #F4D35E;
     color: #FFFFFF;
     text-align: center;
     width: 80%;
-    height: 70%;
-    border-radius: 10px;
+    height: 67%;
+    border-radius: 12px;
+
+    font-family: 'Urbanist';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 0.2px;
 }
 
 .approaching {
     background-color: #FEFADF;
-    border: #FFD700 2px solid;
-    color: #FFD700;
+    border: #F4D35E 2px solid;
+    color: #F4D35E;
     text-align: center;
     width: 80%;
-    height: 70%;
-    border-radius: 10px;
+    height: 67%;
+    border-radius: 12px;
+
+    font-family: Urbanist;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 0.2px;
 }
 
 .lots-container {

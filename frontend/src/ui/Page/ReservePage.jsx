@@ -81,7 +81,7 @@ function ReservePage() {
 
     return (
         <>
-            <Header togglerType={TOGGLER_TYPE.EXIT} />
+            <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
             <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={infoType} />
             <ViewLotsSet SECTION={'A'} LOTs_STATUS={array} />
             <ParkingStatus parking_status={parkingData} />

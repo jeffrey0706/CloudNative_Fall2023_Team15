@@ -6,7 +6,7 @@ function ReserveButton({text='Reserve', onClick=() => {}, color='danger', outlin
   return (
     <Container className='reserve-button-container'>
       <Row>
-          <Col xs={{ offset: 1, size: 10 }}>
+          <Col xs={{ offset: 1, size: 10 }} md={{ offset: 3, size: 6 }}>
             <Button className='reserve-button' outline={outline} color={color} onClick={onClick}>{text}</Button>
           </Col>
       </Row>
