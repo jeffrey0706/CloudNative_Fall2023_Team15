@@ -7,7 +7,6 @@ class Area(db.Model):
     ParkingLotID = db.Column(db.Integer, db.ForeignKey('ParkingLots.ParkingLotID'), nullable=False)
     Name = db.Column(db.String(255), nullable=False)
     Floor = db.Column(db.Integer)
-    Preference = db.Column(db.Integer)
 
     def __init__(self, **kwargs):
         super(Area, self).__init__(**kwargs)
