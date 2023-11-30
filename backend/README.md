@@ -12,3 +12,9 @@ python main.py
 ## Test API
 1. use curl in command line
 2. use PostMan 
+
+## Unittest
+```
+export FLASK_APP=main.py
+flask test
+```
