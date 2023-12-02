@@ -14,7 +14,6 @@ CREATE TABLE Areas (
     ParkingLotID int NOT NULL,
     Name varchar(255) NOT NULL,
     Floor int,
-    Preference int,
     PRIMARY KEY (AreaID),
     FOREIGN KEY (ParkingLotID) REFERENCES ParkingLots(ParkingLotID),
     UNIQUE UniqueArea(`ParkingLotID`, `Name`, `Floor`)

@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 class ParkingSpot(db.Model):
     __tablename__ = 'ParkingSpots'
