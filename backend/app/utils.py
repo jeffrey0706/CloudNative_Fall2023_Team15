@@ -159,6 +159,17 @@ def create_app(config_name='testing'):
         '''
         data = request.get_json()
 
+        if 'car_id' not in data:
+            return jsonify({
+                'error': 'Bad Request',
+                'message': 'Missing required parameter: car_id'
+            }), 400
+        if 'parking_spot_id' not in data:
+            return jsonify({
+                'error': 'Bad Request',
+                'message': 'Missing required parameter: parking_spot_id'
+            }), 400
+
         reservation: Reservation = Reservation(
             CarID=data.get('car_id'),
             ParkingSpotID=data.get('parking_spot_id'),
