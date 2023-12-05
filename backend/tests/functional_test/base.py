@@ -4,7 +4,7 @@ from app import db
 from app.utils import create_app
 from app.models import *
 
-class SettingBase(TestCase):
+class FunctionalTestSettingBase(TestCase):
     def create_app(self):
         return create_app('testing')
     

@@ -1,7 +1,7 @@
 import unittest
-from tests.base import SettingBase
+from tests.functional_test.base import FunctionalTestSettingBase
 
-class CheckParkingLotAPI(SettingBase):
+class CheckParkingLotAPI(FunctionalTestSettingBase):
     def test_get_parkinglots(self):
         response = self.client.get('/parkinglots')
         self.assert200(response, '`GET /parkinglots` is unavailable')
