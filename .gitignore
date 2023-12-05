@@ -56,3 +56,5 @@ backend/dist/
 backend/*.egg-info/
 
 __pycache__/
+
+*.db
