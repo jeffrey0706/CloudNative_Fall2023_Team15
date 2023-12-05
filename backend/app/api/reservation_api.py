@@ -70,6 +70,9 @@ def configure_reservation(app_conig):
         }
 
         // DELETE: /reservation/{car_id}
+        error code:
+            404 means reservation not exist,
+            504 means some error happend when accessing database
         {
             message: string,
         }
@@ -78,7 +81,7 @@ def configure_reservation(app_conig):
         car: Car = Car.query.filter_by(CarID=car_id).first()
 
         if not car:
-            return jsonify({'message': 'Car not found'})
+            return jsonify({'message': 'Car not found'}), 404
 
         if request.method == 'GET':
             reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
@@ -99,7 +102,7 @@ def configure_reservation(app_conig):
                     'expired_time': reservation.ExpiredTime,
                 })
             else:
-                return jsonify({'message': 'Reservation not found'})
+                return jsonify({'message': 'Reservation not found'}), 404
         elif request.method == 'DELETE':
             reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
 
@@ -111,6 +114,6 @@ def configure_reservation(app_conig):
                     return jsonify({'message': 'Reservation deleted'})
                 except IntegrityError as e:
                     db.session.rollback()
-                    return jsonify({'message': f'Failed to delete reservation, caused by {e.orig}'})
+                    return jsonify({'message': f'Failed to delete reservation, caused by {e.orig}'}), 503
             else:
-                return jsonify({'message': 'Reservation not found'})
+                return jsonify({'message': 'Reservation not found'}), 404
