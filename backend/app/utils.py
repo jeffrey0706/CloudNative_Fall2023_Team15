@@ -1,15 +1,9 @@
 from flask import Flask
-from flask import jsonify, request
-import sqlalchemy
-from sqlalchemy.exc import IntegrityError
 
-from datetime import datetime
 from typing import List
 
 from app.config import config
-from app.models import *
 from app import db
-
 from app.api import *
 
 def create_app(config_name='testing'):
