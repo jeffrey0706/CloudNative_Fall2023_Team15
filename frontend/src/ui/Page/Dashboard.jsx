@@ -4,7 +4,6 @@ import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import LocationList, { LOCATION_LIST_MODE } from '../Component/LocationList';
 import ProgressBar from '../Component/ProgressBar';
-import axios from 'axios';
 
 // Production API
 import { API } from '../Api';

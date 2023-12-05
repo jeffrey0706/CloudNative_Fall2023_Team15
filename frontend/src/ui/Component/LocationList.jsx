@@ -27,14 +27,14 @@ function LocationList({mode=LOCATION_LIST_MODE.REMAIN, locations=[]}) {
         if (mode === LOCATION_LIST_MODE.REMAIN) {
             return (
                 <td className='remain-td'>
-                    <b className='remain-span'>{location.remain}</b>spots
+                    <b className='remain-span'>{location.current_capacity}</b>spots
                 </td>
             )
         }
         else if (mode === LOCATION_LIST_MODE.FRACTION) {
             return (
                 <td className='fraction-td'>
-                    <b className='fraction-span'> {`${location.remain} / ${location.capacity}`}</b>spots
+                    <b className='fraction-span'> {`${location.current_capacity} / ${location.maximum_capacity}`}</b>spots
                 </td>
             )
         }
