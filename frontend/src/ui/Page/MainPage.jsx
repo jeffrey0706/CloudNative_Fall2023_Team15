@@ -5,10 +5,9 @@ import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
 import ReserveButton from '../Component/ReserveButton';
-import axios from 'axios';
 
-// Production constants
-import { BASE_URL } from '../Constants';
+// Production API
+import { API } from '../Api';
 // Testing constants
 import { userId, fakeLocations } from '../Constants';
 
@@ -18,17 +17,14 @@ function MainPage() {
 
   const [currentPlace, setCurrentPlace] = React.useState('');
   useEffect(() => {
-    axios
-      .get(BASE_URL + '/profile/' + userId)
-      .then((res) => axios.get(BASE_URL + '/parking_lot/' + res.data.preference))
-      .then((res) => setCurrentPlace(res.data.name))
+    API.profile.get(userId)
+      .then((res) => setCurrentPlace(res.data.preference_lot_name))
       .catch(() => setCurrentPlace(''));
   }, []);
 
   const [locations, setLocations] = React.useState([]);
   useEffect(() => {
-    axios
-      .get(BASE_URL + '/parking_lots')
+    API.parking_lots.get()
       .then((res) => setLocations(res.data))
       .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);

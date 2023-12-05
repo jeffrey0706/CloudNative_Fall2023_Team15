@@ -44,13 +44,11 @@ export const fakeLocations = [
 
 // Testcase setup constants
 export const API_PATTERNS = {
-    PROFILE: /profile/,
-    PARKING_LOT: /parking_lot[^s]/,
-    PARKING_LOTS: /parking_lots/,
-    AREA: /area/,
-    PARKING_SPOT: /parking_spot/,
-    RESERVATION: /reservation/,
     MY_CAR: /my_car/,
+    PARKING_LOTS: /parking_lots/,
+    PROFILE: /profile/,
+    RESERVATION: /reservation/,
+    HISTORY: /history/,
     USER_STATUS: /user_status/,
 };
 export const getApiType = (url) => {

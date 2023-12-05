@@ -7,7 +7,7 @@ import ParkingLot from '../Component/ParkingLot';
 import Floors from '../Component/Floors';
 
 
-function GuardMonitor() {
+function GuardMonitor() { // TODO: How to access the data
 
   const navigate = useNavigate();
 

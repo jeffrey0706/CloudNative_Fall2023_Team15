@@ -11,27 +11,26 @@ const INITIAL_INFO = {
 
 function ProgressBar({ locations = [
   {
+    parkinglot_id: 0,
     name: 'No PKLot Error',
-    remain: 0,
-    capacity: 100,
+    current_capacity: 0,
+    maximum_capacity: 100,
     priority: true,
   }
 ] }) {
 
   const [info, setInfo] = useState(INITIAL_INFO);
   useEffect(() => {
-    const available = locations.reduce((acc, cur) => acc + cur.remain, 0);
-    const capacity = locations.reduce((acc, cur) => acc + cur.capacity, 0);
+    const available = locations.reduce((acc, cur) => acc + cur.current_capacity, 0);
+    const capacity = locations.reduce((acc, cur) => acc + cur.maximum_capacity, 0);
     const occupied = capacity - available;
     const percentage = Math.round(occupied / capacity * 100);
-    if (info.occupied !== occupied || info.capacity !== capacity) {
-      setInfo({
-        occupied: occupied,
-        capacity: capacity,
-        percentage: percentage,
-      });
-    }
-  }, [locations, info.occupied, info.capacity]);
+    setInfo({
+      occupied: occupied,
+      capacity: capacity,
+      percentage: percentage,
+    });
+  }, [locations]);
 
   return (
     <div className="ProgressBar-Container-Outer">

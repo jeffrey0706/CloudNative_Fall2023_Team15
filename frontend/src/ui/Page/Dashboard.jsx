@@ -1,21 +1,20 @@
+import './Dashboard.css';
 import React, { useState, useEffect } from 'react';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import LocationList, { LOCATION_LIST_MODE } from '../Component/LocationList';
 import ProgressBar from '../Component/ProgressBar';
 import axios from 'axios';
-// import './Dashboard.css';
 
-// Production constants
-import { BASE_URL } from '../Constants';
+// Production API
+import { API } from '../Api';
 // Testing constants
 import { fakeLocations } from '../Constants';
 
 function Dashboard() {
   const [locations, setLocations] = useState([]);
   useEffect(() => {
-    axios
-      .get(BASE_URL + '/parking_lots')
+    API.parking_lots.get()
       .then((res) => setLocations(res.data))
       .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);
