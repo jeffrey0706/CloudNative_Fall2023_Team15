@@ -18,7 +18,7 @@ def user_status(uuid):
     user: User = User.query.filter_by(UserID=uuid).first()
 
     if not user:
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'User not found'}), 404
 
     car = Car.query.filter_by(UserID=uuid).first()
     if not car:

@@ -24,7 +24,7 @@ def spot_history(spot_id):
         parking_spot: ParkingSpot = ParkingSpot.query.get(spot_id)
         
         if parking_spot is None:
-            return jsonify({'message': 'spot id does not exist'})
+            return jsonify({'message': 'spot id does not exist'}), 404
 
         results = []
 
@@ -63,4 +63,4 @@ def spot_history(spot_id):
         results = records + attenances
         return jsonify(results)
     except AssertionError as e:
-        return jsonify({'message': 'length of cars is not same as length records'})
+        return jsonify({'message': 'length of cars is not same as length records'}), 503

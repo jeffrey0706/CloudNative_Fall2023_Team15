@@ -18,7 +18,7 @@ def cars(user_id):
     }
     '''
     if not User.query.filter_by(UserID=user_id).first():
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'User not found'}), 404
 
     car = Car.query.filter_by(UserID=user_id).first()
     if not car:
