@@ -1,6 +1,6 @@
 .floors-container {
     width: 100%;
-    height: 2rem;
+    height: 2.4rem;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -14,9 +14,19 @@
 
 .floors-container>.floor {
     height: 100%;
-    width: 4rem;
+    width: 4.5rem;
+    border: solid 2px #7A828A;
     border-radius: 1.2rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     cursor: pointer;
     padding: 0;
+    color: #7A828A;
+    font-weight: 600;
+}
+
+.floors-container>.clicked_floor {
+    border-color: #353945;
+    background-color: #353945;
+    color: #ffffff;
+    font-weight: 600;
 }
