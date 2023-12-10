@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import path, MagicMock
+from unittest.mock import patch
 
 from tests.unit_test.base import UnitTestSettingBase
 

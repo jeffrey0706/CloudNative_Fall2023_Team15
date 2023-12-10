@@ -1,30 +1,33 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from tests.unit_test.base import UnitTestSettingBase
-
+from app.models import User, Car, Attendance, ParkingSpot, Area, ParkingLot
 class CarApiTestCase(UnitTestSettingBase):
 
-    @patch('self.app.User.query.filter_by')
-    @patch('self.app.Car.query.filter_by')
-    @patch('self.app.Attendance.query.filter_by')
-    @patch('self.app.ParkingSpot.query.filter_by')
-    @patch('self.app.Area.query.filter_by')
-    @patch('self.app.ParkingLot.query.filter_by')
-    def test_get_car_info_successful(self, 
-                                     mock_user_query, 
-                                     mock_car_query, 
+    # Order should be reversed
+    @patch('app.api.car_api.ParkingLot')
+    @patch('app.api.car_api.Area')
+    @patch('app.api.car_api.ParkingSpot')
+    @patch('app.api.car_api.Attendance')
+    @patch('app.api.car_api.Car')
+    @patch('app.api.car_api.User')
+    def test_get_car_info_successful(self,
+                                     mock_user_query,
+                                     mock_car_query,
                                      mock_attendance_query,
-                                     mock_parking_spot_query, 
-                                     mock_area_query, 
+                                     mock_parking_spot_query,
+                                     mock_area_query,
                                      mock_parking_lot_query):
+        
+
         # Mock the database queries
-        mock_user_query.return_value.first.return_value = MagicMock(UserID=1)
-        mock_car_query.return_value.first.return_value = MagicMock(UserID=1, CarID=1)
-        mock_attendance_query.return_value.first.return_value = MagicMock(CarID=1, ParkingSpotID=1, ParkTime='2023-01-01 12:00:00')
-        mock_parking_spot_query.return_value.first.return_value = MagicMock(Number=123, AreaID=1)
-        mock_area_query.return_value.first.return_value = MagicMock(Name='Test Area', Floor=1, ParkingLotID=1)
-        mock_parking_lot_query.return_value.first.return_value = MagicMock(Name='Test Parking Lot')
+        mock_user_query.query.filter_by.return_value.first.return_value = User(UserID=1)
+        mock_car_query.query.filter_by.return_value.first.return_value = Car(UserID=1, CarID=1)
+        mock_attendance_query.query.filter_by.return_value.first.return_value = Attendance(CarID=1, ParkingSpotID=1, ParkTime='2023-01-01 12:00:00')
+        mock_parking_spot_query.query.filter_by.return_value.first.return_value = ParkingSpot(Number=123, AreaID=1)
+        mock_area_query.query.filter_by.return_value.first.return_value = Area(Name='Test Area', Floor=1, ParkingLotID=1)
+        mock_parking_lot_query.query.filter_by.return_value.first.return_value = ParkingLot(Name='Test Parking Lot')
 
         # Perform a GET request to /mycar/1
         response = self.client.get('/mycar/1')
