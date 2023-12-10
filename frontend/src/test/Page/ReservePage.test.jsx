@@ -30,11 +30,12 @@ afterAll(() => {
 
 test.each([fakeExpiredTime, fakeAvailableTime])('Fetching correct data with time %s', async (endTime) => {
     // Setup
-    const number = 52;
     const areaName = 'Test Area';
     const parkingLotName = 'Test Parking Lot 3';
+    const parkingSpotNumber = 9;
     const floor = 3;
     const licensePlate = 'ABC-123';
+    const reservationTime = new Date(endTime.getTime() - 30 * 60 * 1000);
     await act(() => {
         axios.get.mockImplementation((url) => {
             const apiType = getApiType(url);
@@ -42,23 +43,12 @@ test.each([fakeExpiredTime, fakeAvailableTime])('Fetching correct data with time
                 case API_PATTERNS.RESERVATION:
                     return Promise.resolve({ data: {
                         car_id: licensePlate,
-                        parking_spot_id: 1,
-                        end_time: endTime.toJSON(),
-                    } });
-                case API_PATTERNS.PARKING_SPOT:
-                    return Promise.resolve({ data: {
-                        area_id: 1,
-                        number: number,
-                    } });
-                case API_PATTERNS.AREA:
-                    return Promise.resolve({ data: {
-                        parking_lot_id: 1,
-                        name: areaName,
-                        floor: floor,
-                    } });
-                case API_PATTERNS.PARKING_LOT:
-                    return Promise.resolve({ data: {
-                        name: parkingLotName,
+                        parking_spot_number: parkingSpotNumber,
+                        area_name: areaName,
+                        area_floor: floor,
+                        parking_lot_name: parkingLotName,
+                        reservation_time: reservationTime.toJSON(),
+                        expired_time: endTime.toJSON(),
                     } });
                 default:
                     return Promise.reject(new Error('URL not found'));
@@ -70,14 +60,14 @@ test.each([fakeExpiredTime, fakeAvailableTime])('Fetching correct data with time
     // Action
     const licensePlateElement = await screen.findByText(licensePlate);
     const locationElement = await screen.findByText(parkingLotName);
-    const parkingSpotElement = await screen.findByText(areaName + number + ' (Floor ' + floor + ')');
+    const parkingSpotElement = await screen.findByText(areaName + parkingSpotNumber + ' (Floor ' + floor + ')');
     const expiredTimeElement = await screen.findByText(endTime.toJSON());
     const expiredElement = await waitFor(() => screen.queryByText('Expired'));
     const reserveAvailable = await waitFor(() => screen.queryByText('Cancel the Reservation'));
     const reserveExpired = await waitFor(() => screen.queryByText('Reserve a New One'));
 
     // Assertion
-    expect(axios.get).toHaveBeenCalledTimes(4);
+    expect(axios.get).toHaveBeenCalledTimes(1);
     expect(licensePlateElement).toBeInTheDocument();
     expect(locationElement).toBeInTheDocument();
     expect(parkingSpotElement).toBeInTheDocument();
