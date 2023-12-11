@@ -12,6 +12,7 @@ import MainPage from './ui/Page/MainPage';
 import GuardMonitor from './ui/Page/GuardMonitor';
 import Dashboard from './ui/Page/Dashboard';
 import ReservePage from './ui/Page/ReservePage';
+import MapView from './ui/Page/MapView';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "reservation/",
     element: <ReservePage />,
+  },
+  {
+    path: "map/",
+    element: <MapView />,
   },
 ]);
 // TODO: Update all the hyperlinks to <Link> element provided by react-router-dom

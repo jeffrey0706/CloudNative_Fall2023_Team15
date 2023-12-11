@@ -48,6 +48,35 @@ export const fakeLocations = [
         priority: true,
     },
 ]
+export const fakeMapCenter = {
+    lat: 25.0330,
+    lng: 121.5654
+};
+export const fakeLocationsCoordinate = [
+    {
+        name: 'Parking Lot 1',
+        lat: 25.0330,
+        lng: 121.6033,
+        maximum_capacity: 60,
+        current_capacity: 30,
+    },
+    {
+        name: 'Parking Lot 3',
+        lat: 25.0330,
+        lng: 121.6233,
+        maximum_capacity: 60,
+        current_capacity: 56,
+    },
+    {
+        name: 'Parking Lot 4',
+        lat: 25.0330,
+        lng: 121.6833,
+        maximum_capacity: 60,
+        current_capacity: 50,
+    }
+]
+export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 300"
+
 
 // Testcase setup constants
 export const API_PATTERNS = {
