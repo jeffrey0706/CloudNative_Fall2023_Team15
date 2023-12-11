@@ -1,7 +1,8 @@
 import React from 'react';
 import { GoogleMap, LoadScript, OverlayView, OverlayViewF } from '@react-google-maps/api';
 import './Map.css';
-import { API_KEY } from '../../credentials';
+// import { API_KEY } from '../../credentials';
+const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
 
 const containerStyle = {
   width: '100vw',
