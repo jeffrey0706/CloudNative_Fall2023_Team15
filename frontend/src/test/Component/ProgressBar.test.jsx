@@ -11,32 +11,33 @@ import ProgressBar from '../../ui/Component/ProgressBar';
 describe('ProgressBar Component', () => {
     const testLocations = [
         {
-            name: 'Parking Lot 2',
-            remain: 34,
-            capacity: 70,
-            priority: true,
+          parkinglot_id: 0,
+          name: 'Parking Lot 2',
+          current_capacity: 34,
+          maximum_capacity: 70,
+          priority: true,
         },
         {
+            parkinglot_id: 1,
             name: 'Parking Lot 3',
-            remain: 32,
-            capacity: 40,
+            current_capacity: 32,
+            maximum_capacity: 40,
+            priority: false,
         }
     ]
     test('renders with default props', async () => {
-        expect(false).toBe(true);
-        // render(<ProgressBar />);
-        // await waitFor(() => {
-            // expect(screen.getByText('100 (100%)')).toBeInTheDocument();
-            // expect(screen.getByText('out of 100 parking spots used')).toBeInTheDocument();
-        // }, { timeout: 2000 });
+        render(<ProgressBar />);
+        const percentage = await screen.findByText('100 (100%)');
+        const capacity = await screen.findByText('out of 100 parking spots used');
+        expect(percentage).toBeInTheDocument();
+        expect(capacity).toBeInTheDocument();
     });
 
-    // test('renders correctly with locations prop', async () => {
-    //     render(<ProgressBar locations={testLocations} />);
-    //     await waitFor(() => {
-    //         expect(screen.getByText('44 (40%)')).toBeInTheDocument();
-    //         expect(screen.getByText('out of 110 parking spots used')).toBeInTheDocument();
-    //     }, { timeout: 2000 });
-    // });
-
+    test('renders correctly with locations prop', async () => {
+        render(<ProgressBar locations={testLocations} />);
+        const percentage = await screen.findByText('44 (40%)');
+        const capacity = await screen.findByText('out of 110 parking spots used');
+        expect(percentage).toBeInTheDocument();
+        expect(capacity).toBeInTheDocument();
+    });
 });

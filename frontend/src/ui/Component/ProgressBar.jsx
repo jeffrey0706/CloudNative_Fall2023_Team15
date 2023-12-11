@@ -1,45 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import './ProgressBar.css';
 
-const INITIAL_INFO = {
-  available: 0,
-  capacity: 0,
-  percentage: 0,
-}
+const INITIAL_LOCATIONS = [{
+  parkinglot_id: 0,
+  name: 'No PKLot Error',
+  current_capacity: 0,
+  maximum_capacity: 100,
+  priority: true,
+}]
 
-function ProgressBar({ locations = [
-  {
-    parkinglot_id: 0,
-    name: 'No PKLot Error',
-    current_capacity: 0,
-    maximum_capacity: 100,
-    priority: true,
-  }
-] }) {
+function ProgressBar({ locations = INITIAL_LOCATIONS }) {
 
-  const [info, setInfo] = useState(INITIAL_INFO);
-  useEffect(() => {
-    const available = locations.reduce((acc, cur) => acc + cur.current_capacity, 0);
-    const capacity = locations.reduce((acc, cur) => acc + cur.maximum_capacity, 0);
-    const occupied = capacity - available;
-    const percentage = Math.round(occupied / capacity * 100);
-    setInfo({
-      occupied: occupied,
-      capacity: capacity,
-      percentage: percentage,
-    });
-  }, [locations]);
+  const available = locations.reduce((acc, cur) => acc + cur.current_capacity, 0);
+  const capacity = locations.reduce((acc, cur) => acc + cur.maximum_capacity, 0);
+  const occupied = capacity - available;
+  const percentage = Math.round(occupied / capacity * 100);
 
   return (
     <div className="ProgressBar-Container-Outer">
       <div className="ProgressBar-Container">
-        <ChangingProgressProvider values={[0, info.percentage]}>
-          {percentage => (
+        <ChangingProgressProvider values={[0, percentage]}>
+          {() => (
             <CircularProgressbarWithChildren value={percentage} strokeWidth={2} counterClockwise>
-              <div className='ProgressTitle'> {`${info.occupied} (${percentage}%)`} </div>
-              <div className='ProgressSubTitle'> {`out of ${info.capacity} parking spots used`} </div>
+              <div className='ProgressTitle'> {`${occupied} (${percentage}%)`} </div>
+              <div className='ProgressSubTitle'> {`out of ${capacity} parking spots used`} </div>
             </CircularProgressbarWithChildren>
           )}
         </ChangingProgressProvider>
@@ -49,6 +35,7 @@ function ProgressBar({ locations = [
   );
 }
 
+// Not pretty sure what's going on here
 class ChangingProgressProvider extends React.Component {
   static defaultProps = {
     interval: 1000
