@@ -22,7 +22,7 @@ def cars(user_id):
 
     car = Car.query.filter_by(UserID=user_id).first()
     if not car:
-        return jsonify({'message': 'This user does not have a car'})
+        return jsonify({'message': 'This user does not have a car'}), 404
     car_id = car.CarID
 
     attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
@@ -37,6 +37,6 @@ def cars(user_id):
             'area_floor': area.Floor,
             'parking_lot_name': parking_lot.Name,
             'start_time': attendance.ParkTime,
-        })
+        }), 200
     else:
-        return jsonify({'message': 'Car not parked'})
+        return jsonify({'message': 'Car not parked'}), 200

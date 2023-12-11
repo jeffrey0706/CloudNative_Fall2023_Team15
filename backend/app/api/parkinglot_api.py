@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from typing import List
 
 from app.models import ParkingLot, Reservation, Area, Attendance, ParkingSpot
@@ -24,7 +24,7 @@ def parking_lots():
     '''
     all_parking_lots: List[ParkingLot] = ParkingLot.query.all()
     current_capacity = {p.ParkingLotID: 0 for p in all_parking_lots}
-
+    
     # query current reservation and compute current capacity
     reservations: List[Reservation] = Reservation.query.all()
     parking_spot_ids = [r.ParkingSpotID for r in reservations]
@@ -55,4 +55,4 @@ def parking_lots():
         }
         results.append(status)
 
-    return results
+    return jsonify(results)
