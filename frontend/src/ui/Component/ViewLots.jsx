@@ -9,7 +9,7 @@ export const LOT_STATUS = {
     PARKED: 3,
 };
 
-function ViewLots({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }) {
+function ViewLots({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }, FONT_SIZE = 18) {
     const getStatusContent = (status, index) => {
         let lot_code = `${SECTION}0${index + 1}`;
         switch (status) {

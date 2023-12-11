@@ -31,7 +31,7 @@ function ParkingLot({ layout = [['A', 'B'], ['C', 'D']] }) {
     }
     return (
       <div className="wrap-lots-container-1x">
-        <ViewLots SECTION={sect} LOTs_STATUS={array} />
+        <ViewLots SECTION={sect} LOTs_STATUS={array} FONT_SIZE={12} />
       </div>
     )
   }
