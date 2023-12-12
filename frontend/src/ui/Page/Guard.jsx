@@ -23,9 +23,8 @@ function Guard() {
 
 
   const onPKLotClick = (event) => {
-    // console.log(event.target.parentNode.id || event.target.id);
-    const LotInfo = event.target.parentNode.id || event.target.id
-    navigate('/guard/monitor', { state: { LotInfo: LotInfo } })
+    const PKLotName = event.target.id || event.target.parentNode.id || event.target.parentNode.parentNode.id
+    navigate('/guard/monitor', { state: { PKLotName: PKLotName } })
   }
 
 
