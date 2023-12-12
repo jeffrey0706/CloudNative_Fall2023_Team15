@@ -175,3 +175,20 @@ GET /history/{spot_id}
 404: spot id does not exist
 503: length of cars is not same as length records
 ```
+
+### Map
+```js
+// GET /map?parkinglot_id=&floor=
+[
+    {
+        spot_id: int,
+        spot_number: int,
+        area_id: int
+        area_name: string,
+        status: int // EMPTY(0), OCCUPIED(1), APPROACHING(2), PARKED(3)
+    }
+]
+// Error code
+400: missing query parameter or Invalid parameter ('parkinglot_id' and 'floor' must be integer)
+404: parking lot not found
+```
