@@ -42,7 +42,7 @@ def create_reservation():
         CarID=data.get('car_id'),
         ParkingSpotID=data.get('parking_spot_id'),
         ReservationTime=datetime.now(),
-        ExpiredTime=datetime.now() + app_conig.RESERVATION_TIME,
+        ExpiredTime=datetime.now() + RESERVATION_TIME,
     )
 
     try:
@@ -54,7 +54,7 @@ def create_reservation():
         return jsonify({'reservation_id': reservation_id})
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'message': f'Failed to create new reservation, caused by {e.orig}'})  
+        return jsonify({'message': f'Failed to create new reservation, caused by {e.orig}'}), 503 
 
 
 @reservation_bp.route('/reservation/<int:car_id>', methods=['DELETE', 'GET'])
@@ -82,7 +82,7 @@ def reservation(car_id):
     # Check if car_id exist
     car: Car = Car.query.filter_by(CarID=car_id).first()
 
-    if not car:
+    if car is None:
         return jsonify({'message': 'Car not found'}), 404
 
     if request.method == 'GET':
@@ -96,6 +96,7 @@ def reservation(car_id):
 
             return jsonify({
                 'car_id': reservation.CarID,
+                'car_license': car.Lisence,
                 'parking_spot_number': parking_spot.Number,
                 'area_name': area.Name,
                 'area_floor': area.Floor,

@@ -30,7 +30,6 @@ def create_profile():
         db.session.rollback()
         return jsonify({'message': f'Failed to create new profile, caused by {e.orig}'}), 503
     except (ValueError, TypeError) as e:
-        # print(e)
         return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'}), 400
 
 @profile_bp.route('/profile/<int:uuid>', methods=['POST', 'GET', 'PUT'])
@@ -84,4 +83,4 @@ def profile(uuid):
         except sqlalchemy.orm.exc.MultipleResultsFound:
             return jsonify({'message': 'duplicate uuid, please check database'}), 503
         except (ValueError, TypeError):
-            return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'}), 400        
+            return jsonify({'message': 'expired time should be in `%Y-%m-%d %H:%M:%S` format'}), 400       
