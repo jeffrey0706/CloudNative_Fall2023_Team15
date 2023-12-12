@@ -1,7 +1,8 @@
 from unittest.mock import patch
+import sqlalchemy
 
 from tests.unit_test.base import UnitTestSettingBase
-from app.models import ParkingLot, Reservation, ParkingSpot, Area, Attendance, User
+from app.models import ParkingLot, Area, User
 
 class CheckProfileAPI(UnitTestSettingBase):
     @patch('app.api.profile_api.User')
@@ -55,6 +56,21 @@ class CheckProfileAPI(UnitTestSettingBase):
         response = self.client.put('/profile/1', json={'expired': '2023/12/01 23:59:59'})
         self.assert400(response, 'expired time should be in `%Y-%m-%d %H:%M:%S` format')
 
+    @patch('app.api.profile_api.db')
+    @patch('app.api.profile_api.User')
+    def test_put_profile_db_error(self,
+                                  mock_user,
+                                  mock_db):
+        mock_user.query.filter_by.return_value.one_or_none.return_value = User(UserID=1)
+        mock_db.session.commit.side_effect = sqlalchemy.orm.exc.MultipleResultsFound
+        response = self.client.put('/profile/1', json={
+            'preference': 1,
+            'expired': '2023-12-01 23:59:59',
+            'role': 'Employee',
+            'Priority': 'Normal'
+            })
+        self.assertEqual(response.status_code, 503)
+
     @patch('app.api.profile_api.User')
     def test_put_profile_successful(self, 
                                        mock_user):
@@ -74,6 +90,9 @@ class CheckProfileAPI(UnitTestSettingBase):
         self.assertIn('priority', result)
         self.assertIn('expired', result)
 
+    def test_post_profile_no_json_body_error(self):
+        response = self.client.post('/profile')
+        self.assertEqual(response.status_code, 415)
 
     def test_post_profile_time_format_error(self):
         response = self.client.post('/profile', json={
@@ -83,3 +102,28 @@ class CheckProfileAPI(UnitTestSettingBase):
             'Priority': 'Normal'
             })
         self.assert400(response, 'expired time should be in `%Y-%m-%d %H:%M:%S` format')
+
+    @patch('app.api.profile_api.db')
+    def test_post_profile_integrity_error(self,
+                                          mock_db):
+        mock_db.session.commit.side_effect = sqlalchemy.exc.IntegrityError(None, None, None)
+        response = self.client.post('/profile', json={
+            'preference': 1,
+            'expired': '2023-12-01 23:59:59',
+            'role': 'Employee',
+            'Priority': 'Normal'
+            })
+        self.assertEqual(response.status_code, 503)
+
+    @patch('app.api.profile_api.db')
+    def test_post_profile_successful(self,
+                                     mock_db):
+        response = self.client.post('/profile', json={
+            'preference': 1,
+            'expired': '2023-12-01 23:59:59',
+            'role': 'Employee',
+            'Priority': 'Normal'
+            })
+        self.assert200(response)
+        result = response.get_json()
+        self.assertIn('id', result)
