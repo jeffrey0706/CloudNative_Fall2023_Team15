@@ -24,7 +24,7 @@ flask test
 ### Profile
 
 ```js
-// GET: /profile/{user_id}
+GET: /profile/{user_id}
 {
     'id': int,
     'preference_lot_id': int,
@@ -39,7 +39,7 @@ flask test
 404: Profile not found
 503: Duplicate uuid, please check database
 
-// PUT: /profile/{user_id}
+PUT: /profile/{user_id}
 // request
 {
     'preference': string,
@@ -60,7 +60,7 @@ flask test
 404: Profile not found
 503: Duplicate uuid, please check database
 
-// POST: /profile
+POST: /profile
 // request
 {
     'preference': string,
@@ -80,7 +80,7 @@ flask test
 ### Parking Lots
 
 ```js
-// GET: /parking_lots
+GET: /parking_lots
 [
     {
         parkinglot_id: int,
@@ -96,7 +96,7 @@ flask test
 ### Reservation
 
 ```js
-// GET: /reservation/{car_id}
+GET: /reservation/{car_id}
 {
     car_id: int,
     parking_spot_number: int,
@@ -109,7 +109,7 @@ flask test
 // Error code
 404: Car or Reservation not found
 
-// DELETE: /reservation/{car_id}
+DELETE: /reservation/{car_id}
 {
     message: string,
 }
@@ -117,7 +117,7 @@ flask test
 404: Car or Reservation not found
 503: Failed to delete reservation
 
-// POST: /reservation
+POST: /reservation
 // request
 {
     car_id: int,
@@ -135,7 +135,7 @@ flask test
 ### My Car
 
 ```js
-// GET: /mycar/{user_id}
+GET: /mycar/{user_id}
 {
     car_id: int,
     parking_spot_number: int,
@@ -151,7 +151,7 @@ flask test
 
 ### User Status
 ```js
-// GET: /user_status/{user_id}
+GET: /user_status/{user_id}
 {
     status: string, // NONE(0), RESERVED(1), PARKED(2), EXPIRED(3)
 }
@@ -161,7 +161,7 @@ flask test
 
 ### Spot History
 ```js
-// GET /history/{spot_id}
+GET /history/{spot_id}
 [
     {
         type: string,       // ATTENDANCE, RECORD
