@@ -30,15 +30,16 @@ function MainPage() {
   }, []);
 
   const reserveBtnClick = () => navigate('/reservation');
+  const mapBtnClick = () => navigate('/map');
 
   return (
     <>
-        <Header togglerType={TOGGLER_TYPE.COLLAPSE}/>
-        <div className='body-wrapper'>
-          <Location currentPlace={currentPlace}/>
-          <LocationList locations={locations}/>
-          <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick}/>
-        </div>
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
+      <div className='body-wrapper'>
+        <Location currentPlace={currentPlace} onClick={mapBtnClick} />
+        <LocationList locations={locations} />
+        <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+      </div>
     </>
   );
 }

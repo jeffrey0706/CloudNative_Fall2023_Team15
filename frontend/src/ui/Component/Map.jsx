@@ -1,8 +1,6 @@
 import React from 'react';
 import { GoogleMap, LoadScript, OverlayView, OverlayViewF } from '@react-google-maps/api';
 import './Map.css';
-// import { API_KEY } from '../../credentials';
-const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
 
 const containerStyle = {
   width: '100vw',
@@ -37,7 +35,7 @@ const MapContainer = (props) => {
   // console.log('MapContainer props:', props);
 
   return (
-    <LoadScript googleMapsApiKey={API_KEY}>
+    <LoadScript googleMapsApiKey={props.API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={props.center}

@@ -15,6 +15,9 @@ import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css"
 
+// import { API_KEY } from '../../credentials';
+const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
+
 function MapView() {
 
     const navigate = useNavigate();
@@ -42,9 +45,12 @@ function MapView() {
         }
     }
 
+    const reserveBtnClick = () => navigate('/reservation');
+
     return (
         <>
             <MapContainer
+                API_KEY={API_KEY}
                 fakeLocations_coordinate={fakeLocationsCoordinate}
                 center={fakeMapCenter}
                 selectedPKLot={selectedPKLot}
@@ -52,7 +58,7 @@ function MapView() {
                 onGoogleApiLoaded={onGoogleApiLoaded}
             />
             <ReserveFooter location={fakeLocationsCoordinate.find(({ name }) => name === selectedPKLot)} />
-            <ReserveButton text='Reserve' color='danger' outline={false} onClick={() => { throw new Error("Connection with backend API is not yet done!"); }} />
+            <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
             <Button color='none' className='back-btn' onClick={onBackIconClick}>
                 <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
