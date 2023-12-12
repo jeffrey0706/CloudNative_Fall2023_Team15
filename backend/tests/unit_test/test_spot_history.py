@@ -3,7 +3,7 @@ from unittest.mock import patch
 from tests.unit_test.base import UnitTestSettingBase
 from app.models import Car, ParkingSpot, Record
 
-class TestSpotHistoryAPI(UnitTestSettingBase):
+class CheckSpotHistoryAPI(UnitTestSettingBase):
     @patch('app.api.spot_history_api.ParkingSpot')
     def test_get_spot_history_no_parkingspot_error(self,
                                             mock_parkingspot):

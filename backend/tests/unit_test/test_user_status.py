@@ -4,7 +4,7 @@ from datetime import datetime
 from tests.unit_test.base import UnitTestSettingBase
 from app.models import Car, User, Reservation, Attendance
 
-class TestUserStatusAPI(UnitTestSettingBase):
+class CheckUserStatusAPI(UnitTestSettingBase):
     @patch('app.api.user_status_api.User')
     def test_get_user_status_no_user_error(self,
                                            mock_user):

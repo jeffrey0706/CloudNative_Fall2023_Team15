@@ -3,8 +3,7 @@ from unittest.mock import patch
 from tests.unit_test.base import UnitTestSettingBase
 from app.models import User, Car, Attendance, ParkingSpot, Area, ParkingLot
 
-class CarApiTestCase(UnitTestSettingBase):
-    
+class CheckCarAPI(UnitTestSettingBase):
     @patch('app.api.car_api.User')
     def test_get_car_no_user_error(self,
                                         mock_user):
