@@ -23,7 +23,7 @@ flask test
 
 ### Profile
 
-```json
+```js
 // GET: /profile/{user_id}
 {
     'id': int,
@@ -79,7 +79,7 @@ flask test
 
 ### Parking Lots
 
-```json
+```js
 // GET: /parking_lots
 [
     {
@@ -95,7 +95,7 @@ flask test
 
 ### Reservation
 
-```json
+```js
 // GET: /reservation/{car_id}
 {
     car_id: int,
@@ -134,7 +134,7 @@ flask test
 
 ### My Car
 
-```json
+```js
 // GET: /mycar/{user_id}
 {
     car_id: int,
@@ -150,7 +150,7 @@ flask test
 ```
 
 ### User Status
-```json
+```js
 // GET: /user_status/{user_id}
 {
     status: string, // NONE(0), RESERVED(1), PARKED(2), EXPIRED(3)
@@ -160,7 +160,7 @@ flask test
 ```
 
 ### Spot History
-```json
+```js
 // GET /history/{spot_id}
 [
     {
