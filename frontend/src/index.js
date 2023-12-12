@@ -10,36 +10,42 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MainPage from './ui/Page/MainPage';
 import GuardMonitor from './ui/Page/GuardMonitor';
-import Dashboard from './ui/Page/Dashboard';
+import Guard from './ui/Page/Guard';
 import ReservePage from './ui/Page/ReservePage';
 import MapView from './ui/Page/MapView';
 import GuardMonitorDetail from './ui/Page/GuardMonitorDetail';
 
 const router = createBrowserRouter([
+
+  // Before-reserve pages
   {
     path: "/",
     element: <MainPage />,
     errorElement: <MainPage />,
   },
   {
-    path: "guard/",
-    element: <GuardMonitor />,
+    path: "map/",
+    element: <MapView />,
   },
-  {
-    path: "guard/detail/",
-    element: <GuardMonitorDetail />,
-  },
-  {
-    path: "dashboard/",
-    element: <Dashboard />,
-  },
+
+  // Reserve pages
   {
     path: "reservation/",
     element: <ReservePage />,
   },
+
+  // Guard pages
   {
-    path: "map/",
-    element: <MapView />,
+    path: "guard/",
+    element: <Guard />,
+  },
+  {
+    path: "guard/monitor/",
+    element: <GuardMonitor />,
+  },
+  {
+    path: "guard/monitor/detail/",
+    element: <GuardMonitorDetail />,
   },
 ]);
 // TODO: Update all the hyperlinks to <Link> element provided by react-router-dom

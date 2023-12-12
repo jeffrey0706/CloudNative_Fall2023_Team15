@@ -30,7 +30,7 @@ function GuardMonitor() { // TODO: How to access the data
   const onLotClick = (event) => {
     // console.log(event.target.parentNode.id || event.target.id);
     const LotInfo = event.target.parentNode.id || event.target.id
-    navigate('/guard/detail', { state: { LotInfo: LotInfo } })
+    navigate('/guard/monitor/detail', { state: { LotInfo: LotInfo } })
   }
 
   let LotPosition = fakePKLotName + ' -> ' + currentFloor;

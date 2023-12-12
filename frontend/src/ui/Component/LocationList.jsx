@@ -1,8 +1,8 @@
 import './LocationList.css';
-import { 
-  Table,
-  Row,
-  Col
+import {
+    Table,
+    Row,
+    Col
 } from 'reactstrap';
 import React from 'react';
 import { PiWheelchairFill } from "react-icons/pi";
@@ -12,7 +12,7 @@ export const LOCATION_LIST_MODE = {
     FRACTION: 1,
 }
 
-function LocationList({mode=LOCATION_LIST_MODE.REMAIN, locations=[]}) {
+function LocationList({ mode = LOCATION_LIST_MODE.REMAIN, locations = [], onClick = () => { } }) {
 
     const getClassName = (mode) => {
         if (mode === LOCATION_LIST_MODE.REMAIN)
@@ -50,8 +50,8 @@ function LocationList({mode=LOCATION_LIST_MODE.REMAIN, locations=[]}) {
                     <tbody>
                         {
                             locations.map((location, index) => (
-                                <tr className='loc-list-tr' key={'location' + index}>
-                                    <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && location.priority && <PiWheelchairFill className='disable-icon' size={16}/>}</td>
+                                <tr className='loc-list-tr' key={'location' + index} id={location.name} onClick={onClick} >
+                                    <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && location.priority && <PiWheelchairFill className='disable-icon' size={16} />}</td>
                                     {showInfo(mode, location)}
                                 </tr>
                             ))
@@ -61,6 +61,6 @@ function LocationList({mode=LOCATION_LIST_MODE.REMAIN, locations=[]}) {
             </Col>
         </Row>
     );
-  }
-  
-  export default LocationList;
+}
+
+export default LocationList;
