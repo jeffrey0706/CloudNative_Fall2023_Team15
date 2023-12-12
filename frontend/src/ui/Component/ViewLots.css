@@ -8,7 +8,7 @@
     border-radius: 12px;
 
     font-family: 'Urbanist';
-    font-size: 18px;
+    /* font-size: 18px; This layout is for 2 pages, so the font-size should use the inheritanced one. */
     font-style: normal;
     font-weight: 700;
     line-height: 140%; /* 25.2px */
@@ -25,7 +25,7 @@
     border-radius: 12px;
 
     font-family: Urbanist;
-    font-size: 18px;
+    /* font-size: 18px; This layout is for 2 pages, so the font-size should use the inheritanced one. */
     font-style: normal;
     font-weight: 700;
     line-height: 140%; /* 25.2px */

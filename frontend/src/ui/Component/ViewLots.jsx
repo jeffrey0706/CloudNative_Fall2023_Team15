@@ -9,7 +9,7 @@ export const LOT_STATUS = {
     PARKED: 3,
 };
 
-function ViewLots({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }, FONT_SIZE = 18) {
+function ViewLots({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1], FONT_SIZE = 18 }) {
     const getStatusContent = (status, index) => {
         let lot_code = `${SECTION}0${index + 1}`;
         switch (status) {
@@ -33,15 +33,18 @@ function ViewLots({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }, FONT_SIZE
                 return '';
         }
     };
+    console.log(FONT_SIZE)
 
     return (
         <div className="lots-container">
-            {LOTs_STATUS.map((status, index) => (
-                <div key={index} className={`grid-item status-${status}`}>
-                    {getStatusContent(status, index)}
-                </div>
-            ))}
-        </div>
+            {
+                LOTs_STATUS.map((status, index) => (
+                    <div key={index} className={`grid-item status-${status}`} style={{ fontSize: `${FONT_SIZE}px` }}>
+                        {getStatusContent(status, index)}
+                    </div>
+                ))
+            }
+        </div >
     );
 }
 

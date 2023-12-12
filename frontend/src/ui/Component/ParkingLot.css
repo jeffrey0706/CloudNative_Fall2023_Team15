@@ -9,7 +9,7 @@
 }
 
 .wrap-lots-container-2x {
-    width: 90vmin;
+    /* width: 90vmin; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
