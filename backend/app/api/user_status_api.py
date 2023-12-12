@@ -28,7 +28,7 @@ def user_status(uuid):
 
     car = Car.query.filter_by(UserID=uuid).first()
     if not car:
-        return jsonify({'message': 'This user does not have a car'}), 404
+        return jsonify({'message': 'This user does not have a car'})
     car_id = car.CarID
     
     # Check reservation or Attendance by car_id
