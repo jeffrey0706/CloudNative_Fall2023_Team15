@@ -19,6 +19,7 @@ def create_app(config_name='testing'):
     app.register_blueprint(reservation_bp)
     app.register_blueprint(spot_history_bp)
     app.register_blueprint(user_status_bp)
+    app.register_blueprint(map_bp)
 
     db.init_app(app)
 
