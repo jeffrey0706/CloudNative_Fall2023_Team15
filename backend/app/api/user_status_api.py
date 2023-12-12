@@ -1,8 +1,14 @@
+from enum import IntEnum
 from flask import Blueprint, jsonify
-
 from datetime import datetime
 
-from app.models import User, Car, Reservation, Attendance
+from app.models import User, Car, Reservation, Attendance, Record
+
+class Status(IntEnum):
+    NONE = 0
+    RESERVED = 1
+    PARKED = 2
+    EXPIRED = 3
 
 user_status_bp = Blueprint('user_status', __name__)
 
@@ -11,7 +17,7 @@ def user_status(uuid):
     '''
     // GET: /user_status/{user_id}
     {
-        status: string, // NONE, RESERVED, PARKED, EXPIRED
+        status: int, // NONE(0), RESERVED(1), PARKED(2), EXPIRED(3)
     }
     '''
     # if user not exist, return NONE
@@ -28,13 +34,13 @@ def user_status(uuid):
     # Check reservation or Attendance by car_id
     reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
     attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
-    
+
     if attendance:
-        return jsonify({'status': 'PARKED'})
+        return jsonify({'status': Status.PARKED})
     elif reservation:
         if reservation.ExpiredTime < datetime.now():
-            return jsonify({'status': 'EXPIRED'})
+            return jsonify({'status': Status.EXPIRED})
         else:
-            return jsonify({'status': 'RESERVED'})
+            return jsonify({'status': Status.RESERVED})
     else:
-        return jsonify({'status': 'NONE'})
+        return jsonify({'status': Status.NONE})
