@@ -4,7 +4,7 @@ from datetime import datetime
 
 from app.models import User, Car, Reservation, Attendance, Record
 
-class Status(IntEnum):
+class UserStatus(IntEnum):
     NONE = 0
     RESERVED = 1
     PARKED = 2
@@ -36,11 +36,11 @@ def user_status(uuid):
     attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
 
     if attendance:
-        return jsonify({'status': Status.PARKED})
+        return jsonify({'status': UserStatus.PARKED})
     elif reservation:
         if reservation.ExpiredTime < datetime.now():
-            return jsonify({'status': Status.EXPIRED})
+            return jsonify({'status': UserStatus.EXPIRED})
         else:
-            return jsonify({'status': Status.RESERVED})
+            return jsonify({'status': UserStatus.RESERVED})
     else:
-        return jsonify({'status': Status.NONE})
+        return jsonify({'status': UserStatus.NONE})
