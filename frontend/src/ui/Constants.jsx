@@ -1,6 +1,7 @@
 // Testing constants, which shold be removed after backend is implemented
 export const userId = 1;
 export const reservationId = 1;
+export const fakePKLotName = 'Parking Lot 2';
 export const fakeLocations = [
     {
         parkinglot_id: 0,
