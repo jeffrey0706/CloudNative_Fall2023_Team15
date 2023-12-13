@@ -1,4 +1,3 @@
-import './GuardMonitor.css';
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
