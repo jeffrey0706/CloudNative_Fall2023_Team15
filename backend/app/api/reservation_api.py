@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 from datetime import datetime, timedelta
 
-from app.models import Reservation, Area, ParkingSpot, ParkingLot, Car
+from app.models import Reservation, Area, ParkingSpot, ParkingLot, Car, Appointment
 from app import db
 
 reservation_bp = Blueprint('reservation', __name__)
@@ -38,7 +38,7 @@ def create_reservation():
             'message': 'Missing required parameter: parking_spot_id'
         }), 400
 
-    reservation: Reservation = Reservation(
+    reservation: Appointment = Appointment(
         CarID=data.get('car_id'),
         ParkingSpotID=data.get('parking_spot_id'),
         ReservationTime=datetime.now(),
@@ -86,7 +86,7 @@ def reservation(car_id):
         return jsonify({'message': 'Car not found'}), 404
 
     if request.method == 'GET':
-        reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
+        reservation: Appointment = Appointment.query.filter(Appointment.CarID==car_id, Appointment.ParkTime==None).first()
 
         if reservation:
 
@@ -107,7 +107,7 @@ def reservation(car_id):
         else:
             return jsonify({'message': 'Reservation not found'}), 404
     elif request.method == 'DELETE':
-        reservation: Reservation = Reservation.query.filter_by(CarID=car_id).first()
+        reservation: Appointment = Appointment.query.filter(Appointment.CarID==car_id, Appointment.ParkTime==None).first()
 
         if reservation:
             try:

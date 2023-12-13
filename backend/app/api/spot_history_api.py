@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 
 from typing import List
 
-from app.models import ParkingSpot, Record, Car, Attendance
+from app.models import ParkingSpot, Record, Car, Attendance, Appointment
 
 spot_history_bp = Blueprint('spot_history', __name__)
 
@@ -44,7 +44,7 @@ def spot_history(spot_id):
             } for c, r in zip(cars, records)
         ]
 
-        attenances: List[Attendance] = Attendance.query.filter_by(ParkingSpotID=spot_id).all()
+        attenances: List[Appointment] = Appointment.query.filter(Appointment.ParkingSpotID==spot_id, Appointment.ParkTime!=None).all()
         car_ids = [r.CarID for r in attenances]
         cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
 
