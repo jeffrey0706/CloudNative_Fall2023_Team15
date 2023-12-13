@@ -49,7 +49,7 @@ const profile = {
      *  * expired: datetime,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/profile/' + userId),
+    get: (userId) => axios.get(BASE_URL + '/profile/' + userId, { crossdomain: true }),
 
     /**
      * @param {number} userId

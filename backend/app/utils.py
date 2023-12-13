@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from typing import List
 
@@ -10,6 +11,7 @@ def create_app(config_name='testing'):
     conf = config[config_name]
 
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(conf)
 
     app.register_blueprint(car_bp) 
