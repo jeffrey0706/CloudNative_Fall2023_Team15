@@ -1,0 +1,75 @@
+/** 1rem = 16px */
+
+.header-nav {
+    padding-top: 0;
+    margin-bottom: 40px;
+    background-color: #FCFCFD;
+}
+
+.header-nav .navbar-brand {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 6vw;
+    gap: 0.75rem;
+    min-height: 13vh;
+}
+
+.home-nav {
+    font-size: 1rem;
+    font-family: "DM", "Sans";
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.125rem;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    min-height: 2.3rem;
+    width: 64px;
+    text-wrap: wrap;
+}
+
+.exit-btn {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    margin-right: 1rem;
+}
+
+.close-btn {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    margin-right: 0.625rem;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.header-modal .modal-content ul {
+    position: relative;
+    top: 3%;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.header-modal .nav-link {
+    color: #777E90;
+    font-family: Poppins;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 2rem;
+    padding-left: 2.5rem;
+}
+
+/* TODO: Hover doesn't work on mobile */
+.header-modal .nav-link:hover {
+    color: black;
+    border-left: black 0.1875rem solid;
+}
+
+.header-nav button.navbar-toggler {
+    border: none;
+}
+
+.header-nav .navbar-toggler-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}

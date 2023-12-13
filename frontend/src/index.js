@@ -1,13 +1,61 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import './index.css';
-import App from './ui/App';
 import reportWebVitals from './ui/reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import MainPage from './ui/Page/MainPage';
+import GuardMonitor from './ui/Page/GuardMonitor';
+import Guard from './ui/Page/Guard';
+import ReservePage from './ui/Page/ReservePage';
+import MapView from './ui/Page/MapView';
+import GuardMonitorDetail from './ui/Page/GuardMonitorDetail';
+
+const router = createBrowserRouter([
+
+  // Before-reserve pages
+  {
+    path: "/",
+    element: <MainPage />,
+    errorElement: <MainPage />,
+  },
+  {
+    path: "map/",
+    element: <MapView />,
+  },
+
+  // Reserve pages
+  {
+    path: "reservation/",
+    element: <ReservePage />,
+  },
+
+  // Guard pages
+  {
+    path: "guard/",
+    element: <Guard />,
+  },
+  {
+    path: "guard/monitor/",
+    element: <GuardMonitor />,
+  },
+  {
+    path: "guard/monitor/detail/",
+    element: <GuardMonitorDetail />,
+  },
+]);
+// TODO: Update all the hyperlinks to <Link> element provided by react-router-dom
+// E.g. <a href="/guard/">Guard</a> ==> <Link to="/guard/">Guard</Link>
+// S.t. it won't need another request to the server to update the page
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

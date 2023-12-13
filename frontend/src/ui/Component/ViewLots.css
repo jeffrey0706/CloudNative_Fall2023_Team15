@@ -1,0 +1,68 @@
+
+.parked {
+    background-color: #F4D35E;
+    color: #FFFFFF;
+    text-align: center;
+    width: 80%;
+    height: 67%;
+    border-radius: 12px;
+
+    font-family: 'Urbanist';
+    /* font-size: 18px; This layout is for 2 pages, so the font-size should use the inheritanced one. */
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 0.2px;
+}
+
+.approaching {
+    background-color: #FEFADF;
+    border: #F4D35E 2px solid;
+    color: #F4D35E;
+    text-align: center;
+    width: 80%;
+    height: 67%;
+    border-radius: 12px;
+
+    font-family: Urbanist;
+    /* font-size: 18px; This layout is for 2 pages, so the font-size should use the inheritanced one. */
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 0.2px;
+}
+
+.lots-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+    width: 100%;
+}
+
+.grid-item {
+    border: 0.1px solid #A3A3A4;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-item > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-item img {
+    width: 70%;
+    height: 70%;
+}
+
+.grid-item:nth-child(odd) {
+    border-left: none;
+}
+
+.grid-item:nth-child(even) {
+    border-right: none;
+}

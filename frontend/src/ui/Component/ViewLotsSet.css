@@ -1,0 +1,43 @@
+.wrap-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.wrap-lots-container {
+    margin-bottom: 3vh;
+    width: 90vw;
+    height: 25vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: visible;
+    /* background-color: aliceblue; */
+    /* flex-direction: column; */
+}
+
+.wrap-dir-container {
+    width: 10vw;
+    height: 120%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.View-Lots-container {
+    width: 70%;
+    height: 100%;
+}
+
+.divider {
+    height: 1px;
+    background-color: #E6E8EC;
+    margin: 20px 0;
+}
+
+.SectionImg {
+    width: 100%;
+    height: 100%;
+}

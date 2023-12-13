@@ -1,0 +1,14 @@
+.loc-div {
+    margin-top: 0.625rem;
+    margin-bottom: 2.5rem;
+}
+
+.body-wrapper {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* .reserve-button-container {
+    position: fixed;
+    bottom: 7vh;
+} */

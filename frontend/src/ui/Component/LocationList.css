@@ -1,0 +1,67 @@
+.loc-list-comp {
+    width: 100%;
+}
+
+.loc-list-comp .loc-list-tr {
+    height: 3.125rem;
+}
+
+.loc-list-comp .loc-list-tr * {
+    vertical-align: middle;
+}
+
+.loc-list-comp .disable-icon {
+    margin-left: 0.3rem;
+    color: rgb(146, 146, 146);
+}
+
+.loc-list-comp .loc-list-col {
+    max-height: 40vh;
+    overflow-y: scroll;
+}
+
+/** CSS for remain mode **/
+
+.remain-loc-list .name-td {
+    font-family: Inter;
+    width: 70%;
+    font-size: 0.8rem;
+}
+
+.remain-loc-list .remain-td {
+    font-family: Poppins;
+    width: 30%;
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.remain-loc-list .remain-span {
+    font-family: Poppins ;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 0;
+    letter-spacing: 0;
+    margin-right: 0.3rem;
+}
+
+/** CSS for fraction mode **/
+
+.fraction-loc-list .name-td {
+    width: 50%;
+}
+
+.fraction-loc-list .fraction-td {
+    font-size: 0.74rem;
+    font-weight: 300;
+    width: 30%;
+    text-align: right;
+}
+
+.fraction-loc-list .fraction-span {
+    font-family: Poppins, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 0;
+    letter-spacing: 0;
+    margin-right: 0.3rem;
+}

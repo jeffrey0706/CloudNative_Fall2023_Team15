@@ -1,0 +1,63 @@
+.PreviewFooterWrapper {
+    /* put as a footer */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
+    padding: 3vw;
+    background-color: #FFFFFF;
+    /* z-index: 10000; */
+}
+
+.PreviewFooterHeader {
+    /* header */
+    height: 7vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 1.25rem;
+}
+
+.PreviewFooterTitle {
+    font-family: Poppins;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.PreviewFooterSubTitle {
+    font-family: Poppins;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #000000;
+    cursor: pointer;
+}
+
+.addressWrapper {
+    /* address */
+    height: 2.125rem;
+    font-size: 12px;
+    font-weight: 400;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.25rem;
+}
+
+.priorityWrapper {
+    /* priority */
+    height: 3.125rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
