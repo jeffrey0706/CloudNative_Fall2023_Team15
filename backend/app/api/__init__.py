@@ -8,5 +8,3 @@ from .spot_history_api import spot_history_bp
 from .map_api import map_bp
 # from .reservation_api import configure_reservation
 from .user_status_api import user_status_bp
-
-from .reservation_api import configure_reservation
