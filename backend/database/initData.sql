@@ -54,11 +54,13 @@ VALUES
 (6, 5, 1, 'General'),
 (6, 6, 0, 'General');
 
-INSERT INTO Users (Preference, Role, Priority, Expired)
+
+
+INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword, Preference, Role, Priority, Expired)
 VALUES
-(1, 'Employee', 'Top', NULL),
-(1, 'Employee', 'Normal', NULL),
-(2, 'Attendant', 'Normal', NULL);
+('Alice', 'alice', 'sender',  'alicesender', 1, 'Employee', 'Top', NULL),
+('Bob', 'bob', 'receiver', 'bobreceiver', 1, 'Employee', 'Normal', NULL),
+('Eve', 'eve', 'middle', 'evemiddle', 2, 'Attendant', 'Normal', NULL);
 
 INSERT INTO Cars (UserID, Lisence)
 VALUES

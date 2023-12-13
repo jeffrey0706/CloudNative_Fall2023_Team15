@@ -2,10 +2,14 @@ CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
+SET time_zone = "+08:00";
+
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255) UNIQUE,
     SpotCounts int,  -- total spot, not available spot
+    longitude float,
+    latitude float,
     PRIMARY KEY (ParkingLotID)
 );
 
@@ -32,12 +36,16 @@ CREATE TABLE ParkingSpots (
 
 CREATE TABLE Users (
     UserID int AUTO_INCREMENT,
+    UserName varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL,
+    Salt varchar(255) NOT NULL,
+    HashedSaltedPassword varchar(255) NOT NULL,
     Preference int,
     Role varchar(255),
     Priority varchar(255),
     Expired DATETIME,
     PRIMARY KEY (UserID),
-    FOREIGN KEY (Preference) REFERENCES Areas(AreaID)
+    FOREIGN KEY (Preference) REFERENCES ParkingLots(ParkingLotID)
 );
 
 CREATE TABLE Cars (
@@ -77,3 +85,15 @@ CREATE TABLE Records (
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
 );
+
+CREATE EVENT IF NOT EXISTS DeleteExpiredReservationsEvent
+ON SCHEDULE EVERY 30 SECOND
+DO
+  DELETE FROM Reservations
+  WHERE ExpiredTime <= NOW();
+
+CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
+AFTER DELETE ON Reservations
+FOR EACH ROW
+INSERT INTO Records (CarID, ParkingSpotID, ParkTime, ExitTime)
+VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime);
