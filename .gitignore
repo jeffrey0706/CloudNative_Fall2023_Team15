@@ -52,4 +52,12 @@ replay_pid*
 # yarn-debug.log*
 # yarn-error.log*
 
+# # python build files
+backend/build/
+backend/dist/
+backend/*.egg-info/
+
+__pycache__/
+
+*.db
 credentials*

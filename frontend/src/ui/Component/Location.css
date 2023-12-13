@@ -56,8 +56,5 @@
 }
 
 .map-icon-col {
-    /* display: flex;
-    justify-content: right; */
-    /* padding: 0; */
-    padding-left: 0.5rem;
+    justify-content: right;
 }

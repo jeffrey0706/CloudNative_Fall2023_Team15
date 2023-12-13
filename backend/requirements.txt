@@ -1,0 +1,8 @@
+flask==3.0.0
+flask_sqlalchemy==3.1.1
+flask_testing
+mysqlclient==2.2.0
+pymysql==1.1.0
+sqlalchemy==2.0.23
+mysql-connector
+Flask-Cors
