@@ -1,4 +1,3 @@
-from .appointment import Appointment
 from .area import Area
 from .attenance import Attendance
 from .car import Car

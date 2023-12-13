@@ -58,7 +58,7 @@ CREATE TABLE Cars (
     PRIMARY KEY (CarID)
 );
 
-CREATE TABLE Appointments (
+CREATE TABLE Reservations (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     ReservationTime DATETIME,
@@ -67,18 +67,18 @@ CREATE TABLE Appointments (
     ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Appointment PRIMARY KEY (CarID, ParkingSpotID)
+    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
 );
 
--- CREATE TABLE Attendances (
---     CarID int NOT NULL,
---     ParkingSpotID int NOT NULL,
---     ParkTime DATETIME,
---     ExitTime DATETIME,
---     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
---     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
---     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
--- );
+CREATE TABLE Attendances (
+    CarID int NOT NULL,
+    ParkingSpotID int NOT NULL,
+    ParkTime DATETIME,
+    ExitTime DATETIME,
+    FOREIGN KEY (CarID) REFERENCES Cars(CarID),
+    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
+    CONSTRAINT PK_Attendance PRIMARY KEY (CarID, ParkingSpotID)
+);
 
 CREATE TABLE Records (
     RecordsID int AUTO_INCREMENT,
@@ -93,14 +93,14 @@ CREATE TABLE Records (
     PRIMARY KEY (RecordsID)
 );
 
-CREATE EVENT IF NOT EXISTS DeleteExpiredAppointmentsEvent
+CREATE EVENT IF NOT EXISTS DeleteExpiredReservationsEvent
 ON SCHEDULE EVERY 30 SECOND
 DO
-    DELETE FROM Appointments
-    WHERE (DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW() AND ParkTime IS NULL) OR (ExitTime IS NOT NULL AND ExitTime <= NOW());
+    DELETE FROM Reservations
+    WHERE (DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW());
 
-CREATE TRIGGER IF NOT EXISTS AtferDeleteFromAppointments
-AFTER DELETE ON Appointments
+CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
+AFTER DELETE ON Reservations
 FOR EACH ROW
-INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
-VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime, OLD.ParkTime, OLD.ExitTime);
+INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime)
+VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime);
