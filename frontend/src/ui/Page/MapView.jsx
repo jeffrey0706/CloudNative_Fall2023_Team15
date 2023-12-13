@@ -1,22 +1,22 @@
 // import './MapView.css';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReserveButton from '../Component/ReserveButton';
-
-
 import { Button } from 'reactstrap';
 
 // Production API
 // import { API } from '../Api';
+
 // Testing constants
-import { fakeMapCenter, fakeLocationsCoordinate } from '../Constants';
+import { fakeMapCenter, fakeLocationsCoordinate, fakeApiKey as API_KEY } from '../Constants';
 import MapContainer from '../Component/Map';
 import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css"
 
-import { API_KEY } from '../../credentials';
+// import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
+
 
 function MapView() {
 

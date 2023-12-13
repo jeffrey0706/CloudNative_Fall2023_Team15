@@ -77,6 +77,7 @@ export const fakeLocationsCoordinate = [
 ]
 export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 300"
 export const fakeGuardAnalysisData = [[65, 59, 80, 81, 56, 55, 65, 59, 80], [15, 19, 10, 21, 46, 57, 68, 39, 50], [65, 59, 30, 81, 36, 35, 65, 29, 20], [15, 46, 57, 78, 9, 50, 39, 10, 21]]
+export const fakeApiKey = 'fakeApiKey';
 
 // Testcase setup constants
 export const API_PATTERNS = {
