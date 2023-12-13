@@ -18,9 +18,11 @@ def create_app(config_name='testing'):
     app = Flask(__name__)
     app.config.from_object(conf)
 
-    app.register_blueprint(car_bp)    
+    app.register_blueprint(car_bp) 
+    app.register_blueprint(login_bp)   
     app.register_blueprint(parkinglot_bp)
     app.register_blueprint(profile_bp)
+    app.register_blueprint(register_bp)
     configure_reservation(conf)
     app.register_blueprint(reservation_bp)
     app.register_blueprint(spot_history_bp)
