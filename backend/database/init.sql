@@ -40,6 +40,8 @@ CREATE TABLE Users (
     Password varchar(255) NOT NULL,
     Salt varchar(255) NOT NULL,
     HashedSaltedPassword varchar(255) NOT NULL,
+    SessionKey varchar(255) NOT NULL,
+    SessionExporedTime DATETIME NOT NULL,
     Preference int,
     Role varchar(255),
     Priority varchar(255),
@@ -56,44 +58,49 @@ CREATE TABLE Cars (
     PRIMARY KEY (CarID)
 );
 
-CREATE TABLE Reservations (
+CREATE TABLE Appointments (
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     ReservationTime DATETIME,
     ExpiredTime DATETIME,
-    FOREIGN KEY (CarID) REFERENCES Cars(CarID),
-    FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
-);
-
-CREATE TABLE Attendances (
-    CarID int NOT NULL,
-    ParkingSpotID int NOT NULL,
     ParkTime DATETIME,
     ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+    CONSTRAINT PK_Appointment PRIMARY KEY (CarID, ParkingSpotID)
 );
+
+-- CREATE TABLE Attendances (
+--     CarID int NOT NULL,
+--     ParkingSpotID int NOT NULL,
+--     ParkTime DATETIME,
+--     ExitTime DATETIME,
+--     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
+--     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
+--     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+-- );
 
 CREATE TABLE Records (
+    RecordsID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
+    ReservationTime DATETIME,
+    ExpiredTime DATETIME,
     ParkTime DATETIME,
     ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Record PRIMARY KEY (CarID, ParkingSpotID)
+    PRIMARY KEY (RecordsID)
 );
 
-CREATE EVENT IF NOT EXISTS DeleteExpiredReservationsEvent
+CREATE EVENT IF NOT EXISTS DeleteExpiredAppointmentsEvent
 ON SCHEDULE EVERY 30 SECOND
 DO
-  DELETE FROM Reservations
-  WHERE ExpiredTime <= NOW();
+    DELETE FROM Appointments
+    WHERE (DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW() AND ParkTime IS NULL) OR (ExitTime IS NOT NULL AND ExitTime <= NOW());
 
-CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
-AFTER DELETE ON Reservations
+CREATE TRIGGER IF NOT EXISTS AtferDeleteFromAppointments
+AFTER DELETE ON Appointments
 FOR EACH ROW
-INSERT INTO Records (CarID, ParkingSpotID, ParkTime, ExitTime)
-VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime);
+INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
+VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime, OLD.ParkTime, OLD.ExitTime);

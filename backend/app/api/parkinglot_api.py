@@ -2,7 +2,7 @@ import copy
 from flask import Blueprint, jsonify
 from typing import List
 
-from app.models import ParkingLot, Reservation, Area, Attendance, ParkingSpot
+from app.models import ParkingLot, Reservation, Area, Attendance, ParkingSpot, Appointment
 
 parkinglot_bp = Blueprint('parkinglot', __name__)
 
@@ -37,7 +37,8 @@ def parking_lots():
     current_handicap_capacity = copy.deepcopy(maximum_handicap_capacity)
     
     # query current reservation and compute current capacity
-    reservations: List[Reservation] = Reservation.query.all()
+    # reservations: List[Reservation] = Reservation.query.all()
+    reservations: List[Appointment] = Appointment.query.filter(Appointment.ParkTime == None).all()
     parking_spot_ids = [r.ParkingSpotID for r in reservations]
     parking_spots: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
     area_ids = [p.AreaID for p in parking_spots]
@@ -48,7 +49,8 @@ def parking_lots():
             current_handicap_capacity[area.ParkingLotID] -= 1
 
     # query current attendance and compute current capacity
-    attendances: List[Attendance] = Attendance.query.all()
+    # attendances: List[Attendance] = Attendance.query.all()
+    attendances: List[Appointment] = Appointment.query.filter(Appointment.ParkTime != None).all()
     parking_spot_ids = [r.ParkingSpotID for r in attendances]
     parking_spots: List[ParkingSpot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
     area_ids = [p.AreaID for p in parking_spots]
