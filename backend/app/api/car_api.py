@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from app.models import ParkingLot, Area, Attendance, ParkingSpot, Car, User, Appointment
+from app.models import ParkingLot, Area, Attendance, ParkingSpot, Car, User
 
 car_bp = Blueprint('car', __name__)
 
@@ -25,8 +25,7 @@ def cars(user_id):
         return jsonify({'message': 'This user does not have a car'}), 404
     car_id = car.CarID
 
-    # attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
-    attendance: Appointment = Appointment.query.filter(Appointment.CarID==car_id, Appointment.ParkTime!=None).first()
+    attendance: Attendance = Attendance.query.filter_by(CarID=car_id).first()
     if attendance:
         parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=attendance.ParkingSpotID).first()
         area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()

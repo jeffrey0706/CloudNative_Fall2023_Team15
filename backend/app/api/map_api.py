@@ -2,7 +2,7 @@ from enum import IntEnum
 from typing import List
 from flask import Blueprint, jsonify, request
 
-from app.models import ParkingLot, Area, ParkingSpot, Car, User, Appointment
+from app.models import ParkingLot, Area, Attendance, ParkingSpot, Car, User, Reservation
 
 class SpotStatus(IntEnum):
     EMPTY = 0
@@ -44,15 +44,12 @@ def get_map():
 
     areas: List[Area] = Area.query.filter_by(ParkingLotID=parkinglot_id, Floor=floor).all()
     parking_spots: List[ParkingSpot] = ParkingSpot.query.filter(ParkingSpot.AreaID.in_([a.AreaID for a in areas])).all()
-    # reservations: List[Reservation] = Reservation.query.filter(Reservation.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
-    # attendances: List[Attendances] = Attendances.query.filter(Attendances.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
-    appointment: List[Appointment] = Appointment.query.filter(Appointment.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
+    reservations: List[Reservation] = Reservation.query.filter(Reservation.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
+    attendances: List[Attendance] = Attendance.query.filter(Attendance.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
 
     areas = {a.AreaID: a for a in areas}
-    # reservations = {r.ParkingSpotID: r for r in reservations}
-    # attendances = {a.ParkingSpotID: a for a in attendances}
-    reservations = {a.ParkingLotID: a for a in appointment if a.ParkTime == None}
-    attendances = {a.ParkingLotID: a for a in appointment if a.ParkTime != None}
+    reservations = {r.ParkingSpotID: r for r in reservations}
+    attendances = {a.ParkingSpotID: a for a in attendances}
 
     results = []
     for ps in parking_spots:
