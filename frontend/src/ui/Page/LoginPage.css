@@ -1,0 +1,19 @@
+.form-wrapper {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.form-control {
+    line-height: 2.5 !important;
+    background-color: #F4F5F6;
+}
+
+.mb-3 {
+    margin-bottom: 0rem !important;
+}
+
+.up_shift {
+    position: absolute;
+    bottom: 47vh;
+    left: 0;
+}

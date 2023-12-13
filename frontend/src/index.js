@@ -14,8 +14,15 @@ import Guard from './ui/Page/Guard';
 import ReservePage from './ui/Page/ReservePage';
 import MapView from './ui/Page/MapView';
 import GuardMonitorDetail from './ui/Page/GuardMonitorDetail';
+import LoginPage from './ui/Page/LoginPage';
 
 const router = createBrowserRouter([
+
+  // Login
+  {
+    path: "login/",
+    element: <LoginPage />,
+  },
 
   // Before-reserve pages
   {
