@@ -54,7 +54,10 @@ function ReservePage() {
                 setParkingData({
                     License_plate: res.data.car_id,
                     Location: res.data.parking_lot_name,
-                    Parking_spot: res.data.area_name + res.data.parking_spot_number + ' (Floor ' + res.data.area_floor + ')',
+                    Parking_spot: 
+                        res.data.area_name +
+                        res.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
+                        ' (Floor ' + res.data.area_floor + ')',
                     Expired_time: res.data.expired_time,
                 })
             })

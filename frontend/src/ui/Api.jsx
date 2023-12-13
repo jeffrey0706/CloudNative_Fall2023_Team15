@@ -15,7 +15,7 @@ const my_car = {
      *  * start_time: datetime,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/my_car/' + userId),
+    get: (userId) => axios.get(BASE_URL + '/mycar/' + userId),
 }
 
 const parking_lots = {
@@ -29,7 +29,7 @@ const parking_lots = {
      *  * priority: bool,
      *  }
      */
-    get: () => axios.get(BASE_URL + '/parking_lots'),
+    get: () => axios.get(BASE_URL + '/parkinglots'),
 }
 
 const profile = {
@@ -174,7 +174,7 @@ const user_status = {
      *  * status: string,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/user_status/' + userId, { crossdomain: true }),
+    get: (userId) => axios.get(BASE_URL + '/userstatus/' + userId, { crossdomain: true }),
 }
 
 export const API = {
