@@ -14,6 +14,7 @@ import Guard from './ui/Page/Guard';
 import ReservePage from './ui/Page/ReservePage';
 import MapView from './ui/Page/MapView';
 import GuardMonitorDetail from './ui/Page/GuardMonitorDetail';
+import GuardAnalysis from './ui/Page/GuardAnalysis';
 import LoginPage from './ui/Page/LoginPage';
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "guard/",
     element: <Guard />,
+  },
+  {
+    path: "guard/analysis/",
+    element: <GuardAnalysis />,
   },
   {
     path: "guard/monitor/",
