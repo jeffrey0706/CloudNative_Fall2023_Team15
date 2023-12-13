@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - run: sudo apt-get update && sudo apt-get upgrade
+      - run: sudo apt-get update
       - run: sudo apt-get install libmysqlclient-dev
       - run: pip install -r requirements.txt
       - run: python main.py unit-test
