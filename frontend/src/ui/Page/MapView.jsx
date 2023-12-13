@@ -15,8 +15,8 @@ import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css"
 
-// import { API_KEY } from '../../credentials';
-const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
+import { API_KEY } from '../../credentials';
+// const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
 
 function MapView() {
 
@@ -48,7 +48,7 @@ function MapView() {
     const reserveBtnClick = () => navigate('/reservation');
 
     return (
-        <>
+        <div className='map-view-wrapper'>
             <MapContainer
                 API_KEY={API_KEY}
                 fakeLocations_coordinate={fakeLocationsCoordinate}
@@ -63,7 +63,7 @@ function MapView() {
             <Button color='none' className='back-btn' onClick={onBackIconClick}>
                 <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
             </Button>
-        </>
+        </div>
     );
 }
 
