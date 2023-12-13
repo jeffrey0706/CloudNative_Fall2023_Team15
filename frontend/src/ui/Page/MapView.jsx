@@ -1,5 +1,5 @@
 // import './MapView.css';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReserveButton from '../Component/ReserveButton';
 import { Button } from 'reactstrap';
