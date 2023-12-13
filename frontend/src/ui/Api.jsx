@@ -72,7 +72,8 @@ const profile = {
                 preference: preference,
                 role: role,
                 priority: priority,
-            }
+            },
+            { crossdomain: true }
         ),
     
     /**
@@ -97,7 +98,8 @@ const profile = {
                 preference: preference,
                 role: role,
                 priority: priority,
-            }
+            },
+            { crossdomain: true }
         ),
 }
 
@@ -116,7 +118,7 @@ const reservation = {
      *  * expired_time: datetime,  
      *  }
      */
-    get: (carId) => axios.get(BASE_URL + '/reservation/' + carId),
+    get: (carId) => axios.get(BASE_URL + '/reservation/' + carId, { crossdomain: true }),
 
     /**
      * @param {number} carId
@@ -132,7 +134,8 @@ const reservation = {
             {
                 car_id: carId,
                 parking_spot_id: parkingSpotId,
-            }
+            },
+            { crossdomain: true }
         ),
     
     /**
@@ -143,7 +146,7 @@ const reservation = {
      *  * message: string,  
      *  }
      */
-    delete: (carId) => axios.delete(BASE_URL + '/reservation/' + carId),
+    delete: (carId) => axios.delete(BASE_URL + '/reservation/' + carId, { crossdomain: true }),
 }
 
 const history = {
@@ -159,7 +162,7 @@ const history = {
      *  * end_time: datetime,  
      *  }
      */
-    get: (spotId) => axios.get(BASE_URL + '/history/' + spotId),
+    get: (spotId) => axios.get(BASE_URL + '/history/' + spotId, { crossdomain: true }),
 }
 
 const user_status = {
@@ -171,7 +174,7 @@ const user_status = {
      *  * status: string,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/user_status/' + userId),
+    get: (userId) => axios.get(BASE_URL + '/user_status/' + userId, { crossdomain: true }),
 }
 
 export const API = {
