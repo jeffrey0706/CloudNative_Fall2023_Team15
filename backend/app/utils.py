@@ -17,7 +17,7 @@ def create_app(config_name='testing'):
     app.register_blueprint(parkinglot_bp)
     app.register_blueprint(profile_bp)
     app.register_blueprint(register_bp)
-    configure_reservation(conf)
+    # configure_reservation(conf)
     app.register_blueprint(reservation_bp)
     app.register_blueprint(spot_history_bp)
     app.register_blueprint(user_status_bp)
