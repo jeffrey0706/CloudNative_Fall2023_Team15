@@ -66,14 +66,4 @@ INSERT INTO Cars (UserID, Lisence)
 VALUES
 (1, 'AGE-6277'),
 (2, 'GFD-8542'),
-(3, 'ABC-8542');
-
--- INSERT INTO Appointments (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
--- VALUES
--- (1, 3, '2023-12-13 12:00:00', '2023-12-13 15:00:00', NULL, NULL),
--- (3, 2, '2023-12-13 12:00:00', '2023-12-13 13:00:00', '2023-12-13 12:50:00', '2023-12-13 14:50:00'),
--- (2, 2, '2023-12-13 12:00:00', '2023-12-13 13:00:00', '2023-12-13 12:50:00', NULL);
-
--- INSERT INTO Records (CarID, ParkingSpotID, StartTime, ExitTime)
--- VALUES
--- ();
+(3, 'EJF-8542');
