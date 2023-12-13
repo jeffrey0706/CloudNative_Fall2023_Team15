@@ -80,12 +80,12 @@ export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 
 
 // Testcase setup constants
 export const API_PATTERNS = {
-    MY_CAR: /my_car/,
-    PARKING_LOTS: /parking_lots/,
+    MY_CAR: /mycar/,
+    PARKING_LOTS: /parkinglots/,
     PROFILE: /profile/,
     RESERVATION: /reservation/,
     HISTORY: /history/,
-    USER_STATUS: /user_status/,
+    USER_STATUS: /userstatus/,
 };
 export const getApiType = (url) => {
     for (const [key, value] of Object.entries(API_PATTERNS)) {
