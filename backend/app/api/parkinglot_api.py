@@ -16,6 +16,8 @@ def parking_lots():
             {
                 parkinglot_id: int,
                 name: string,
+                longitude: float,
+                latitude: float,
                 current_capacity: int,
                 maximum_capacity: int,
                 current_handicap_capacity: int,
@@ -63,6 +65,8 @@ def parking_lots():
         status = {
             'parkinglot_id': parking_lot.ParkingLotID,
             'name': parking_lot.Name,
+            'longitude': parking_lot.Longitude,
+            'latitude': parking_lot.Latitude,
             'current_capacity': current_capacity[parking_lot.ParkingLotID],
             'maximum_capacity': parking_lot.SpotCounts,
             'current_handicap_capacity': current_handicap_capacity[parking_lot.ParkingLotID],
