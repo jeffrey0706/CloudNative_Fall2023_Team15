@@ -40,28 +40,35 @@ function GuardAnalysis() {
     ],
     datasets: [
       {
-        label: '1F',
+        label: 'All',
+        data: fakeGuardAnalysisData[0].map((_, col) => fakeGuardAnalysisData.reduce((sum, row) => sum + row[col], 0) / 4),
+        fill: false,
+        borderColor: 'rgb(0, 0, 0)',
+        tension: 0.1
+      },
+      {
+        label: 'A',
         data: fakeGuardAnalysisData[0],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
       },
       {
-        label: '2F',
+        label: 'B',
         data: fakeGuardAnalysisData[1],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
       },
       {
-        label: '3F',
+        label: 'C',
         data: fakeGuardAnalysisData[2],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
       },
       {
-        label: '4F',
+        label: 'D',
         data: fakeGuardAnalysisData[3],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
