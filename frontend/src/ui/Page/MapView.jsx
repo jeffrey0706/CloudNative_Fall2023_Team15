@@ -8,7 +8,7 @@ import { Button } from 'reactstrap';
 // import { API } from '../Api';
 
 // Testing constants
-import { fakeMapCenter, fakeLocationsCoordinate, fakeApiKey as API_KEY } from '../Constants';
+import { fakeMapCenter, fakeLocationsCoordinate, fakeApiKey } from '../Constants';
 import MapContainer from '../Component/Map';
 import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -18,6 +18,14 @@ import "./MapView.css";
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
 
 function MapView() {
+
+    let API_KEY;
+    try {
+        API_KEY = require('../../credentials').API_KEY;
+    } catch (error) {
+        console.log('No credentials file found. Using fake API key.')
+        API_KEY = fakeApiKey
+    }
 
     const navigate = useNavigate();
 

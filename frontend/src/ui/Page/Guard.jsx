@@ -28,9 +28,8 @@ function Guard() {
   }
 
   const onAnalysisClick = () => {
-    navigate('/guard/analysis');
+    navigate('/guard/analysis', { state: { AllPKLotName: fakeLocations } });
   }
-
 
   return (
     <>
