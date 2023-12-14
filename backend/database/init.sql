@@ -8,8 +8,8 @@ CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255) UNIQUE,
     SpotCounts int,  -- total spot, not available spot
-    longitude float,
-    latitude float,
+    Longitude float,
+    Latitude float,
     PRIMARY KEY (ParkingLotID)
 );
 
