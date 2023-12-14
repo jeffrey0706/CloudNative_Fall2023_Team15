@@ -21,7 +21,7 @@ function LoginPage() {
         <>
             <HeaderLogin />
             <div className="form-wrapper">
-                <Form>
+                <Form id="loginForm">
                     <FormGroup>
                         <Label for="Account"></Label>
                         <Input

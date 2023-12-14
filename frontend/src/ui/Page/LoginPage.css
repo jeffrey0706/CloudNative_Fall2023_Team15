@@ -1,6 +1,7 @@
 .form-wrapper {
-    width: 90%;
-    margin-left: 5%;
+    width: 80%;
+    max-width: 732px;
+    margin: auto;
 }
 
 .form-control {
@@ -14,6 +15,10 @@
 
 .up_shift {
     position: absolute;
-    bottom: 47vh;
+    bottom: 50vh;
     left: 0;
+}
+
+#loginForm .form-control:focus{
+    box-shadow: none;
 }
