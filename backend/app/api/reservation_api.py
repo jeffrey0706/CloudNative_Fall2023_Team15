@@ -17,7 +17,13 @@ def create_reservation():
         POST /reservation
         {
             car_id: int,
-            parking_spot_id: int,
+            car_license: string,
+            parking_spot_number: int,
+            area_name: string,
+            area_floor: int,
+            parking_lot_name: string,
+            reservation_time: datetime,
+            expired_time: datetime, 
         }
     Response
         {
