@@ -25,7 +25,7 @@ def parking_lots():
             }
         ]
 
-    TODO handicap, coordinate and address should be add into database
+    #TODO address should be add into database
     '''
     all_parking_lots: List[ParkingLot] = ParkingLot.query.all()
     current_capacity = {p.ParkingLotID: p.SpotCounts for p in all_parking_lots}
