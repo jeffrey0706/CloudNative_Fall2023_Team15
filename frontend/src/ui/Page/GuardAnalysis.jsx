@@ -1,5 +1,6 @@
 import './GuardAnalysis.css';
 import React, { useState } from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
@@ -13,6 +14,9 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 function GuardAnalysis() {
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { AllPKLotName } = location.state || {};
 
   const onBackIconClick = () => {
     if (window.history.state && window.history.state.idx > 0) {
@@ -80,10 +84,43 @@ function GuardAnalysis() {
     }
   };
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("All");
+
+  const toggle = () => {
+    setDropdownOpen(prevState => !prevState);
+  }
+
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+  };
+
   return (
     <>
       <Header togglerType={TOGGLER_TYPE.EXIT} />
       <SubHeader BACK_ICON={true} LEFT_STR='Analysis' RHS_INFO={INFO_TYPE.DATE} onBackIconClick={onBackIconClick} />
+
+      <div className="dropdown-wrapper">
+        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <DropdownToggle caret className="custom-dropdown-toggle" color="light">
+            {selectedItem}
+          </DropdownToggle>
+          <DropdownMenu className="custom-dropdown-menu">
+            {selectedItem !== "All" && <>
+              <DropdownItem className="drop-down-item" key="All" onClick={(e) => handleSelect("All", e)} >All</DropdownItem>
+              <DropdownItem divider />
+            </>
+            }
+            {AllPKLotName.map((item, index) => (
+              <>
+                <DropdownItem className="drop-down-item" key={item.name} onClick={(e) => handleSelect(item.name, e)} >{item.name}</DropdownItem>
+                {index !== AllPKLotName.length - 1 && <DropdownItem divider />}
+              </>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+
       <div className="line-chart-wrapper">
         <Line data={data} options={options} />
       </div>

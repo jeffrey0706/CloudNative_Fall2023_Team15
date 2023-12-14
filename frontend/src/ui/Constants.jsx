@@ -49,35 +49,41 @@ export const fakeLocations = [
     },
 ]
 export const fakeMapCenter = {
-    lat: 24.77330624179132, 
+    lat: 24.77330624179132,
     lng: 121.01276808736742
 };
 export const fakeLocationsCoordinate = [
     {
         name: 'Parking Lot 1',
-        lat: 24.767768461439623, 
+        lat: 24.767768461439623,
         lng: 121.01101130255014,
         maximum_capacity: 60,
         current_capacity: 30,
     },
     {
         name: 'Parking Lot 3',
-        lat: 24.766365616228974, 
+        lat: 24.766365616228974,
         lng: 121.00877970463625,
         maximum_capacity: 60,
         current_capacity: 56,
     },
     {
         name: 'Parking Lot 4',
-        lat: 24.773691410943822, 
-        lng: 120.9968492388658, 
+        lat: 24.773691410943822,
+        lng: 120.9968492388658,
         maximum_capacity: 60,
         current_capacity: 50,
     }
 ]
 export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 300"
-export const fakeGuardAnalysisData = [[65, 59, 80, 81, 56, 55, 65, 59, 80], [15, 19, 10, 21, 46, 57, 68, 39, 50], [65, 59, 30, 81, 36, 35, 65, 29, 20], [15, 46, 57, 78, 9, 50, 39, 10, 21]]
 export const fakeApiKey = 'fakeApiKey';
+
+export const fakeGuardAnalysisData = [
+    Array.from({ length: 9 }, () => Math.floor(50 + Math.random() * 50)),
+    Array.from({ length: 9 }, () => Math.floor(40 + Math.random() * 40)),
+    Array.from({ length: 9 }, () => Math.floor(20 + Math.random() * 30)),
+    Array.from({ length: 9 }, () => Math.floor(10 + Math.random() * 20))
+]
 
 // Testcase setup constants
 export const API_PATTERNS = {
