@@ -10,3 +10,4 @@ from .map_api import map_bp
 from .user_status_api import user_status_bp
 from .parked_api import parked_bp
 from .exited_api import exited_bp
+from .expired_alert_api import expired_alert_bp
