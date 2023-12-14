@@ -2,7 +2,7 @@ import './MyCarPage.css';
 import React from "react";
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader from '../Component/SubHeader';
-import carGIF from '../../assets/giphy.gif';
+import carGIF from '../../assets/MyCarNotFound.gif';
 
 
 function MyCarPage() {
