@@ -43,35 +43,35 @@ function GuardAnalysis() {
         label: 'All',
         data: fakeGuardAnalysisData[0].map((_, col) => fakeGuardAnalysisData.reduce((sum, row) => sum + row[col], 0) / 4),
         fill: false,
-        borderColor: 'rgb(0, 0, 0)',
-        tension: 0.1
+        borderColor: 'rgb(41, 44, 51)',
+        tension: 0.1,
       },
       {
-        label: 'A',
+        label: 'Area A',
         data: fakeGuardAnalysisData[0],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(109, 189, 191)',
         tension: 0.1
       },
       {
-        label: 'B',
+        label: 'Area B',
         data: fakeGuardAnalysisData[1],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(241, 163, 84)',
         tension: 0.1
       },
       {
-        label: 'C',
+        label: 'Area C',
         data: fakeGuardAnalysisData[2],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(87, 160, 229)',
         tension: 0.1
       },
       {
-        label: 'D',
+        label: 'Area D',
         data: fakeGuardAnalysisData[3],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(247, 207, 107)',
         tension: 0.1
       }
     ]
@@ -87,6 +87,11 @@ function GuardAnalysis() {
     plugins: {
       legend: {
         position: 'bottom', // Positioning the legend at the bottom
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'line',
+          padding: 18,
+        },
       }
     }
   };
