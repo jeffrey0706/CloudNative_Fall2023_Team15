@@ -15,7 +15,7 @@ const my_car = {
      *  * start_time: datetime,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/mycar/' + userId),
+    get: (userId) => axios.get(BASE_URL + '/mycar/' + userId, { crossdomain: true }),
 }
 
 const parking_lots = {
