@@ -12,9 +12,9 @@ import { fakeMapCenter, fakeLocationsCoordinate, fakeApiKey as API_KEY } from '.
 import MapContainer from '../Component/Map';
 import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
-import "./MapView.css"
+import "./MapView.css";
 
-import { API_KEY } from '../../credentials';
+// import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
 
 function MapView() {
@@ -26,11 +26,17 @@ function MapView() {
     const [mapRef, setMapRef] = useState(null);
 
     const onGoogleApiLoaded = (map) => {
+        var bounds = new window.google.maps.LatLngBounds();
+        for (var i = 0; i < fakeLocationsCoordinate.length; i++) {
+            bounds.extend(fakeLocationsCoordinate[i]);
+        }
+        map.fitBounds(bounds);
+        map.setCenter(bounds.getCenter());
         setMapRef(map);
     }
 
     const onMarkerClick = (markerId, lat, lng) => {
-        console.log('This is ->', markerId)
+        // console.log('This is ->', markerId)
         setSelectedPKLot(markerId);
         mapRef?.setZoom(18);
         mapRef?.setCenter({ lat, lng })

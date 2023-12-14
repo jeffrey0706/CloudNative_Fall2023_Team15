@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GoogleMap, LoadScript, OverlayView, OverlayViewF } from '@react-google-maps/api';
 import './Map.css';
 
