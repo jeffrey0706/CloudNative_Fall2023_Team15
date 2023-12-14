@@ -37,8 +37,17 @@ def exited():
     
     car_id = data.get('car_id')
     exit_time = data.get('exit_time')
-    exit_time = datetime.strptime(exit_time, '%Y-%m-%d %H:%M:%S')
-    exit_time = exit_time.replace(tzinfo=None)
+
+    try:
+        exit_time = datetime.strptime(exit_time, '%Y-%m-%d %H:%M:%S')
+        exit_time = exit_time.replace(tzinfo=None)
+    except (ValueError, TypeError):
+        return jsonify({'message': '`exit_time` should be in `%Y-%m-%d %H:%M:%S` format'}), 400
+
+    try:
+        car_id = int(car_id)
+    except ValueError:
+        return jsonify({'error': "Invalid 'car_id` parameter, must be an integer"}), 400
 
     attendance: Attendance = Attendance.query.filter_by(CarID=car_id).one_or_none()
     if not attendance:

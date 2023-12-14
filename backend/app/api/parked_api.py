@@ -37,8 +37,17 @@ def parked():
     
     car_id = data.get('car_id')
     parked_time = data.get('parked_time')
-    parked_time = datetime.strptime(parked_time, '%Y-%m-%d %H:%M:%S')
-    parked_time = parked_time.replace(tzinfo=None)
+
+    try:
+        parked_time = datetime.strptime(parked_time, '%Y-%m-%d %H:%M:%S')
+        parked_time = parked_time.replace(tzinfo=None)
+    except (ValueError, TypeError):
+        return jsonify({'message': '`parked_time` should be in `%Y-%m-%d %H:%M:%S` format'}), 400
+
+    try:
+        car_id = int(car_id)
+    except ValueError:
+        return jsonify({'error': "Invalid 'car_id` parameter, must be an integer"}), 400
 
     reservation: Reservation = Reservation.query.filter_by(CarID=car_id).one_or_none()
     if not reservation:
