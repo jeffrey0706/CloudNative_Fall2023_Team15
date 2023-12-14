@@ -1,24 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import './index.css';
-import reportWebVitals from './ui/reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import reportWebVitals from "./ui/reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import MainPage from './ui/Page/MainPage';
-import GuardMonitor from './ui/Page/GuardMonitor';
-import Guard from './ui/Page/Guard';
-import ReservePage from './ui/Page/ReservePage';
-import MapView from './ui/Page/MapView';
-import GuardMonitorDetail from './ui/Page/GuardMonitorDetail';
-import GuardAnalysis from './ui/Page/GuardAnalysis';
-import LoginPage from './ui/Page/LoginPage';
+import MainPage from "./ui/Page/MainPage";
+import GuardMonitor from "./ui/Page/GuardMonitor";
+import Guard from "./ui/Page/Guard";
+import ReservePage from "./ui/Page/ReservePage";
+import MapView from "./ui/Page/MapView";
+import GuardMonitorDetail from "./ui/Page/GuardMonitorDetail";
+import GuardAnalysis from "./ui/Page/GuardAnalysis";
+import LoginPage from "./ui/Page/LoginPage";
+import MyCarPage from "./ui/Page/MyCarPage";
 
 const router = createBrowserRouter([
-
   // Login
   {
     path: "login/",
@@ -40,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "reservation/",
     element: <ReservePage />,
+  },
+  {
+    path: "mycar/",
+    element: <MyCarPage />,
   },
 
   // Guard pages
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
 // E.g. <a href="/guard/">Guard</a> ==> <Link to="/guard/">Guard</Link>
 // S.t. it won't need another request to the server to update the page
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />

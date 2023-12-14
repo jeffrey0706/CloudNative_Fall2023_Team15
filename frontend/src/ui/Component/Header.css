@@ -61,7 +61,7 @@
 }
 
 /* TODO: Hover doesn't work on mobile */
-.header-modal .nav-link:hover {
+.active {
     color: black;
     border-left: black 0.1875rem solid;
 }
