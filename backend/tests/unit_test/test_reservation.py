@@ -47,6 +47,7 @@ class CheckReservationAPI(UnitTestSettingBase):
             'car_id': 1,
             'car_license': 'AGE-6277',
             'parking_spot_number': 10,
+            'parking_spot_id': 1,
             'area_name': 'Test Area',
             'area_floor': 2,
             'parking_lot_name': 'Test ParkingLot',
