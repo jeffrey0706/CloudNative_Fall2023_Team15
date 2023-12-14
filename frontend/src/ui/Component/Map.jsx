@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleMap, LoadScript, OverlayView, OverlayViewF } from '@react-google-maps/api';
 import './Map.css';
 
 const containerStyle = {
   width: '100vw',
-  height: '100vh',
+  height: '60vh',
   // overflow: 'visible !important'
 };
 
@@ -37,24 +37,64 @@ const MapContainer = (props) => {
   return (
     <LoadScript googleMapsApiKey={props.API_KEY}>
       <GoogleMap
+        onLoad={props.onGoogleApiLoaded}
         mapContainerStyle={containerStyle}
         center={props.center}
-        zoom={12}
+        zoom={15}
         options={{
+          styles: [
+            {
+              "featureType": "transit",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+            },
+            {
+              "featureType": "landscape.man_made",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+            },
+            {
+              "featureType": "water",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+            },
+            {
+              "featureType": "poi.business",
+              "stylers": [
+                { "visibility": "on" }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "stylers": [
+                { "color": "#ffffff" }
+              ]
+            },
+          ],
           disableDoubleClickZoom: true,
           clickableIcons: false,
           disableDefaultUI: true // This will disable the default UI including the search box
         }}
-        onGoogleApiLoaded={props.onGoogleApiLoaded}
       >
         {props.fakeLocations_coordinate.map(({ lat, lng, name, maximum_capacity, current_capacity }, index) => (
-          < CustomMarker
+          <CustomMarker
             key={name}
             id={name}
             position={{ lat, lng, key: name, name }}
             available_num={maximum_capacity - current_capacity}
             selectedPKLot={props.selectedPKLot}
-            onClick={() => props.onMarkerClick(name)}
+            onClick={() => {
+              props.onMarkerClick(name, lat, lng);
+            }}
           />
         ))}
         {/* Child components, like markers, info windows, etc. */}

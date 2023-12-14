@@ -49,28 +49,28 @@ export const fakeLocations = [
     },
 ]
 export const fakeMapCenter = {
-    lat: 25.0330,
-    lng: 121.5654
+    lat: 24.77330624179132, 
+    lng: 121.01276808736742
 };
 export const fakeLocationsCoordinate = [
     {
         name: 'Parking Lot 1',
-        lat: 25.0330,
-        lng: 121.6033,
+        lat: 24.767768461439623, 
+        lng: 121.01101130255014,
         maximum_capacity: 60,
         current_capacity: 30,
     },
     {
         name: 'Parking Lot 3',
-        lat: 25.0330,
-        lng: 121.6233,
+        lat: 24.766365616228974, 
+        lng: 121.00877970463625,
         maximum_capacity: 60,
         current_capacity: 56,
     },
     {
         name: 'Parking Lot 4',
-        lat: 25.0330,
-        lng: 121.6833,
+        lat: 24.773691410943822, 
+        lng: 120.9968492388658, 
         maximum_capacity: 60,
         current_capacity: 50,
     }

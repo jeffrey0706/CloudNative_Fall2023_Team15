@@ -1,5 +1,5 @@
 // import './MapView.css';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReserveButton from '../Component/ReserveButton';
 import { Button } from 'reactstrap';
@@ -14,9 +14,8 @@ import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css"
 
-// import { API_KEY } from '../../credentials';
+import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
-
 
 function MapView() {
 
@@ -24,16 +23,17 @@ function MapView() {
 
     const [selectedPKLot, setSelectedPKLot] = useState('Parking Lot 3');
 
-    const mapRef = useRef(null)
+    const [mapRef, setMapRef] = useState(null);
 
-    const onGoogleApiLoaded = ({ map, maps }) => {
-        mapRef.current = map
+    const onGoogleApiLoaded = (map) => {
+        setMapRef(map);
     }
 
-    const onMarkerClick = (markerId) => {
+    const onMarkerClick = (markerId, lat, lng) => {
         console.log('This is ->', markerId)
         setSelectedPKLot(markerId);
-        // mapRef.current.setCenter({ lat, lng })
+        mapRef?.setZoom(18);
+        mapRef?.setCenter({ lat, lng })
     }
 
     const onBackIconClick = () => {
