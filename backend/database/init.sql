@@ -63,8 +63,6 @@ CREATE TABLE Reservations (
     ParkingSpotID int NOT NULL,
     ReservationTime DATETIME,
     ExpiredTime DATETIME,
-    ParkTime DATETIME,
-    ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
@@ -98,7 +96,6 @@ ON SCHEDULE EVERY 30 SECOND
 DO
     DELETE FROM Reservations
     WHERE (DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW());
-<<<<<<< HEAD
 
 CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
 AFTER DELETE ON Reservations
@@ -118,25 +115,3 @@ FOR EACH ROW
     )
     WHERE ((CarID=OLD.CarID) AND (ParkingSpotID=OLD.ParkingSpotID))
     ORDER BY RecordID DESC LIMIT 1;
-
-
-    CREATE TRIGGER IF NOT EXISTS AtferDeleteFromAttendances
-    AFTER DELETE ON Attendances
-    FOR EACH ROW
-        UPDATE Records
-        SET ParkTime = (
-            OLD.ParkTime
-        ),
-        ExitTime = (
-            OLD.ExitTime
-        )
-        WHERE ((CarID=OLD.CarID) AND (ParkingSpotID=OLD.ParkingSpotID))
-        ORDER BY RecordID DESC LIMIT 1;
-=======
-
-CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
-AFTER DELETE ON Reservations
-FOR EACH ROW
-INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime)
-VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime);
->>>>>>> a1bf260d605808528216cc068e26c76cf30be7d0
