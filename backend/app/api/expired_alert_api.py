@@ -35,7 +35,7 @@ def expired_alert():
     for attendance in attendances:
         if datetime.now() - attendance.ParkTime > Expired_time_threshold:
             car: Car = Car.query.filter_by(CarID=attendance.CarID).first()
-            parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=reservation.ParkingSpotID).first()
+            parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=attendance.ParkingSpotID).first()
             area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
             parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
 
