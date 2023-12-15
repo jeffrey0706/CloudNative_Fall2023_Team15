@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from tests.unit_test.base import UnitTestSettingBase
-from app.models import User, Car, Attendance, ParkingSpot, Area, ParkingLot, Reservation
+from app.models import Attendance, ParkingSpot, Area, ParkingLot, Reservation
 
 class CheckMapAPI(UnitTestSettingBase):
     def test_get_map_missing_parameter_error(self):
