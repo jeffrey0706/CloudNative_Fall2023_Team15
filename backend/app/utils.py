@@ -26,6 +26,7 @@ def create_app(config_name='testing'):
     app.register_blueprint(map_bp)
     app.register_blueprint(parked_bp)
     app.register_blueprint(exited_bp)
+    app.register_blueprint(expired_alert_bp)
 
     db.init_app(app)
 
