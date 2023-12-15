@@ -47,7 +47,7 @@ def parked():
     try:
         car_id = int(car_id)
     except ValueError:
-        return jsonify({'error': "Invalid 'car_id` parameter, must be an integer"}), 400
+        return jsonify({'error': "Invalid `car_id` parameter, must be an integer"}), 400
 
     reservation: Reservation = Reservation.query.filter_by(CarID=car_id).one_or_none()
     if not reservation:

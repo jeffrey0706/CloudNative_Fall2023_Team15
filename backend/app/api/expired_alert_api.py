@@ -1,14 +1,15 @@
+from typing import List
 from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
 
 from datetime import datetime, timedelta
 
-from app.models import Attendance, Car, Reservation, Area, ParkingSpot, ParkingLot
+from app.models import Attendance, Car, Area, ParkingSpot, ParkingLot
 from app import db
 
 expired_alert_bp = Blueprint('expired_alert', __name__)
 
-Expired_time_threshold = timedelta(days=3)
+expired_time_threshold = timedelta(days=3)
 
 @expired_alert_bp.route('/expired_alert', methods=['GET'])
 def expired_alert():
@@ -25,20 +26,18 @@ def expired_alert():
                 area_floor: int,
                 parking_lot_name: string,
                 park_time: datetime,
-                TotalTime: timedelta,
+                total_time: int // in seconds,
             }
         ]
     '''
-    attendances: Attendance = Attendance.query.all()
+    attendances: List[Attendance] = Attendance.query.all()
     expired_alerts = []
-
     for attendance in attendances:
-        if datetime.now() - attendance.ParkTime > Expired_time_threshold:
+        if datetime.now() - attendance.ParkTime > expired_time_threshold:
             car: Car = Car.query.filter_by(CarID=attendance.CarID).first()
             parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=attendance.ParkingSpotID).first()
             area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
             parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
-
             expired_alerts.append({
                 'car_id': attendance.CarID,
                 'car_license': car.Lisence,
@@ -47,7 +46,7 @@ def expired_alert():
                 'area_floor': area.Floor,
                 'parking_lot_name': parking_lot.Name,
                 'park_time': attendance.ParkTime,
-                'TotalTime': datetime.now() - attendance.ParkTime,
+                'total_time': (datetime.now() - attendance.ParkTime).total_seconds(),
             })
 
     return jsonify(expired_alerts)
