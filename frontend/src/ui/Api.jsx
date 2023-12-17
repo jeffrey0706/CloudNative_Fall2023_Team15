@@ -29,7 +29,7 @@ const parking_lots = {
      *  * priority: bool,
      *  }
      */
-    get: () => axios.get(BASE_URL + '/parkinglots'),
+    get: () => axios.get(BASE_URL + '/parkinglots', { crossdomain: true }),
 }
 
 const profile = {
@@ -174,7 +174,7 @@ const user_status = {
      *  * status: string,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/userstatus/' + userId, { crossdomain: true }),
+    get: (userId) => axios.get(BASE_URL + '/user_status/' + userId, { crossdomain: true }),
 }
 
 const login = {
@@ -197,6 +197,27 @@ const login = {
         ),
 }
 
+const map = {
+    /**
+     * @param {number} parkinglot_id
+     * @param {number} floor
+     * 
+     * @returns {Promise}
+     * data: {
+     *  * spot_id: int,
+     *  * spot_number: int,
+     *  * area_id: int, 
+     *  * area_name: string,
+     *  * status: int, //  EMPTY(0), OCCUPIED(1), APPROACHING(2), PARKED(3)
+     * }
+     */
+    get: (parkinglot_id, floor) =>  axios.get(
+        BASE_URL + '/map',
+        { params: { parkinglot_id, floor }},
+        { crossdomain: true }
+    ),
+}
+
 export const API = {
     my_car: my_car,
     parking_lots: parking_lots,
@@ -205,4 +226,5 @@ export const API = {
     history: history,
     user_status: user_status,
     login: login,
+    map: map,
 };
