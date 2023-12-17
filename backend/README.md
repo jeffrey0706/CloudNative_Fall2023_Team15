@@ -120,14 +120,24 @@ POST: /reservation
 // request
 {
     car_id: int,
-    parking_spot_id: int,
+    parking_lot_id: int,
 }
 // response
 {
-    reservation_id: int,
+    car_id: int,
+    car_license: string,
+    parking_spot_number: int,
+    parking_spot_id: int,
+    area_name: string,
+    area_floor: int,
+    parking_lot_name: string,
+    reservation_time: datetime,
+    expired_time: datetime, 
 }
 // Error code:
-400: Missing required parameter: 'car_id' or 'parking_spot_id'
+400: Missing required parameter: 'car_id' or 'parking_lot_id'
+404: Car or parkinglot not found
+409: No available parking spot
 503: Failed to create new reservation
 ```
 
