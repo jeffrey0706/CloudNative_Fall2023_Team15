@@ -13,7 +13,7 @@ import MapView from "./ui/Page/MapView";
 import GuardMonitorDetail from "./ui/Page/GuardMonitorDetail";
 import GuardAnalysis from "./ui/Page/GuardAnalysis";
 import LoginPage from "./ui/Page/LoginPage";
-import MyCarPage from "./ui/Page/MyCarPage";
+import ErrorPage from "./ui/Page/ErrorPage";
 
 const router = createBrowserRouter([
   // Login
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
-    errorElement: <MainPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "map/",
@@ -38,10 +38,10 @@ const router = createBrowserRouter([
     path: "reservation/",
     element: <ReservePage />,
   },
-  {
-    path: "mycar/",
-    element: <MyCarPage />,
-  },
+  // {
+  //   path: "mycar/",
+  //   element: <MyCarPage />,
+  // },
 
   // Guard pages
   {
