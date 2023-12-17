@@ -62,7 +62,6 @@ def create_reservation():
     reservations: List[Reservation] = Reservation.query.filter(Reservation.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
     attendances: List[Attendance] = Attendance.query.filter(Attendance.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
 
-    areas = {a.AreaID: a for a in areas}
     reservations = {r.ParkingSpotID: r for r in reservations}
     attendances = {a.ParkingSpotID: a for a in attendances}
 
