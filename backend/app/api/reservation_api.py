@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
 import datetime
+from typing import List
 
 from app.models import Reservation, Area, ParkingSpot, ParkingLot, Car, Attendance
 from app import db
@@ -17,6 +18,11 @@ def create_reservation():
         POST /reservation
         {
             car_id: int,
+            parking_lot_id: int,
+        }
+    Response
+        {
+            car_id: int,
             car_license: string,
             parking_spot_number: int,
             parking_spot_id: int,
@@ -26,10 +32,6 @@ def create_reservation():
             reservation_time: datetime,
             expired_time: datetime, 
         }
-    Response
-        {
-            reservation_id: int
-        }
     '''
     data = request.get_json()
 
@@ -38,29 +40,44 @@ def create_reservation():
             'error': 'Bad Request',
             'message': 'Missing required parameter: car_id'
         }), 400
-    if 'parking_spot_id' not in data:
+    if 'parking_lot_id' not in data:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Missing required parameter: parking_spot_id'
+            'message': 'Missing required parameter: parking_lot_id'
         }), 400
 
-    car: Car = Car.query.filter_by(CarID=data.get('car_id')).first()
+    car_id = data.get('car_id')
+    parking_lot_id = data.get('parking_lot_id')
+
+    car: Car = Car.query.filter_by(CarID=car_id).first()
     if car is None:
         return jsonify({'message': 'Car not found'}), 404
     
-    parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
-    if parking_spot is None:
-        return jsonify({'message': 'Parking spot not found'}), 404
+    parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=parking_lot_id).first()
+    if parking_lot is None:
+        return jsonify({'message': 'Parking lot not found'}), 404
     
-    current_spot_reservation: Reservation = Reservation.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
-    current_spot_attendance: Attendance = Attendance.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
-    if current_spot_reservation or current_spot_attendance:
-        return jsonify({'message': 'This parking spot is not available'}), 409
+    areas: List[Area] = Area.query.filter_by(ParkingLotID=parking_lot_id).all()
+    parking_spots: List[ParkingSpot] = ParkingSpot.query.filter(ParkingSpot.AreaID.in_([a.AreaID for a in areas])).all()
+    reservations: List[Reservation] = Reservation.query.filter(Reservation.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
+    attendances: List[Attendance] = Attendance.query.filter(Attendance.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
 
-    current_car_reservation: Reservation = Reservation.query.filter_by(CarID=data.get('car_id')).first()
-    current_car_attendance: Attendance = Attendance.query.filter_by(CarID=data.get('car_id')).first()
-    if current_car_reservation or current_car_attendance:
-        return jsonify({'message': 'This car has already reserved an spot or parked'}), 409
+    areas = {a.AreaID: a for a in areas}
+    reservations = {r.ParkingSpotID: r for r in reservations}
+    attendances = {a.ParkingSpotID: a for a in attendances}
+
+    # Check available parking spots
+    available_spots = []
+    for ps in parking_spots:
+        if ps.ParkingSpotID in reservations or ps.ParkingSpotID in attendances:
+            continue
+        available_spots.append(ps)
+
+    if len(available_spots) == 0:
+        return jsonify({'message': 'No available parking spot'}), 409
+    
+    # Randomly choose a parking spot
+    parking_spot = available_spots[0]
 
     reservation: Reservation = Reservation(
         CarID=data.get('car_id'),
@@ -74,7 +91,6 @@ def create_reservation():
         db.session.commit()
         
         area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
-        parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
 
         return jsonify({
             'car_id': reservation.CarID,

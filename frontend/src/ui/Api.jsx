@@ -122,18 +122,18 @@ const reservation = {
 
     /**
      * @param {number} carId
-     * @param {number} parkingSpotId
+     * @param {number} parkingLotId
      * 
      * @returns {Promise}
      *  data: {  
      *  * reservation_id: int,  
      *  }
      */
-    post: (carId, parkingSpotId) => axios.post(
+    post: (carId, parkingLotId) => axios.post(
             BASE_URL + '/reservation',
             {
                 car_id: carId,
-                parking_spot_id: parkingSpotId,
+                parking_lot_id: parkingLotId,
             },
             { crossdomain: true }
         ),

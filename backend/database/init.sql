@@ -60,12 +60,12 @@ CREATE TABLE Cars (
 
 CREATE TABLE Reservations (
     CarID int NOT NULL,
-    ParkingSpotID int NOT NULL,
+    ParkingSpotID int NOT NULL UNIQUE,
     ReservationTime DATETIME,
     ExpiredTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+    PRIMARY KEY (CarID)
 );
 
 CREATE TABLE Attendances (
@@ -103,6 +103,8 @@ FOR EACH ROW
     INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
     VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime, NULL, NULL);
 
+DELIMITER //
+
 CREATE TRIGGER IF NOT EXISTS  AtferDeleteFromAttendances
 AFTER DELETE ON Attendances
 FOR EACH ROW
@@ -123,11 +125,13 @@ BEGIN
 		WHERE CarID = OLD.CarID
 		    AND ParkingSpotID = OLD.ParkingSpotID
 		    AND ReservationTime <= OLD.ParkTime
-            AND ExpiredTime >= OLD.ParkTime;
+            AND ExpiredTime >= OLD.ParkTime
 		ORDER BY RecordID DESC
 		LIMIT 1;
 	ELSE
 		INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
 		VALUES (OLD.CarID, OLD.ParkingSpotID, NULL, NULL, OLD.ParkTime, OLD.ExitTime);
 	END IF;
-END;
+END //
+
+DELIMITER ;
