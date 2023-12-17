@@ -8,4 +8,4 @@ Step 3. Send a merge request only after testings are passed
 
 ## Build & Test
 Step 1. Run `npm install && npm install --only=dev`  
-Step 2. Run `npm run start` for starting the app or `npm run test` for testing  
+Step 2. Run `npm run start` for starting the app or `npm run test` for testing  or `npm run test -- --coverage --watchAll` to get coverage

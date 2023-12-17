@@ -55,13 +55,13 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
             <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink exact to="/" activeClassName="active" tag={Link}>Home</NavLink>
+                  <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink exact to="/mycar" activeClassName="active" tag={Link}>My Car</NavLink>
+                  <NavLink to="/mycar" tag={Link}>My Car</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink exact to="/reservation" activeClassName="active" tag={Link}>My Reservation</NavLink>
+                  <NavLink to="/reservation" tag={Link}>My Reservation</NavLink>
                 </NavItem>
               </Nav>
             </Modal>
