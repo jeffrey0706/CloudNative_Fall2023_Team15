@@ -60,7 +60,8 @@ test.each([fakeExpiredTime, fakeAvailableTime])('Fetching correct data with time
     // Action
     const licensePlateElement = await screen.findByText(licensePlate);
     const locationElement = await screen.findByText(parkingLotName);
-    const parkingSpotElement = await screen.findByText(areaName + parkingSpotNumber + ' (Floor ' + floor + ')');
+    const parkingSpotNumberExpand = parkingSpotNumber < 10 ? '0' + parkingSpotNumber : parkingSpotNumber;
+    const parkingSpotElement = await screen.findByText(areaName + parkingSpotNumberExpand + ' (Floor ' + floor + ')');
     const expiredTimeElement = await screen.findByText(endTime.toJSON());
     const expiredElement = await waitFor(() => screen.queryByText('Expired'));
     const reserveAvailable = await waitFor(() => screen.queryByText('Cancel the Reservation'));

@@ -11,7 +11,7 @@ export const INFO_TYPE = {
   ANALYSIS: 3,
 };
 
-function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE.NONE, onBackIconClick=()=>{} }) {
+function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE.NONE, onBackIconClick = () => { }, onAnalysisClick = () => { } }) {
 
   const render_right = (RHS_INFO) => {
     switch (RHS_INFO) {
@@ -42,7 +42,7 @@ function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE
         )
       case INFO_TYPE.ANALYSIS:
         return (
-          <div className="DashBoard-Subtitle">
+          <div className="DashBoard-Subtitle" onClick={onAnalysisClick} >
             <img className='AnalysisImg' src={analysisImage} alt="" />
           </div >
         )
@@ -56,7 +56,7 @@ function SubHeader({ BACK_ICON = false, LEFT_STR = 'LOREM', RHS_INFO = INFO_TYPE
     if (BACK_ICON) {
       return (
         <div className="DashBoard-Title">
-          <IoIosArrowRoundBack onClick={onBackIconClick}/>
+          <IoIosArrowRoundBack onClick={onBackIconClick} />
           {LEFT_STR}
         </div>
       )

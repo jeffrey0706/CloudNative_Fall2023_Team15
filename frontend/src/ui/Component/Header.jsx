@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
+import { NavLink as Link } from 'react-router-dom';
 
 export const TOGGLER_TYPE = {
   COLLAPSE: 0,
@@ -54,13 +55,13 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
             <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink href="#Home">Home</NavLink>
+                  <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="#MyCar">My Car</NavLink>
+                  <NavLink to="/mycar" tag={Link}>My Car</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="#MyReservation">My Reservation</NavLink>
+                  <NavLink to="/reservation" tag={Link}>My Reservation</NavLink>
                 </NavItem>
               </Nav>
             </Modal>
