@@ -48,6 +48,9 @@
       "last 1 safari version"
     ]
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "jest-watch-typeahead": "^0.6.5"
