@@ -36,3 +36,8 @@
     font-weight: 500;
     font-size: 0.9rem;
 }
+
+.loc-list-tr {
+    height: 3.125rem;
+    border-color: transparent;
+}
