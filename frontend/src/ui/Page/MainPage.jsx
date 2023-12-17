@@ -1,5 +1,6 @@
 import './MainPage.css';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Modal, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
@@ -9,36 +10,89 @@ import ReserveButton from '../Component/ReserveButton';
 // Production API
 import { API } from '../Api';
 // Testing constants
-import { userId, fakeLocations } from '../Constants';
+import { userId, reservationId as carId } from '../Constants';
 
 function MainPage() {
-
   const navigate = useNavigate();
+  const [locations, setLocations] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState({});
+  const [userStatus, setUserStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const [statusButton, setStatusButton] = useState(null);
 
-  const [currentPlace, setCurrentPlace] = React.useState('');
   useEffect(() => {
     API.profile.get(userId)
-      .then((res) => setCurrentPlace(res.data.preference_lot_name))
-      .catch(() => setCurrentPlace(''));
+      .then((res) => {
+        const { data } = res;
+        setCurrentLocation({
+          'name': data.preference_lot_name,
+          'parkinglot_id': data.preference_lot_id,
+        });
+      })
+      .catch((err) => setError(err));
   }, []);
-
-  const [locations, setLocations] = React.useState([]);
+  
   useEffect(() => {
     API.parking_lots.get()
       .then((res) => setLocations(res.data))
-      .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
+      .catch((err) => setError(err));
   }, []);
 
-  const reserveBtnClick = () => navigate('/reservation');
+  useEffect(() => {
+    API.user_status.get(userId)
+    .then((res) => {
+      setUserStatus(res.data.status); 
+      switch (userStatus) {
+        case 1: // RESERVED
+        setStatusButton(
+            <>
+              <ReserveButton text='My Reservation' color='danger' outline={false} onClick={() => navigate(`/reservation?carId=${carId}`)} />
+              <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
+            </>
+          );
+          break;
+        case 2: // PARKED
+        setStatusButton(
+            <>
+              <ReserveButton text='My Car' color='danger' outline={false} onClick={() => navigate(`/mycar?userId=${userId}`)} />
+              <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
+            </>
+          );
+          break;
+        default: // NONE, EXPIRED
+        setStatusButton(<ReserveButton text='Reserve' color='danger' outline={false} onClick={reserve} />);
+      }
+    })
+    .catch((err) => setError(err));
+  }, [userStatus]);
+
+  const reserve = () => {
+    API.reservation.post(userId, currentLocation.parkinglot_id)
+      .then((res) => navigate(`/reservation?carId=${carId}`))
+      .catch((err) => {setError(err); console.log('Error: ', err);});
+  };
+  const newReserve = async() => {
+    await API.reservation.delete(carId)
+      .then(() => console.log('Reservation deleted'))
+      .catch((err) => setError(err));
+    reserve();
+  };
   const mapBtnClick = () => navigate('/map');
+  const onModalClose = () => setError(null);
 
   return (
     <>
       <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
+      {error && <Modal isOpen={error !== null} toggle={onModalClose}>
+        <ModalBody style={{ backgroundColor: 'rgb(243, 216, 218)', color: 'rgb(121, 40, 44)' }}>
+            {error.message}
+        </ModalBody>
+      </Modal>}
       <div className='body-wrapper'>
-        <Location currentPlace={currentPlace} onClick={mapBtnClick} />
-        <LocationList locations={locations} />
-        <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+        <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
+        <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
+        {statusButton}
+        {/* <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} /> */}
       </div>
     </>
   );

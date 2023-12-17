@@ -10,10 +10,12 @@ import {
   Modal,
 } from 'reactstrap';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { NavLink as Link } from 'react-router-dom';
+import { reservationId, userId } from '../Constants'; // TODO: Remove fake userId
 
 export const TOGGLER_TYPE = {
   COLLAPSE: 0,
@@ -21,7 +23,7 @@ export const TOGGLER_TYPE = {
 };
 
 function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
-
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const togglerClicked = () => {
     setModal(!modal);
@@ -58,10 +60,10 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
                   <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to="/mycar" tag={Link}>My Car</NavLink>
+                  <NavLink to={`/mycar?userId=${userId}`} tag={Link}>My Car</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to="/reservation" tag={Link}>My Reservation</NavLink>
+                  <NavLink to={`/reservation?carId=${reservationId}`} tag={Link}>My Reservation</NavLink>
                 </NavItem>
               </Nav>
             </Modal>
@@ -80,7 +82,7 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
 
   return (
     <Navbar light expand="md" className='header-nav'>
-      <NavbarBrand>
+      <NavbarBrand onClick={() => navigate('/')}>
         <FaCarSide size={20}/>
         <div className='home-nav'>Quick Parking</div>
       </NavbarBrand>

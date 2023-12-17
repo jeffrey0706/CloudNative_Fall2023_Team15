@@ -13,24 +13,30 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
     const getStatusContent = (status, index) => {
         let lot_code = `${SECTION}0${index + 1}`;
         switch (status) {
-            case LOT_STATUS.EMPTY:
-                return '';
-            case LOT_STATUS.OCCUPIED:
+            // case LOT_STATUS.EMPTY:
+            //     return '';
+            case LOT_STATUS.PARKED:
                 return <img src={CarImg} alt="Occupied" />;
+            // case LOT_STATUS.APPROACHING:
+            //     return (
+            //         <div className="approaching">
+            //             {lot_code}
+            //         </div>
+            //     );
             case LOT_STATUS.APPROACHING:
                 return (
-                    <div className="approaching">
+                    <div className="appoarching">
                         {lot_code}
                     </div>
                 );
-            case LOT_STATUS.PARKED:
-                return (
-                    <div className="parked">
-                        {lot_code}
-                    </div>
-                );
+            case LOT_STATUS.EMPTY:
+            case LOT_STATUS.OCCUPIED:
             default:
-                return '';
+                return (
+                    <div className="others">
+                        {lot_code}
+                    </div>
+                );
         }
     };
 

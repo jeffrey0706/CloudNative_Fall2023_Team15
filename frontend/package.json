@@ -12,6 +12,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.3.2",
     "chart.js": "^4.4.1",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-circular-progressbar": "^2.1.0",
@@ -54,6 +55,9 @@
   },
   "jest": {
     "resetMocks": false,
-    "coverageReporters": ["json", "html"]
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   }
 }

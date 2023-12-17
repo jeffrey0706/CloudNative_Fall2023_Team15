@@ -1,5 +1,14 @@
+.body-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+    /* height: 100vh; */
+
+}
+
 .reserve-button-container {
-    position: fixed;
+    /* position: fixed; */
     bottom: 7vh;
     left: 0;
 }

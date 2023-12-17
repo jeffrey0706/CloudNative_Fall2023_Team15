@@ -1,6 +1,6 @@
 // Testing constants, which shold be removed after backend is implemented
 export const userId = 1;
-export const reservationId = 2; // It should be carId
+export const reservationId = 1; // It should be carId
 export const fakeLocations = [
     {
         parkinglot_id: 0,
@@ -92,7 +92,7 @@ export const API_PATTERNS = {
     PROFILE: /profile/,
     RESERVATION: /reservation/,
     HISTORY: /history/,
-    USER_STATUS: /userstatus/,
+    USER_STATUS: /user_status/,
 };
 export const getApiType = (url) => {
     for (const [key, value] of Object.entries(API_PATTERNS)) {
@@ -103,5 +103,19 @@ export const getApiType = (url) => {
     return undefined;
 };
 
+// User status transfer function
+export const codeToStatus = (code) => {
+    switch (code) {
+        case 1:
+            return "RESERVED";
+        case 2:
+            return "PARKED";
+        case 3: 
+            return "EXPIRED";
+        default:
+            return "NONE";
+    }
+}
+
 // Production constants, which may still need to be changed
-export const BASE_URL = 'http://localhost:5000';
+export const BASE_URL = 'http://127.0.0.1:5000';

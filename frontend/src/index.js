@@ -16,6 +16,12 @@ import LoginPage from "./ui/Page/LoginPage";
 import ErrorPage from "./ui/Page/ErrorPage";
 
 const router = createBrowserRouter([
+  // Error page
+  {
+    path: "error/",
+    element: <ErrorPage />,
+  },
+
   // Login
   {
     path: "login/",
