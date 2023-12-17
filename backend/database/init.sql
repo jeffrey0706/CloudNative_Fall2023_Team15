@@ -8,8 +8,8 @@ CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255) UNIQUE,
     SpotCounts int,  -- total spot, not available spot
-    longitude float,
-    latitude float,
+    Longitude float,
+    Latitude float,
     PRIMARY KEY (ParkingLotID)
 );
 
@@ -63,8 +63,6 @@ CREATE TABLE Reservations (
     ParkingSpotID int NOT NULL,
     ReservationTime DATETIME,
     ExpiredTime DATETIME,
-    ParkTime DATETIME,
-    ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
     CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
@@ -81,7 +79,7 @@ CREATE TABLE Attendances (
 );
 
 CREATE TABLE Records (
-    RecordsID int AUTO_INCREMENT,
+    RecordID int AUTO_INCREMENT,
     CarID int NOT NULL,
     ParkingSpotID int NOT NULL,
     ReservationTime DATETIME,
@@ -90,17 +88,46 @@ CREATE TABLE Records (
     ExitTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    PRIMARY KEY (RecordsID)
+    PRIMARY KEY (RecordID)
 );
 
 CREATE EVENT IF NOT EXISTS DeleteExpiredReservationsEvent
 ON SCHEDULE EVERY 30 SECOND
 DO
     DELETE FROM Reservations
-    WHERE (DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW());
+    WHERE DATE_ADD(ExpiredTime, INTERVAL 2 HOUR) <= NOW();
 
 CREATE TRIGGER IF NOT EXISTS AtferDeleteFromReservations
 AFTER DELETE ON Reservations
 FOR EACH ROW
-INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime)
-VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime);
+    INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
+    VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime, NULL, NULL);
+
+CREATE TRIGGER IF NOT EXISTS  AtferDeleteFromAttendances
+AFTER DELETE ON Attendances
+FOR EACH ROW
+BEGIN
+    DECLARE recordCount INT;
+
+	SELECT COUNT(*) INTO recordCount
+	FROM Records
+	WHERE CarID = OLD.CarID
+        AND ParkingSpotID = OLD.ParkingSpotID
+        AND ReservationTime <= OLD.ParkTime
+        AND ExpiredTime >= OLD.ParkTime;
+
+	IF recordCount > 0 THEN
+		UPDATE Records
+		SET ParkTime = OLD.ParkTime,
+			ExitTime = OLD.ExitTime
+		WHERE CarID = OLD.CarID
+		    AND ParkingSpotID = OLD.ParkingSpotID
+		    AND ReservationTime <= OLD.ParkTime
+            AND ExpiredTime >= OLD.ParkTime;
+		ORDER BY RecordID DESC
+		LIMIT 1;
+	ELSE
+		INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
+		VALUES (OLD.CarID, OLD.ParkingSpotID, NULL, NULL, OLD.ParkTime, OLD.ExitTime);
+	END IF;
+END;
