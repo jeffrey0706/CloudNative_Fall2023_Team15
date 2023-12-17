@@ -1,4 +1,3 @@
-import './GuardMonitor.css';
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
@@ -13,13 +12,15 @@ function GuardMonitor() { // TODO: How to access the data
   const location = useLocation();
   const { PKLotName } = location.state || {};
 
-  const floors = ['1F', '2F', '3F', '4F'];
   const layout = [['A', 'B'], ['C', 'D']];
+
+  const floors = ['1F', '2F', '3F', '4F'];
   const [currentFloor, setCurrentFloor] = useState(floors[0]);
   const onFloorBtnClick = (event) => {
     setCurrentFloor(event.target.innerText);
     LotPosition = PKLotName + ' -> ' + currentFloor;
   }
+
   const onBackIconClick = () => {
     if (window.history.state && window.history.state.idx > 0) {
       navigate(-1);

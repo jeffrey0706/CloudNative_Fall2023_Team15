@@ -16,3 +16,7 @@
     align-items: center;
     --bs-btn-padding-x: 0;
 }
+
+.map-view-wrapper * {
+    overflow: visible;
+}

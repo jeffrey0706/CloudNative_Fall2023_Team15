@@ -15,7 +15,7 @@ const my_car = {
      *  * start_time: datetime,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/mycar/' + userId),
+    get: (userId) => axios.get(BASE_URL + '/mycar/' + userId, { crossdomain: true }),
 }
 
 const parking_lots = {
@@ -49,7 +49,7 @@ const profile = {
      *  * expired: datetime,  
      *  }
      */
-    get: (userId) => axios.get(BASE_URL + '/profile/' + userId, { crossdomain: true }),
+    get: (userId) => axios.get(BASE_URL + '/profile/' + userId, { crossDomain: true }),
 
     /**
      * @param {number} userId
@@ -177,6 +177,26 @@ const user_status = {
     get: (userId) => axios.get(BASE_URL + '/userstatus/' + userId, { crossdomain: true }),
 }
 
+const login = {
+    /**
+     * @param {string} account
+     * @param {string} password
+     * 
+     * @returns {Promise}
+     *  data: {  
+     *  * user_id: int,  
+     *  }
+     */
+    post: (account, password) => axios.post(
+            BASE_URL + '/login',
+            {
+                account: account,
+                password: password,
+            },
+            { crossdomain: true }
+        ),
+}
+
 export const API = {
     my_car: my_car,
     parking_lots: parking_lots,
@@ -184,4 +204,5 @@ export const API = {
     reservation: reservation,
     history: history,
     user_status: user_status,
+    login: login,
 };

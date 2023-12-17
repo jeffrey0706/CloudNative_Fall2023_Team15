@@ -1,27 +1,27 @@
 import './ParkingStatus.css';
 import React from 'react';
+import {
+    Table,
+    Row,
+    Col
+} from 'reactstrap';
 
 function ParkingStatus({ parking_status }) {
-
-    const keys = Object.keys(parking_status).map(key => (
-        <div key={key} className="item-key">
-            {key.replace(/_/g, ' ')}
-        </div>
-    ));
-
-    const values = Object.keys(parking_status).map(key => (
-        <div key={key} className="item-value">
-            {parking_status[key]}
-        </div>
-    ));
-
     return (
-        <div className="wrap-container">
-            <div className="parking-status">
-                <div className="keys-container">{keys}</div>
-                <div className="values-container">{values}</div>
-            </div>
-        </div>
+        <Row style={{ 'marginTop': '1.5rem' }}>
+            <Col xs={{ size: 10, offset: 1 }}>
+                <Table>
+                    <tbody>
+                        {Object.keys(parking_status).map(key => (
+                            <tr className='loc-list-tr' key={key}>
+                                <td>{key.replace(/_/g, ' ')}</td>
+                                <td>{parking_status[key]}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </Col>
+        </Row>
     );
 }
 

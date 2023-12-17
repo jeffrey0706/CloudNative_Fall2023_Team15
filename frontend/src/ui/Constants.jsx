@@ -49,43 +49,50 @@ export const fakeLocations = [
     },
 ]
 export const fakeMapCenter = {
-    lat: 25.0330,
-    lng: 121.5654
+    lat: 24.77330624179132,
+    lng: 121.01276808736742
 };
 export const fakeLocationsCoordinate = [
     {
         name: 'Parking Lot 1',
-        lat: 25.0330,
-        lng: 121.6033,
+        lat: 24.767768461439623,
+        lng: 121.01101130255014,
         maximum_capacity: 60,
         current_capacity: 30,
     },
     {
         name: 'Parking Lot 3',
-        lat: 25.0330,
-        lng: 121.6233,
+        lat: 24.766365616228974,
+        lng: 121.00877970463625,
         maximum_capacity: 60,
         current_capacity: 56,
     },
     {
         name: 'Parking Lot 4',
-        lat: 25.0330,
-        lng: 121.6833,
+        lat: 24.773691410943822,
+        lng: 120.9968492388658,
         maximum_capacity: 60,
         current_capacity: 50,
     }
 ]
 export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 300"
+export const fakeApiKey = 'fakeApiKey';
 
+export const fakeGuardAnalysisData = [
+    Array.from({ length: 9 }, () => Math.floor(50 + Math.random() * 50)),
+    Array.from({ length: 9 }, () => Math.floor(40 + Math.random() * 40)),
+    Array.from({ length: 9 }, () => Math.floor(20 + Math.random() * 30)),
+    Array.from({ length: 9 }, () => Math.floor(10 + Math.random() * 20))
+]
 
 // Testcase setup constants
 export const API_PATTERNS = {
-    MY_CAR: /my_car/,
-    PARKING_LOTS: /parking_lots/,
+    MY_CAR: /mycar/,
+    PARKING_LOTS: /parkinglots/,
     PROFILE: /profile/,
     RESERVATION: /reservation/,
     HISTORY: /history/,
-    USER_STATUS: /user_status/,
+    USER_STATUS: /userstatus/,
 };
 export const getApiType = (url) => {
     for (const [key, value] of Object.entries(API_PATTERNS)) {
