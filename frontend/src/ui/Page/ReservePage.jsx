@@ -100,45 +100,6 @@ function ReservePage() {
         }
     }, [parkingInfo.parkingLotId, parkingInfo.parkingArea, parkingInfo.parkingFloor]);
 
-    // useEffect(() => {
-    //     API.reservation.get(carId)
-    //         .then((res) => {
-    //             // Check if the reservation is expired
-    //             const now = new Date();
-    //             const expire = new Date(res.data.expired_time);
-    //             const expireTime = moment().format('YYYY/MM/DD HH:mm:ss');
-    //             // if (now > expire)
-    //             //     setExpired(EXPIRE_TYPE.EXPIRE);
-    //             // else
-    //             //     setExpired(EXPIRE_TYPE.NONE);
-                
-    //             // Set parking data
-    //             setParkingData({
-    //                 License_plate: res.data.car_license,
-    //                 Location: res.data.parking_lot_name,
-    //                 Parking_spot: 
-    //                     res.data.area_name +
-    //                     res.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
-    //                     ' (Floor ' + res.data.area_floor + ')',
-    //                 Expired_time: expireTime,
-    //             });
-    //         })
-    //         .catch(() => {
-    //             console.log('Error: Failed to fetch data');
-    //             setExpired(EXPIRE_TYPE.EXPIRE);
-    //             setParkingData(INITIAL_PARKING_DATA);
-    //         });
-    // }, [location.search, carId]);
-
-    // useEffect(() => {
-    //     let tmpArray = [];
-    //     for (let i = 0; i < 6; i++) {
-    //         let randomNumber = Math.floor(Math.random() * Object.keys(LOT_STATUS).length);
-    //         tmpArray.push(randomNumber);
-    //     }
-    //     setArray(tmpArray);
-    // }, []); // TODO: Change this after the API for parking map is implemented
-
     const deleteRsv = () => {
         API.reservation.delete(carId)
             .then((res) => console.log("Reservation deleted", res))

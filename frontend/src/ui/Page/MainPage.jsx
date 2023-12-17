@@ -92,7 +92,6 @@ function MainPage() {
         <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
         <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
         {statusButton}
-        {/* <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} /> */}
       </div>
     </>
   );

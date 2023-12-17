@@ -13,16 +13,8 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
     const getStatusContent = (status, index) => {
         let lot_code = `${SECTION}0${index + 1}`;
         switch (status) {
-            // case LOT_STATUS.EMPTY:
-            //     return '';
             case LOT_STATUS.PARKED:
                 return <img src={CarImg} alt="Occupied" />;
-            // case LOT_STATUS.APPROACHING:
-            //     return (
-            //         <div className="approaching">
-            //             {lot_code}
-            //         </div>
-            //     );
             case LOT_STATUS.APPROACHING:
                 return (
                     <div className="appoarching">
