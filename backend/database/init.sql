@@ -103,6 +103,8 @@ FOR EACH ROW
     INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
     VALUES (OLD.CarID, OLD.ParkingSpotID, OLD.ReservationTime, OLD.ExpiredTime, NULL, NULL);
 
+DELIMITER //
+
 CREATE TRIGGER IF NOT EXISTS  AtferDeleteFromAttendances
 AFTER DELETE ON Attendances
 FOR EACH ROW
@@ -123,11 +125,13 @@ BEGIN
 		WHERE CarID = OLD.CarID
 		    AND ParkingSpotID = OLD.ParkingSpotID
 		    AND ReservationTime <= OLD.ParkTime
-            AND ExpiredTime >= OLD.ParkTime;
+            AND ExpiredTime >= OLD.ParkTime
 		ORDER BY RecordID DESC
 		LIMIT 1;
 	ELSE
 		INSERT INTO Records (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
 		VALUES (OLD.CarID, OLD.ParkingSpotID, NULL, NULL, OLD.ParkTime, OLD.ExitTime);
 	END IF;
-END;
+END //
+
+DELIMITER ;
