@@ -60,12 +60,12 @@ CREATE TABLE Cars (
 
 CREATE TABLE Reservations (
     CarID int NOT NULL,
-    ParkingSpotID int NOT NULL,
+    ParkingSpotID int NOT NULL UNIQUE,
     ReservationTime DATETIME,
     ExpiredTime DATETIME,
     FOREIGN KEY (CarID) REFERENCES Cars(CarID),
     FOREIGN KEY (ParkingSpotID) REFERENCES ParkingSpots(ParkingSpotID),
-    CONSTRAINT PK_Reservation PRIMARY KEY (CarID, ParkingSpotID)
+    PRIMARY KEY (CarID)
 );
 
 CREATE TABLE Attendances (
