@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import { render, waitFor, act } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import Header, {TOGGLER_TYPE} from '../../ui/Component/Header';
 import { describe, expect } from '@jest/globals';
 
 const setup =(togglerType) => {
-    render(<Header togglerType={togglerType}/>);
+    render(<BrowserRouter><Header togglerType={togglerType}/></BrowserRouter>);
 }
 
 describe('`COLLAPSE` mode', () => {

@@ -1,14 +1,13 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
+import datetime
 
-from datetime import datetime, timedelta
-
-from app.models import Reservation, Area, ParkingSpot, ParkingLot, Car
+from app.models import Reservation, Area, ParkingSpot, ParkingLot, Car, Attendance
 from app import db
 
 reservation_bp = Blueprint('reservation', __name__)
 
-RESERVATION_TIME = timedelta(minutes=15)
+RESERVATION_TIME = datetime.timedelta(minutes=15)
 
 # def configure_reservation(app_conig):
 @reservation_bp.route('/reservation', methods=['POST'])
@@ -18,7 +17,14 @@ def create_reservation():
         POST /reservation
         {
             car_id: int,
+            car_license: string,
+            parking_spot_number: int,
             parking_spot_id: int,
+            area_name: string,
+            area_floor: int,
+            parking_lot_name: string,
+            reservation_time: datetime,
+            expired_time: datetime, 
         }
     Response
         {
@@ -38,20 +44,49 @@ def create_reservation():
             'message': 'Missing required parameter: parking_spot_id'
         }), 400
 
+    car: Car = Car.query.filter_by(CarID=data.get('car_id')).first()
+    if car is None:
+        return jsonify({'message': 'Car not found'}), 404
+    
+    parking_spot: ParkingSpot = ParkingSpot.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
+    if parking_spot is None:
+        return jsonify({'message': 'Parking spot not found'}), 404
+    
+    current_spot_reservation: Reservation = Reservation.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
+    current_spot_attendance: Attendance = Attendance.query.filter_by(ParkingSpotID=data.get('parking_spot_id')).first()
+    if current_spot_reservation or current_spot_attendance:
+        return jsonify({'message': 'This parking spot is not available'}), 409
+
+    current_car_reservation: Reservation = Reservation.query.filter_by(CarID=data.get('car_id')).first()
+    current_car_attendance: Attendance = Attendance.query.filter_by(CarID=data.get('car_id')).first()
+    if current_car_reservation or current_car_attendance:
+        return jsonify({'message': 'This car has already reserved an spot or parked'}), 409
+
     reservation: Reservation = Reservation(
         CarID=data.get('car_id'),
         ParkingSpotID=data.get('parking_spot_id'),
-        ReservationTime=datetime.now(),
-        ExpiredTime=datetime.now() + RESERVATION_TIME,
+        ReservationTime=datetime.datetime.now(),
+        ExpiredTime=datetime.datetime.now() + RESERVATION_TIME,
     )
 
     try:
         db.session.add(reservation)
         db.session.commit()
+        
+        area: Area = Area.query.filter_by(AreaID=parking_spot.AreaID).first()
+        parking_lot: ParkingLot = ParkingLot.query.filter_by(ParkingLotID=area.ParkingLotID).first()
 
-        reservation_id = f'({reservation.CarID}, {reservation.ParkingSpotID})'
-
-        return jsonify({'reservation_id': reservation_id})
+        return jsonify({
+            'car_id': reservation.CarID,
+            'car_license': car.Lisence,
+            'parking_spot_number': parking_spot.Number,
+            'parking_spot_id': parking_spot.ParkingSpotID,
+            'parking_lot_name': parking_lot.Name,
+            'area_name': area.Name,
+            'area_floor': area.Floor,
+            'reservation_time': reservation.ReservationTime,
+            'expired_time': reservation.ExpiredTime,
+        })
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({'message': f'Failed to create new reservation, caused by {e.orig}'}), 503 
@@ -65,6 +100,7 @@ def reservation(car_id):
         car_id: int,
         car_license: string,
         parking_spot_number: int,
+        parking_spot_id: int,
         area_name: string,
         area_floor: int,
         parking_lot_name: string,
@@ -99,6 +135,7 @@ def reservation(car_id):
                 'car_id': reservation.CarID,
                 'car_license': car.Lisence,
                 'parking_spot_number': parking_spot.Number,
+                'parking_spot_id': parking_spot.ParkingSpotID,
                 'area_name': area.Name,
                 'area_floor': area.Floor,
                 'parking_lot_name': parking_lot.Name,

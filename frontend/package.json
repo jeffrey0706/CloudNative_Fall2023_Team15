@@ -53,6 +53,7 @@
     "jest-watch-typeahead": "^0.6.5"
   },
   "jest": {
-    "resetMocks": false
+    "resetMocks": false,
+    "coverageReporters": ["json", "html"]
   }
 }

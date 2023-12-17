@@ -54,8 +54,6 @@ VALUES
 (6, 5, 1, 'General'),
 (6, 6, 0, 'General');
 
-
-
 INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword, SessionKey, SessionExporedTime, Preference, Role, Priority, Expired)
 VALUES
 ('Alice', 'alice', 'sender',  'alicesender', 'a', '2023-12-25 12:00:00', 1, 'Employee', 'Top', NULL),
@@ -66,14 +64,20 @@ INSERT INTO Cars (UserID, Lisence)
 VALUES
 (1, 'AGE-6277'),
 (2, 'GFD-8542'),
-(3, 'ABC-8542');
+(3, 'EJF-8542');
 
--- INSERT INTO Appointments (CarID, ParkingSpotID, ReservationTime, ExpiredTime, ParkTime, ExitTime)
+-- INSERT INTO Reservations (CarID, ParkingSpotID, ReservationTime, ExpiredTime)
 -- VALUES
--- (1, 3, '2023-12-13 12:00:00', '2023-12-13 15:00:00', NULL, NULL),
--- (3, 2, '2023-12-13 12:00:00', '2023-12-13 13:00:00', '2023-12-13 12:50:00', '2023-12-13 14:50:00'),
--- (2, 2, '2023-12-13 12:00:00', '2023-12-13 13:00:00', '2023-12-13 12:50:00', NULL);
+-- (1, 1, '2023-12-14 12:00:00', '2023-12-14 13:00:00'),
+-- (2, 2, '2023-12-14 12:00:00', '2023-12-14 17:00:00'),
+-- (3, 3, '2023-12-14 12:00:00', '2023-12-14 13:00:00');
 
--- INSERT INTO Records (CarID, ParkingSpotID, StartTime, ExitTime)
+-- INSERT INTO Attendances (CarID, ParkingSpotID, ParkTime, ExitTime)
 -- VALUES
--- ();
+-- (1, 1, '2023-12-14 14:30:00', '2023-12-14 15:30:00');
+
+-- INSERT INTO Reservations (CarID, ParkingSpotID, ReservationTime, ExpiredTime)
+-- VALUES
+-- (1, 1, '2023-12-14 13:00:00', '2023-12-14 14:00:00');
+
+-- delete from Attendances where CarID=1;

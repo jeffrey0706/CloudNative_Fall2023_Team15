@@ -22,7 +22,7 @@ class CheckParkingLotAPI(UnitTestSettingBase):
             ParkingSpot(ParkingSpotID=4, AreaID=1, Priority='Handicap')
         ]
 
-        mock_parkinglot.query.all.return_value = [ParkingLot(ParkingLotID=1, Name='Test', SpotCounts=4)]
+        mock_parkinglot.query.all.return_value = [ParkingLot(ParkingLotID=1, Name='Test', SpotCounts=4, Longitude=0, Latitude=0)]
         mock_parkingspot.query.all.return_value = parking_spots
         mock_reservation.query.return_value.all.return_value = [Reservation(ParkingSpotID=1)]
         mock_attendance.query.return_value.all.return_value = [Attendance(ParkingSpotID=1)]
@@ -44,6 +44,8 @@ class CheckParkingLotAPI(UnitTestSettingBase):
             {
                 'parkinglot_id': 1,
                 'name': 'Test',
+                'longitude': 0,
+                'latitude': 0,
                 'current_capacity': 1,
                 'maximum_capacity': 4,
                 'current_handicap_capacity': 1,
