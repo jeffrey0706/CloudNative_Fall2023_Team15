@@ -111,11 +111,15 @@ function ReservePage() {
     return (
         <>
             <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
-            <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />
-            {/* <ViewLotsSet SECTION={parkingInfo.parkingArea} LOTs_STATUS={map} /> */}
-            <ViewLotsSet LOTs_STATUS={map} />
-            <ParkingStatus parking_status={reservationData} />
-            <ReserveButton text={expired.text} color={expired.color} outline={expired.outline} onClick={deleteRsv} />
+            <div className='body-wrapper'>
+                <div>
+                    <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />
+                    {/* <ViewLotsSet SECTION={parkingInfo.parkingArea} LOTs_STATUS={map} /> */}
+                    <ViewLotsSet LOTs_STATUS={map} />
+                    <ParkingStatus parking_status={reservationData} />
+                </div>
+                <ReserveButton text={expired.text} color={expired.color} outline={expired.outline} onClick={deleteRsv} />
+            </div>
         </>
     );
 }

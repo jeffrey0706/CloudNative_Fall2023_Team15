@@ -5,7 +5,11 @@
 
 .body-wrapper {
     max-width: 900px;
+    height: 75vh;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* .reserve-button-container {

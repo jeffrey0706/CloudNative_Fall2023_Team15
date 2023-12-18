@@ -45,18 +45,18 @@ function MainPage() {
       switch (userStatus) {
         case 1: // RESERVED
         setStatusButton(
-            <>
+            <div>
               <ReserveButton text='My Reservation' color='danger' outline={false} onClick={() => navigate(`/reservation?carId=${carId}`)} />
               <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
-            </>
+            </div>
           );
           break;
         case 2: // PARKED
         setStatusButton(
-            <>
+            <div>
               <ReserveButton text='My Car' color='danger' outline={false} onClick={() => navigate(`/mycar?userId=${userId}`)} />
               <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
-            </>
+            </div>
           );
           break;
         default: // NONE, EXPIRED
@@ -89,8 +89,10 @@ function MainPage() {
         </ModalBody>
       </Modal>}
       <div className='body-wrapper'>
-        <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
-        <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
+        <div>
+          <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
+          <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
+        </div>
         {statusButton}
       </div>
     </>
