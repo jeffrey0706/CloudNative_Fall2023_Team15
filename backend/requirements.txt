@@ -6,3 +6,5 @@ pymysql==1.1.0
 sqlalchemy==2.0.23
 mysql-connector
 Flask-Cors
+Flask-Session
+Flask-Login
