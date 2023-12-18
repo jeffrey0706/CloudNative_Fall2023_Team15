@@ -103,6 +103,7 @@ GET: /reservation/{car_id}
     area_name: string,
     area_floor: int,
     parking_lot_name: string,
+    parking_lot_id: int,
     reservation_time: datetime,
     expired_time: datetime, 
 }
