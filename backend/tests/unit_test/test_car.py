@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from flask import session
 
 from tests.unit_test.base import UnitTestSettingBase
 from app.models import User, Car, Attendance, ParkingSpot, Area, ParkingLot
@@ -6,7 +7,7 @@ from app.models import User, Car, Attendance, ParkingSpot, Area, ParkingLot
 class CheckCarAPI(UnitTestSettingBase):
     @patch('app.api.car_api.User')
     def test_get_car_no_user_error(self,
-                                        mock_user):
+                                    mock_user):
         mock_user.query.filter_by.return_value.first.return_value = None
         
         response = self.client.get('/mycar/1')
@@ -16,8 +17,8 @@ class CheckCarAPI(UnitTestSettingBase):
     @patch('app.api.car_api.Car')
     @patch('app.api.car_api.User')
     def test_get_car_no_car_error(self,
-                                       mock_user,
-                                       mock_car):
+                                    mock_user,
+                                    mock_car):
         mock_user.query.filter_by.return_value.first.return_value = User(UserID=1)
         mock_car.query.filter_by.return_value.first.return_value = None
         
@@ -29,9 +30,9 @@ class CheckCarAPI(UnitTestSettingBase):
     @patch('app.api.car_api.Car')
     @patch('app.api.car_api.User')
     def test_get_car_successful_without_attendance(self,
-                                                        mock_user,
-                                                        mock_car,
-                                                        mock_attendance):
+                                                    mock_user,
+                                                    mock_car,
+                                                    mock_attendance):
         mock_user.query.filter_by.return_value.first.return_value = User(UserID=1)
         mock_car.query.filter_by.return_value.first.return_value = Car(UserID=1, CarID=1)
         mock_attendance.query.filter_by.return_value.first.return_value = None
@@ -51,14 +52,12 @@ class CheckCarAPI(UnitTestSettingBase):
     @patch('app.api.car_api.Car')
     @patch('app.api.car_api.User')
     def test_get_car_successful_with_attendance(self,
-                                     mock_user,
-                                     mock_car,
-                                     mock_attendance,
-                                     mock_parking_spot,
-                                     mock_area,
-                                     mock_parking_lot):
-        
-
+                                                mock_user,
+                                                mock_car,
+                                                mock_attendance,
+                                                mock_parking_spot,
+                                                mock_area,
+                                                mock_parking_lot):
         # Mock the database queries
         mock_user.query.filter_by.return_value.first.return_value = User(UserID=1)
         mock_car.query.filter_by.return_value.first.return_value = Car(UserID=1, CarID=1)
