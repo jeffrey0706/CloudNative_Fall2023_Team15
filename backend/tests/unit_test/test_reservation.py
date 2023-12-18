@@ -48,9 +48,10 @@ class CheckReservationAPI(UnitTestSettingBase):
             'car_license': 'AGE-6277',
             'parking_spot_number': 10,
             'parking_spot_id': 1,
+            'parking_lot_name': 'Test ParkingLot',
+            'parking_lot_id': 3,
             'area_name': 'Test Area',
             'area_floor': 2,
-            'parking_lot_name': 'Test ParkingLot',
             'reservation_time': '2023-11-01 23:59:59',
             'expired_time': '2023-11-02 23:59:59',
         }

@@ -97,6 +97,7 @@ def create_reservation():
             'parking_spot_number': parking_spot.Number,
             'parking_spot_id': parking_spot.ParkingSpotID,
             'parking_lot_name': parking_lot.Name,
+            'parking_lot_id': parking_lot.ParkingLotID,
             'area_name': area.Name,
             'area_floor': area.Floor,
             'reservation_time': reservation.ReservationTime,
