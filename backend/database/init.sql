@@ -36,18 +36,24 @@ CREATE TABLE ParkingSpots (
 
 CREATE TABLE Users (
     UserID int AUTO_INCREMENT,
-    UserName varchar(255) NOT NULL,
+    UserName varchar(255) UNIQUE NOT NULL,
     Password varchar(255) NOT NULL,
     Salt varchar(255) NOT NULL,
     HashedSaltedPassword varchar(255) NOT NULL,
-    SessionKey varchar(255) NOT NULL,
-    SessionExporedTime DATETIME NOT NULL,
     Preference int,
     Role varchar(255),
     Priority varchar(255),
     Expired DATETIME,
     PRIMARY KEY (UserID),
     FOREIGN KEY (Preference) REFERENCES ParkingLots(ParkingLotID)
+);
+
+CREATE TABLE SessionsDB (
+    id int AUTO_INCREMENT,
+    session_id varchar(255) UNIQUE NOT NULL,
+    data BLOB,
+    expiry DATETIME,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE Cars (

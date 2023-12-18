@@ -15,9 +15,9 @@ register_bp = Blueprint('register', __name__)
 def register():
     '''
     Request
-        POST /reservation
+        POST /register
         {
-            user_name: str,
+            username: str,
             password: str,
             preference: int,
             role: str,
@@ -30,7 +30,7 @@ def register():
     '''
     data = request.get_json()
 
-    if 'user_name' not in data:
+    if 'username' not in data:
         return jsonify({
             'error': 'Bad Request',
             'message': 'Missing required parameter: user_name'
@@ -56,16 +56,22 @@ def register():
             'message': 'Missing required parameter: priority'
         }), 400
     
+    if len(User.query.filter_by(UserName=data.get('username')).all()) != 0:
+        return jsonify({
+            'error': 'Bad Request',
+            'message': 'Invalid username, user already exists in database'
+        }), 400
+    
     salt = ''.join([random.choice(string.ascii_letters + string.digits + string.punctuation) for n in range(6)])
 
     hash = hashlib.sha512()
     hash.update(data.get('password').encode("utf-8") + salt.encode("utf-8"))
 
     current_time = datetime.now()
-    expired_time = current_time.replace(year=expired_time.year + 10)
+    expired_time = current_time.replace(year=current_time.year + 10)
 
     user: User = User(
-        UserName=data.get('user_name'),
+        UserName=data.get('username'),
         Password=data.get('password'),
         Salt=salt,
         HashedSaltedPassword=hash.hexdigest(),
@@ -79,9 +85,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        user_id = f'({user.UserID})'
-
-        return jsonify({'user_id': user_id})
+        return jsonify({'user_id': user.UserID})
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'message': f'Failed to register a new user, caused by {e.orig}'})  
+        return jsonify({'message': f'Failed to register a new user, caused by {e.orig}'}), 503
