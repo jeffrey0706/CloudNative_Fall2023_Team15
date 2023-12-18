@@ -132,6 +132,7 @@ POST: /reservation
     parking_spot_id: int,
     area_name: string,
     area_floor: int,
+    parking_lot_id: int,
     parking_lot_name: string,
     reservation_time: datetime,
     expired_time: datetime, 
