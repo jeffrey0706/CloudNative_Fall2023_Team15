@@ -60,5 +60,6 @@ backend/*.egg-info/
 
 __pycache__/
 
+.converage
 *.db
 credentials*
