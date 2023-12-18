@@ -98,6 +98,7 @@ GET: /parking_lots
 GET: /reservation/{car_id}
 {
     car_id: int,
+    car_license: string,
     parking_spot_number: int,
     area_name: string,
     area_floor: int,
