@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, session
+from flask import Flask
 from flask_cors import CORS
 
 from app.config import config
