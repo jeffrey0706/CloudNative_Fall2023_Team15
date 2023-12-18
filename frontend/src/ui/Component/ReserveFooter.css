@@ -1,10 +1,10 @@
 .PreviewFooterWrapper {
     /* put as a footer */
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 40vh;
+    height: 26vh;
     padding: 3vw;
     background-color: #FFFFFF;
     /* z-index: 10000; */
