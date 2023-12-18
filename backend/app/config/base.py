@@ -1,2 +1,2 @@
-class BaseConfig:
+class BaseConfig(object):
         pass
