@@ -77,6 +77,13 @@ export const fakeLocationsCoordinate = [
 ]
 export const fakeAddress = "No. 8, Lixing 6th Road, East District, Hsinchu City 300"
 export const fakeApiKey = 'fakeApiKey';
+export const fakeHistory = [
+    {
+        car_plate: 'ABC-1234',
+        employee_id: 1,
+        start_time: '2023-12-01 12:00:00',
+        end_time: '2023-12-01 18:00:00',
+    }]
 
 export const fakeGuardAnalysisData = [
     Array.from({ length: 9 }, () => Math.floor(50 + Math.random() * 50)),
