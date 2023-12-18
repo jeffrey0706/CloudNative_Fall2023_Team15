@@ -17,7 +17,7 @@ class UnitTestSettingBase(TestCase):
     def setUp(self):
         self.client = self.app.test_client()
         with self.app.app_context():
-            db.metadata.clear()
+            # db.metadata.clear()
             db.create_all()
 
     def tearDown(self):
