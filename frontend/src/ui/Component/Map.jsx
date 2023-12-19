@@ -110,15 +110,15 @@ const MapContainer = (props) => {
         disableDefaultUI: true // This will disable the default UI including the search box
       }}
     >
-      {props.fakeLocations_coordinate.map(({ lat, lng, name, maximum_capacity, current_capacity }, index) => (
+      {props.locations.map(({ latitude, longitude, name, current_capacity, parkinglot_id }, index) => (
         <CustomMarker
           key={name}
           id={name}
-          position={{ lat, lng, key: name, name }}
-          available_num={maximum_capacity - current_capacity}
+          position={{ latitude, longitude, key: name, name }}
+          available_num={current_capacity}
           selectedPKLot={props.selectedPKLot}
           onClick={() => {
-            props.onMarkerClick(name, lat, lng);
+            props.onMarkerClick(parkinglot_id, latitude, longitude);
           }}
         />
       ))}

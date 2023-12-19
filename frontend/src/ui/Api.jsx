@@ -16,7 +16,7 @@ const my_car = {
      *  * area_name: string,  
      *  * area_floor: int,  
      *  * parking_lot_name: string,  
-     *  * start_time: datetime,  
+     *  * park_time: datetime,  
      *  }
      */
     get: (userId) => axios.get(BASE_URL + '/mycar/' + userId, { crossdomain: true }),
@@ -28,13 +28,17 @@ const parking_lots = {
      *  data: {  
      *  * parkinglot_id: int,  
      *  * name: string,  
+     *  * longitude: float,  
+     *  * latitude: float,  
      *  * current_capacity: int,  
      *  * maximum_capacity: int,  
-     *  * priority: bool,
+     *  * current_handicap_capacity: int,  
+     *  * maximum_handicap_capacity: int,
+     *  * ~~priority: bool,~~  
      *  }
      */
     get: () => axios.get(BASE_URL + '/parkinglots', { crossdomain: true }),
-}
+} // TODO: Remove priority and update test
 
 const profile = {
     /**
@@ -175,7 +179,7 @@ const user_status = {
      * 
      * @returns {Promise}
      *  data: {  
-     *  * status: string,  
+     *  * status: int,  
      *  }
      */
     get: (userId) => axios.get(BASE_URL + '/user_status/' + userId, { crossdomain: true }),

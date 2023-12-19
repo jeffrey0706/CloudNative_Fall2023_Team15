@@ -51,7 +51,7 @@ function LocationList({ mode = LOCATION_LIST_MODE.REMAIN, locations = [], setCur
                         {
                             locations.map((location, index) => (
                                 <tr className='loc-list-tr' key={'location' + index} id={location.name} onClick={() => setCurrentLocation(location)} >
-                                    <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && location.priority && <PiWheelchairFill className='disable-icon' size={16} />}</td>
+                                    <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && (location.current_handicap_capacity > 0) && <PiWheelchairFill className='disable-icon' size={16} />}</td>
                                     {showInfo(mode, location)}
                                 </tr>
                             ))

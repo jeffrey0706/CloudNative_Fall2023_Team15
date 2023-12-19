@@ -47,7 +47,7 @@ function MainPage() {
 
   const reserve = () => {
     API.reservation.post(carId, currentLocation.parkinglot_id)
-      .then((res) => navigate(`/reservation?carId=${carId}`))
+      .then((res) => navigate('/reservation'))
       .catch((err) => {setError(err); console.log('Error: ', err);});
   };
   
@@ -56,7 +56,7 @@ function MainPage() {
       .then(reserve)
       .catch((err) => setError(err));
   };
-  const mapBtnClick = () => navigate('/map');
+  const mapBtnClick = () => navigate(`/map?originalParkingLotId=${currentLocation.parkinglot_id}`);
   const onModalClose = () => setError(null);
   const reserveButtonText = (status) => {
     switch (status) {
@@ -71,9 +71,9 @@ function MainPage() {
   const reserveButtonFunction = (status) => {
     switch (status) {
       case 1: // RESERVED
-        return () => navigate(`/reservation?carId=${carId}`);
+        return () => navigate('/reservation');
       case 2: // PARKED
-        return () => navigate(`/mycar?userId=${userId}`);
+        return () => navigate(`/mycar`);
       default: // NONE, EXPIRED
         return reserve;
     }

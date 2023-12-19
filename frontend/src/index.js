@@ -11,6 +11,7 @@ import MainPage from "./ui/Page/MainPage";
 import GuardMonitor from "./ui/Page/GuardMonitor";
 import Guard from "./ui/Page/Guard";
 import ReservePage from "./ui/Page/ReservePage";
+import MyCarPage from "./ui/Page/MyCarPage";
 import MapView from "./ui/Page/MapView";
 import GuardMonitorDetail from "./ui/Page/GuardMonitorDetail";
 import GuardAnalysis from "./ui/Page/GuardAnalysis";
@@ -46,10 +47,12 @@ const router = createBrowserRouter([
     path: "reservation/",
     element: <ReservePage />,
   },
-  // {
-  //   path: "mycar/",
-  //   element: <MyCarPage />,
-  // },
+
+  // My car pages
+  {
+    path: "mycar/",
+    element: <MyCarPage />,
+  },
 
   // Guard pages
   {

@@ -10,8 +10,8 @@ function ReserveFooter({ location }) {
             <div className='PreviewFooterHeader'>
                 <div className='PreviewFooterTitle'> {location.name} </div>
                 <div className='PreviewFooterSubTitle'>
-                    <span style={{ fontWeight: "500", fontSize: "18px" }}>{location.maximum_capacity - location.current_capacity}&nbsp;</span>
-                    <span>/{location.maximum_capacity} spots</span>
+                    <span style={{ fontWeight: "500", fontSize: "18px", paddingRight: "5px" }}>{location.current_capacity}</span>
+                    <span>/ {location.maximum_capacity} spots</span>
                 </div>
             </div>
 
@@ -20,7 +20,7 @@ function ReserveFooter({ location }) {
             </div>
 
             <div className="priorityWrapper">
-                {1 && <PiWheelchairFill className='disable-icon' size={20} />}
+                {location.current_handicap_capacity > 0 && <PiWheelchairFill className='disable-icon' size={20} />}
             </div>
         </div >
     );

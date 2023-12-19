@@ -60,10 +60,10 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
                   <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={`/mycar?userId=${userId}`} tag={Link}>My Car</NavLink>
+                  <NavLink to={'/mycar'} tag={Link}>My Car</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={`/reservation?carId=${reservationId}`} tag={Link}>My Reservation</NavLink>
+                  <NavLink to={'/reservation'} tag={Link}>My Reservation</NavLink>
                 </NavItem>
               </Nav>
             </Modal>

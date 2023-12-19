@@ -9,7 +9,7 @@ import ParkingStatus from '../Component/ParkingStatus';
 import ReserveButton from '../Component/ReserveButton';
 import moment from 'moment';
 import { API } from '../Api';
-import { UserStatusTransfer } from '../Constants'; // TODO: Remove fake userId
+import { UserStatusTransfer } from '../Constants';
 
 
 const EXPIRE_TYPE = {
@@ -56,9 +56,9 @@ function ReservePage() {
         const reservationPromise = API.reservation.get(carId);
         Promise.all([userStatusPromise, reservationPromise])
             .then(([userStatusRes, reservationRes]) => {
-                if (UserStatusTransfer(userStatusRes.data) === "RESERVED") {
+                if (UserStatusTransfer(userStatusRes.data.status) === "RESERVED") {
                     setExpired(EXPIRE_TYPE.RESERVED);
-                } else if (UserStatusTransfer(userStatusRes.data) === "EXPIRED") {
+                } else if (UserStatusTransfer(userStatusRes.data.status) === "EXPIRED") {
                     setExpired(EXPIRE_TYPE.EXPIRE);
                 }
 
@@ -69,7 +69,7 @@ function ReservePage() {
                         reservationRes.data.area_name +
                         reservationRes.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
                         ' (Floor ' + reservationRes.data.area_floor + ')',
-                    Expired_time: moment.utc(reservationRes.data.expired_time).format('YYYY/MM/DD HH:mm:ss'),
+                    Expired_time: moment.utc(reservationRes.data.expired_time).local().format('YYYY/MM/DD HH:mm:ss'),
                 });
                 setParkingInfo({
                     parkingLotId: reservationRes.data.parking_lot_id,

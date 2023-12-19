@@ -1,6 +1,6 @@
 // import './MapView.css';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ReserveButton from '../Component/ReserveButton';
 import { Button } from 'reactstrap';
 
@@ -13,6 +13,7 @@ import MapContainer from '../Component/Map';
 import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css";
+import { API } from '../Api';
 
 // import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
@@ -28,24 +29,33 @@ function MapView() {
     }
 
     const navigate = useNavigate();
-
-    const [selectedPKLot, setSelectedPKLot] = useState('Parking Lot 3');
+    const location = useLocation();
+    const originalParkingLotId = new URLSearchParams(location.search).get('originalParkingLotId');
+    const [parkingLotId, setParkingLotId] = useState(originalParkingLotId);
+    const [isLoading, setIsLoading] = useState(true);
+    const [locations, setLocations] = useState([]);
+    useEffect(() => {
+        API.parking_lots.get()
+            .then((res) => {
+                setLocations(res.data);
+                setIsLoading(false);
+            })
+            .catch((err) => console.log('Error: ', err));
+    }, []);
 
     const [mapRef, setMapRef] = useState(null);
-
     const onGoogleApiLoaded = (map) => {
-        var bounds = new window.google.maps.LatLngBounds();
-        for (var i = 0; i < fakeLocationsCoordinate.length; i++) {
-            bounds.extend(fakeLocationsCoordinate[i]);
-        }
+        const bounds = new window.google.maps.LatLngBounds();
+        const validLocations = locations.filter(({ latitude, longitude }) => latitude && longitude);
+        validLocations.forEach(({ latitude, longitude }) => bounds.extend({ lat: latitude, lng: longitude }));
         map.fitBounds(bounds);
         map.setCenter(bounds.getCenter());
         setMapRef(map);
     }
 
-    const onMarkerClick = (markerId, lat, lng) => {
+    const onMarkerClick = (parkinglot_id, lat, lng) => {
         // console.log('This is ->', markerId)
-        setSelectedPKLot(markerId);
+        setParkingLotId(parkinglot_id);
         mapRef?.setZoom(18);
         mapRef?.setCenter({ lat, lng })
     }
@@ -60,23 +70,35 @@ function MapView() {
     }
 
     const reserveBtnClick = () => navigate('/reservation');
+    const getCenter = (locations) => {
+        const lat = locations.reduce((acc, cur) => acc + cur.latitude, 0) / locations.length;
+        const lng = locations.reduce((acc, cur) => acc + cur.longitude, 0) / locations.length;
+        return { lat, lng };
+    }
 
     return (
         <div className='map-view-wrapper'>
-            <MapContainer
-                API_KEY={API_KEY}
-                fakeLocations_coordinate={fakeLocationsCoordinate}
-                center={fakeMapCenter}
-                selectedPKLot={selectedPKLot}
-                onMarkerClick={onMarkerClick}
-                onGoogleApiLoaded={onGoogleApiLoaded}
-            />
-            <ReserveFooter location={fakeLocationsCoordinate.find(({ name }) => name === selectedPKLot)} />
-            <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+        {
+            !isLoading ?
+            (
+                <>
+                    <MapContainer
+                        API_KEY={API_KEY}
+                        locations={locations}
+                        center={getCenter(locations)}
+                        selectedPKLot={parkingLotId}
+                        onMarkerClick={onMarkerClick}
+                        onGoogleApiLoaded={onGoogleApiLoaded}
+                    />
+                    <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id == parkingLotId)} />
+                    <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
-            <Button color='none' className='back-btn' onClick={onBackIconClick}>
-                <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
-            </Button>
+                    <Button color='none' className='back-btn' onClick={onBackIconClick}>
+                        <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
+                    </Button>
+                </>
+            ) : (<></>)
+        }
         </div>
     );
 }
