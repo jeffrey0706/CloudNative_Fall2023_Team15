@@ -25,7 +25,7 @@ def login():
     if 'username' not in data:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Missing required parameter: user_name'
+            'message': 'Missing required parameter: username'
         }), 400
     if 'password' not in data:
         return jsonify({
