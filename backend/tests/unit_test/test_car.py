@@ -79,4 +79,4 @@ class CheckCarAPI(UnitTestSettingBase):
         self.assertIn('area_name', data)
         self.assertIn('area_floor', data)
         self.assertIn('parking_lot_name', data)
-        self.assertIn('start_time', data)
+        self.assertIn('park_time', data)

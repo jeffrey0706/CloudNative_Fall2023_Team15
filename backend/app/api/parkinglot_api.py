@@ -6,12 +6,6 @@ from app.models import ParkingLot, Reservation, Area, Attendance, ParkingSpot
 
 parkinglot_bp = Blueprint('parkinglot', __name__)
 
-@parkinglot_bp.before_request
-def check_session():
-    if 'user_id' not in session:
-        return jsonify({'message': 'User not logged in'}), 401
-        # return redirect(url_for('login.login'))
-
 @parkinglot_bp.route('/parkinglots', methods=['GET'])
 def parking_lots():
     '''

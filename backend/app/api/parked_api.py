@@ -15,7 +15,7 @@ def parked():
         POST /parked
         {
             car_id: int,
-            parked_time: datetime,
+            park_time: datetime,
         }
     Response
         {
@@ -29,20 +29,20 @@ def parked():
             'error': 'Bad Request',
             'message': 'Missing required parameter: car_id'
         }), 400
-    if 'parked_time' not in data:
+    if 'park_time' not in data:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Missing required parameter: parked_time'
+            'message': 'Missing required parameter: park_time'
         }), 400
     
     car_id = data.get('car_id')
-    parked_time = data.get('parked_time')
+    park_time = data.get('park_time')
 
     try:
-        parked_time = datetime.strptime(parked_time, '%Y-%m-%d %H:%M:%S')
-        parked_time = parked_time.replace(tzinfo=None)
+        park_time = datetime.strptime(park_time, '%Y-%m-%d %H:%M:%S')
+        park_time = park_time.replace(tzinfo=None)
     except (ValueError, TypeError):
-        return jsonify({'message': '`parked_time` should be in `%Y-%m-%d %H:%M:%S` format'}), 400
+        return jsonify({'message': '`park_time` should be in `%Y-%m-%d %H:%M:%S` format'}), 400
 
     try:
         car_id = int(car_id)
@@ -65,7 +65,7 @@ def parked():
     attendance = Attendance()
     attendance.CarID = car_id
     attendance.ParkingSpotID = reservation.ParkingSpotID
-    attendance.ParkedTime = parked_time
+    attendance.ParkTime = park_time
     attendance.ExitTime = None
     try:
         db.session.add(attendance)
