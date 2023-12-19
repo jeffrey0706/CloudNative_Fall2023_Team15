@@ -17,15 +17,11 @@ const INITIAL_MY_CAR_INFO= {
 }
 
 const FAKE_PARKING_LOT_ID = 1;
-const FAKE_PARKING_FLOOR = 1;
-
 
 function MyCarPage() {
-    // eslint-disable-next-line no-unused-vars
-    const { userId, carId } = useSelector((state) => state.login);
+    const userId = useSelector((state) => state.login.userId);
     const [myCarInfo, setMyCarInfo] = useState(INITIAL_MY_CAR_INFO); 
     const [map, setMap] = useState([]);
-
 
     useEffect(() => {
         API.user_status.get(userId)
@@ -36,7 +32,7 @@ function MyCarPage() {
                 }
 
                 const myCarPromise = API.my_car.get(userId);
-                const mapPromise = myCarPromise.then((res) => API.map.get(FAKE_PARKING_LOT_ID, FAKE_PARKING_FLOOR)); // TODO: Change to real parking lot id and floor
+                const mapPromise = myCarPromise.then((res) => API.map.get(FAKE_PARKING_LOT_ID, res.data.area_floor)); // TODO: Change to real parking lot id
                 Promise.all([myCarPromise, mapPromise])
                     .then(([myCarRes, mapRes]) => {
                         const startTime = moment.utc(myCarRes.data.park_time).local();
