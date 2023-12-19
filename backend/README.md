@@ -154,7 +154,7 @@ GET: /mycar/{user_id}
     area_name: string,
     area_floor: int,
     parking_lot_name: string,
-    start_time: datetime,
+    park_time: datetime,
 }
 // Error code
 200: Car not parked
@@ -176,11 +176,20 @@ GET: /user_status/{user_id}
 GET /history/{spot_id}
 [
     {
-        type: string,       // ATTENDANCE, RECORD
+        type: 'RECORD',
         user_id: int,
         license: string,
-        start_time: datetime,
-        end_time: datetime,
+        reservation_time: datatime,
+        expired_time: datetime,
+        park_time: datetime,
+        exit_time: datetime,
+    },
+    {
+        type: 'ATTENDANCE',
+        user_id: int,
+        license: string,
+        park_time: datetime,
+        exit_time: datetime,
     }
 ]
 // Error code
@@ -211,7 +220,7 @@ POST /parked
 // request
 {
     car_id: int,
-    parked_time: datetime,
+    park_time: datetime,
 }
 // response
 {

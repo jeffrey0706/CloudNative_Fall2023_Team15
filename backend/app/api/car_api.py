@@ -14,7 +14,7 @@ def cars(user_id):
         area_name: string,
         area_floor: int,
         parking_lot_name: string,
-        start_time: datetime,
+        park_time: datetime,
     }
     '''
     if not User.query.filter_by(UserID=user_id).first():
@@ -36,7 +36,7 @@ def cars(user_id):
             'area_name': area.Name,
             'area_floor': area.Floor,
             'parking_lot_name': parking_lot.Name,
-            'start_time': attendance.ParkTime,
+            'park_time': attendance.ParkTime,
         }), 200
     else:
         return jsonify({'message': 'Car not parked'}), 200

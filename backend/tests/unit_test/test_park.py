@@ -22,14 +22,14 @@ class CheckParkAPI(UnitTestSettingBase):
     def test_post_parked_time_format_error(self):
         response = self.client.post('/parked', json={
             'car_id': 1,
-            'parked_time': '2023/11/19 23:59:59'
+            'park_time': '2023/11/19 23:59:59'
         })
         self.assert400(response)
 
     def test_post_parked_wrong_type_error(self):
         response = self.client.post('/parked', json={
             'car_id': 'AGE-6277',
-            'parked_time': '2023/11/19 23:59:59'
+            'park_time': '2023/11/19 23:59:59'
         })
         self.assert400(response)
 
@@ -39,7 +39,7 @@ class CheckParkAPI(UnitTestSettingBase):
 
         response = self.client.post('/parked', json={
             'car_id': 1,
-            'parked_time': '2023-11-19 23:59:59'
+            'park_time': '2023-11-19 23:59:59'
         })
         self.assert404(response)
 
@@ -51,7 +51,7 @@ class CheckParkAPI(UnitTestSettingBase):
 
         response = self.client.post('/parked', json={
             'car_id': 1,
-            'parked_time': '2023-11-19 23:59:59'
+            'park_time': '2023-11-19 23:59:59'
         })
         self.assertEqual(response.status_code, 503)
 
@@ -63,6 +63,6 @@ class CheckParkAPI(UnitTestSettingBase):
 
         response = self.client.post('/parked', json={
             'car_id': 1,
-            'parked_time': '2023-11-19 23:59:59'
+            'park_time': '2023-11-19 23:59:59'
         })
         self.assert200(response)

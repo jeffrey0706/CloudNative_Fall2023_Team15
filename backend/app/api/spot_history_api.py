@@ -39,8 +39,10 @@ def spot_history(spot_id):
                 'type': 'RECORD',
                 'user_id': c.UserID,
                 'license': c.Lisence,
-                'start_time': r.ParkTime,
-                'end_time': r.ExitTime,
+                'reservation_time': r.ReservationTime,
+                'expired_time': r.ExpiredTime,
+                'park_time': r.ParkTime,
+                'exit_time': r.ExitTime,
             } for c, r in zip(cars, records)
         ]
 
@@ -55,8 +57,8 @@ def spot_history(spot_id):
                 'type': 'ATTENDANCE',
                 'user_id': c.UserID,
                 'license': c.Lisence,
-                'start_time': a.ParkTime,
-                'end_time': a.ExitTime,
+                'park_time': a.ParkTime,
+                'exit_time': a.ExitTime,
             } for c, a in zip(cars, attenances)
         ]
 

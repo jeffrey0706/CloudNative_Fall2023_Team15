@@ -65,7 +65,7 @@ def exited():
     try:
         db.session.delete(attendance)
         db.session.commit()
-        return jsonify({f'message': '{car_id} exited successfully}'})
+        return jsonify({f'message': f'car_id {car_id} exited successfully'})
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({'message': f'Failed to delete attendance, caused by {e.orig}'}), 503
