@@ -103,14 +103,13 @@ export const getApiType = (url) => {
     return undefined;
 };
 
-// User status transfer function
-export const codeToStatus = (code) => {
+export const UserStatusTransfer = (code) =>  {
     switch (code) {
-        case 1:
+        case 1: 
             return "RESERVED";
         case 2:
             return "PARKED";
-        case 3: 
+        case 3:
             return "EXPIRED";
         default:
             return "NONE";

@@ -10,7 +10,7 @@ import ReserveButton from '../Component/ReserveButton';
 // Production API
 import { API } from '../Api';
 // Testing constants
-import { userId, reservationId as carId } from '../Constants';
+import { userId, reservationId as carId, UserStatusTransfer } from '../Constants';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -18,61 +18,35 @@ function MainPage() {
   const [currentLocation, setCurrentLocation] = useState({});
   const [userStatus, setUserStatus] = useState(null);
   const [error, setError] = useState(null);
-  const [statusButton, setStatusButton] = useState(null);
 
   useEffect(() => {
-    if (currentLocation === {}) {
-      API.profile.get(userId)
-        .then((res) => {
-          const { data } = res;
-          setCurrentLocation({
-            'name': data.preference_lot_name,
-            'parkinglot_id': data.preference_lot_id,
-          });
-        })
-        .catch((err) => setError(err));
-      }
-  }, [currentLocation]);
-  
-  useEffect(() => {
-    if (locations.length === 0) {
-      API.parking_lots.get()
-        .then((res) => setLocations(res.data))
-        .catch((err) => setError(err));
-    }
-  }, [locations]);
-
-  useEffect(() => {
-    if (statusButton === null) {
-      API.user_status.get(userId)
+    API.profile.get(userId)
       .then((res) => {
-        setUserStatus(res.data.status); 
-        switch (userStatus) {
-          case 1: // RESERVED
-          setStatusButton(
-              <div>
-                <ReserveButton text='My Reservation' color='danger' outline={false} onClick={() => navigate(`/reservation?carId=${carId}`)} />
-                <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
-              </div>
-            );
-            break;
-          case 2: // PARKED
-          setStatusButton(
-              <div>
-                <ReserveButton text='My Car' color='danger' outline={false} onClick={() => navigate(`/mycar?userId=${userId}`)} />
-                <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
-              </div>
-            );
-            break;
-          default: // NONE, EXPIRED
-          setStatusButton(<ReserveButton text='Reserve' color='danger' outline={false} onClick={reserve} />);
-        }
+        const { data } = res;
+        setCurrentLocation({
+          'name': data.preference_lot_name,
+          'parkinglot_id': data.preference_lot_id,
+        });
       })
       .catch((err) => setError(err));
-    }
-  }, [userStatus]);
+  }, []);
+  
+  useEffect(() => {
+    API.parking_lots.get()
+      .then((res) => setLocations(res.data))
+      .catch((err) => setError(err));
+  }, []);
+
+  useEffect(() => {  
+    API.user_status.get(userId)
+    .then((res) => {
+      setUserStatus(res.data.status); 
+    })
+    .catch((err) => setError(err));
+  }, []);
 
   const reserve = () => {
+    console.log("inside func", currentLocation);
     API.reservation.post(userId, currentLocation.parkinglot_id)
       .then((res) => navigate(`/reservation?carId=${carId}`))
       .catch((err) => {setError(err); console.log('Error: ', err);});
@@ -85,6 +59,27 @@ function MainPage() {
   };
   const mapBtnClick = () => navigate('/map');
   const onModalClose = () => setError(null);
+  const reserveButtonText = (status) => {
+    switch (status) {
+      case 1: // RESERVED
+        return 'My Reservation';
+      case 2: // PARKED
+        return 'My Car';
+      default: // NONE, EXPIRED
+        return 'Reserve';
+    }
+  };
+  const reserveButtonFunction = (status) => {
+    switch (status) {
+      case 1: // RESERVED
+        return () => navigate(`/reservation?carId=${carId}`);
+      case 2: // PARKED
+        return () => navigate(`/mycar?userId=${userId}`);
+      default: // NONE, EXPIRED
+        return reserve;
+    }
+  };
+
 
   return (
     <>
@@ -99,7 +94,13 @@ function MainPage() {
           <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
           <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
         </div>
-        {statusButton}
+        <div>
+        <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={false} onClick={reserveButtonFunction(userStatus)} />
+        {
+          (UserStatusTransfer(userStatus) === "RESERVED" || UserStatusTransfer(userStatus) === "PARKED") && 
+          <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
+        }
+        </div>
       </div>
     </>
   );

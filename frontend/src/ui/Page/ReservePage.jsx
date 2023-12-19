@@ -8,7 +8,7 @@ import ParkingStatus from '../Component/ParkingStatus';
 import ReserveButton from '../Component/ReserveButton';
 import moment from 'moment';
 import { API } from '../Api';
-import { userId, codeToStatus } from '../Constants'; // TODO: Remove fake userId
+import { userId, UserStatusTransfer } from '../Constants'; // TODO: Remove fake userId
 
 
 const EXPIRE_TYPE = {
@@ -56,9 +56,9 @@ function ReservePage() {
         API.user_status.get(userId)
             .then((res) => {
                 const { status } = res.data;
-                if (codeToStatus(status) === "RESERVED") {
+                if (UserStatusTransfer(status) === "RESERVED") {
                     setExpired(EXPIRE_TYPE.RESERVED);
-                } else if (codeToStatus(status) === "EXPIRED") {
+                } else if (UserStatusTransfer(status) === "EXPIRED") {
                     setExpired(EXPIRE_TYPE.EXPIRE);
                 }
                 API.reservation.get(carId)
