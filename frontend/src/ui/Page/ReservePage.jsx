@@ -1,6 +1,7 @@
 import './ReservePage.css'
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import ViewLotsSet from '../Component/ViewLotsSet';
@@ -8,7 +9,7 @@ import ParkingStatus from '../Component/ParkingStatus';
 import ReserveButton from '../Component/ReserveButton';
 import moment from 'moment';
 import { API } from '../Api';
-import { userId, UserStatusTransfer } from '../Constants'; // TODO: Remove fake userId
+import { UserStatusTransfer } from '../Constants'; // TODO: Remove fake userId
 
 
 const EXPIRE_TYPE = {
@@ -42,9 +43,7 @@ const PARKING_INFO= {
 
 function ReservePage() {
     const navigate = useNavigate();
-    const location = useLocation();
-    const param = new URLSearchParams(location.search);
-    const carId = param.get('carId');
+    const { userId, carId } = useSelector((state) => state.login);
 
     const [reservationData, setReservationData] = useState(RESERVATION_DATA);
     const [parkingInfo, setParkingInfo] = useState(PARKING_INFO); 
@@ -53,38 +52,36 @@ function ReservePage() {
 
 
     useEffect(() => {
-        API.user_status.get(userId)
-            .then((res) => {
-                const { status } = res.data;
-                if (UserStatusTransfer(status) === "RESERVED") {
+        const userStatusPromise = API.user_status.get(userId);
+        const reservationPromise = API.reservation.get(carId);
+        Promise.all([userStatusPromise, reservationPromise])
+            .then(([userStatusRes, reservationRes]) => {
+                if (UserStatusTransfer(userStatusRes.data) === "RESERVED") {
                     setExpired(EXPIRE_TYPE.RESERVED);
-                } else if (UserStatusTransfer(status) === "EXPIRED") {
+                } else if (UserStatusTransfer(userStatusRes.data) === "EXPIRED") {
                     setExpired(EXPIRE_TYPE.EXPIRE);
                 }
-                API.reservation.get(carId)
-                    .then((res) => {
-                        const { data } = res;
-                        setReservationData({
-                            License_plate: data.car_license,
-                            Location: data.parking_lot_name,
-                            Parking_spot: 
-                                data.area_name +
-                                data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
-                                ' (Floor ' + data.area_floor + ')',
-                            Expired_time: moment.utc(data.expired_time).format('YYYY/MM/DD HH:mm:ss'),
-                        });
-                        setParkingInfo({
-                            parkingLotId: data.parking_lot_id,
-                            parkingArea: data.area_name,
-                            parkingFloor: data.area_floor,
-                        });
-                    })
-                    .catch((err) => {
-                        console.log('Error: Failed to fetch data');
-                        navigate('/error');
-                    });
+
+                setReservationData({
+                    License_plate: reservationRes.data.car_license,
+                    Location: reservationRes.data.parking_lot_name,
+                    Parking_spot: 
+                        reservationRes.data.area_name +
+                        reservationRes.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
+                        ' (Floor ' + reservationRes.data.area_floor + ')',
+                    Expired_time: moment.utc(reservationRes.data.expired_time).format('YYYY/MM/DD HH:mm:ss'),
+                });
+                setParkingInfo({
+                    parkingLotId: reservationRes.data.parking_lot_id,
+                    parkingArea: reservationRes.data.area_name,
+                    parkingFloor: reservationRes.data.area_floor,
+                });
+            })
+            .catch((err) => {
+                console.log('Error: Failed to fetch data');
+                navigate('/error');
             });
-    }, [carId]);
+    }, []);
 
     useEffect(() => {
         if (parkingInfo.parkingLotId !== '' && parkingInfo.parkingFloor !== '') {
@@ -102,9 +99,8 @@ function ReservePage() {
 
     const deleteRsv = () => {
         API.reservation.delete(carId)
-            .then((res) => console.log("Reservation deleted", res))
+            .then((res) => navigate('/'))
             .catch((err) => console.log(err));
-        navigate('/');
     };
 
     

@@ -94,6 +94,7 @@ export const fakeGuardAnalysisData = [
 
 // Testcase setup constants
 export const API_PATTERNS = {
+    LOGIN: /login/,
     MY_CAR: /mycar/,
     PARKING_LOTS: /parkinglots/,
     PROFILE: /profile/,

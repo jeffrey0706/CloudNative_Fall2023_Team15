@@ -1,4 +1,4 @@
-from flask import jsonify, session
+from flask import jsonify, request, session
 
 from .car_api import car_bp
 from .login_api import login_bp
@@ -27,5 +27,27 @@ from .utility_api import utility_bp
 @expired_alert_bp.before_request
 @utility_bp.before_request
 def check_session():
+    if request.method == 'OPTIONS':
+        return
     if 'user_id' not in session:
         return jsonify({'message': 'User not logged in'}), 401
+
+
+@car_bp.after_request
+@parkinglot_bp.after_request
+@profile_bp.after_request
+@reservation_bp.after_request
+@spot_history_bp.after_request
+@map_bp.after_request 
+@user_status_bp.after_request
+@parked_bp.after_request
+@exited_bp.after_request
+@expired_alert_bp.after_request
+@utility_bp.after_request
+@login_bp.after_request
+def add_samesite_to_cookies(response):
+    # Set the SameSite attribute for all cookies
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response

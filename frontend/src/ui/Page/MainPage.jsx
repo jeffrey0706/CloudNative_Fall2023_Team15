@@ -2,6 +2,7 @@ import './MainPage.css';
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
@@ -10,7 +11,7 @@ import ReserveButton from '../Component/ReserveButton';
 // Production API
 import { API } from '../Api';
 // Testing constants
-import { userId, reservationId as carId, UserStatusTransfer } from '../Constants';
+import { UserStatusTransfer } from '../Constants';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -18,44 +19,42 @@ function MainPage() {
   const [currentLocation, setCurrentLocation] = useState({});
   const [userStatus, setUserStatus] = useState(null);
   const [error, setError] = useState(null);
+  const { userId, carId } = useSelector((state) => state.login);
 
   useEffect(() => {
-    API.profile.get(userId)
-      .then((res) => {
-        const { data } = res;
+    if (!userId) {
+      navigate('/login');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    const locationPromise = API.profile.get(userId)
+    const parkingLotsPromise = API.parking_lots.get();
+    const userStatusPromise = API.user_status.get(userId);
+
+    Promise.all([locationPromise, parkingLotsPromise, userStatusPromise])
+      .then(([locationRes, parkingLotsRes, userStatusRes]) => {
         setCurrentLocation({
-          'name': data.preference_lot_name,
-          'parkinglot_id': data.preference_lot_id,
+          'name': locationRes.data.preference_lot_name,
+          'parkinglot_id': locationRes.data.preference_lot_id,
         });
+        setLocations(parkingLotsRes.data);
+        setUserStatus(userStatusRes.data.status);
       })
       .catch((err) => setError(err));
   }, []);
-  
-  useEffect(() => {
-    API.parking_lots.get()
-      .then((res) => setLocations(res.data))
-      .catch((err) => setError(err));
-  }, []);
-
-  useEffect(() => {  
-    API.user_status.get(userId)
-    .then((res) => {
-      setUserStatus(res.data.status); 
-    })
-    .catch((err) => setError(err));
-  }, []);
 
   const reserve = () => {
-    console.log("inside func", currentLocation);
-    API.reservation.post(userId, currentLocation.parkinglot_id)
+    API.reservation.post(carId, currentLocation.parkinglot_id)
       .then((res) => navigate(`/reservation?carId=${carId}`))
       .catch((err) => {setError(err); console.log('Error: ', err);});
   };
-  const newReserve = async() => {
-    await API.reservation.delete(carId)
-      .then(() => console.log('Reservation deleted'))
+  
+  const newReserve = () => {
+    API.reservation.delete(carId)
+      .then(reserve)
       .catch((err) => setError(err));
-    reserve();
   };
   const mapBtnClick = () => navigate('/map');
   const onModalClose = () => setError(null);

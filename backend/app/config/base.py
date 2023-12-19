@@ -9,4 +9,6 @@ class BaseConfig(object):
         SESSION_KEY_PREFIX = ''
         SESSION_TYPE = 'sqlalchemy'
         SESSION_SQLALCHEMY = db
+        SESSION_COOKIE_SAMESITE = 'None'
+        SESSION_COOKIE_SECURE = True
         PERMANENT_SESSION_LIFETIME = timedelta(days=1)

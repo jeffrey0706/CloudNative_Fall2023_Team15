@@ -1,6 +1,10 @@
 import { BASE_URL } from "./Constants";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers['Access-Control-Allow-Credentials'] = 'true';
+
 const my_car = {
     /**
      * @param {number} userId
@@ -179,7 +183,7 @@ const user_status = {
 
 const login = {
     /**
-     * @param {string} account
+     * @param {string} username
      * @param {string} password
      * 
      * @returns {Promise}
@@ -187,14 +191,14 @@ const login = {
      *  * user_id: int,  
      *  }
      */
-    post: (account, password) => axios.post(
-            BASE_URL + '/login',
-            {
-                account: account,
-                password: password,
-            },
-            { crossdomain: true }
-        ),
+    post: (username, password) => axios.post(
+        BASE_URL + '/login',
+        {
+            username: username,
+            password: password,
+        },
+        { crossdomain: true }
+    ),
 }
 
 const map = {

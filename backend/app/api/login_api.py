@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 
 import hashlib
 
-from app.models import User
+from app.models import User, Car
 
 login_bp = Blueprint('login', __name__)
 
@@ -17,7 +17,8 @@ def login():
         }
     Response
         {
-            user_id: int
+            user_id: int,
+            car_id: int,
         }
     '''
     data = request.get_json()
@@ -49,5 +50,7 @@ def login():
             'message': 'Invalid password'
         }), 400
     
+    car: Car = Car.query.filter_by(UserID=user.UserID).first()
+    
     session['user_id'] = user.UserID
-    return jsonify({'id': user.UserID})
+    return jsonify({'user_id': user.UserID, 'car_id': car.CarID if car else None})

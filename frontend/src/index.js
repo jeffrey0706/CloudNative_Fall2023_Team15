@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./ui/reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import store from "./ui/store";
+import { Provider } from 'react-redux'
 
 import MainPage from "./ui/Page/MainPage";
 import GuardMonitor from "./ui/Page/GuardMonitor";
@@ -74,7 +76,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 

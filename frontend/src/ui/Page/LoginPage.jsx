@@ -1,21 +1,38 @@
 import './LoginPage.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import HeaderLogin from '../Component/HeaderLogin';
 import ReserveButton from '../Component/ReserveButton';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../store';
 
 
 // Production API
-// import { API } from '../Api';
+import { API } from '../Api';
 
 function LoginPage() {
 
     const navigate = useNavigate();
+    const user = useSelector((state) => state.login.userId);
+    const dispatch = useDispatch();
     const loginBtnClick = () => {
-        let account = document.getElementById("Account").value;
-        navigate('/', { state: { account: account } })
+        const account = document.getElementById("Account").value;
+        const password = document.getElementById("examplePassword").value;
+        API.login.post(account, password)
+            .then((res) => {
+                localStorage.setItem('userId', res.data.user_id);
+                localStorage.setItem('carId', res.data.car_id);
+                dispatch(login({ userId: res.data.user_id, carId: res.data.car_id }));
+                navigate('/');
+            })
+            .catch((err) => alert('Login failed\n', err));
     };
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, []);
 
     return (
         <>
