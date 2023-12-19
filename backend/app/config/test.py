@@ -9,6 +9,7 @@ def create_sqlite_uri(db_name):
         return "sqlite:///" + os.path.join(basedir, db_name)
 
 class TestingConfig(BaseConfig):
+        TESTING = True
         SQLALCHEMY_DATABASE_URI = create_sqlite_uri('test.db')
         SQLALCHEMY_TRACK_MODIFICATIONS = False
         RESERVATION_TIME = timedelta(minutes=15)

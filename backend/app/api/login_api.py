@@ -1,12 +1,8 @@
-from flask import Blueprint, jsonify, request
-import sqlalchemy
-from sqlalchemy.exc import IntegrityError
+from flask import Blueprint, jsonify, request, session
 
-from datetime import datetime
 import hashlib
 
 from app.models import User
-from app import db
 
 login_bp = Blueprint('login', __name__)
 
@@ -14,9 +10,9 @@ login_bp = Blueprint('login', __name__)
 def login():
     '''
     Request
-        POST /reservation
+        POST /login
         {
-            user_name: str,
+            username: str,
             password: str,
         }
     Response
@@ -26,7 +22,7 @@ def login():
     '''
     data = request.get_json()
 
-    if 'user_name' not in data:
+    if 'username' not in data:
         return jsonify({
             'error': 'Bad Request',
             'message': 'Missing required parameter: user_name'
@@ -37,11 +33,11 @@ def login():
             'message': 'Missing required parameter: password'
         }), 400
 
-    user: User = User.query.filter_by(UserName=data.get('user_name')).one_or_none()
+    user: User = User.query.filter_by(UserName=data.get('username')).one_or_none()
     if not user:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Invalid user name, user does not exist in database'
+            'message': 'Invalid username, user does not exist in database'
         }), 400
     
     hash = hashlib.sha512()
@@ -53,4 +49,5 @@ def login():
             'message': 'Invalid password'
         }), 400
     
+    session['user_id'] = user.UserID
     return jsonify({'id': user.UserID})

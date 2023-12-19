@@ -62,7 +62,6 @@ def create_reservation():
     reservations: List[Reservation] = Reservation.query.filter(Reservation.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
     attendances: List[Attendance] = Attendance.query.filter(Attendance.ParkingSpotID.in_([ps.ParkingSpotID for ps in parking_spots])).all()
 
-    areas = {a.AreaID: a for a in areas}
     reservations = {r.ParkingSpotID: r for r in reservations}
     attendances = {a.ParkingSpotID: a for a in attendances}
 
@@ -98,6 +97,7 @@ def create_reservation():
             'parking_spot_number': parking_spot.Number,
             'parking_spot_id': parking_spot.ParkingSpotID,
             'parking_lot_name': parking_lot.Name,
+            'parking_lot_id': parking_lot.ParkingLotID,
             'area_name': area.Name,
             'area_floor': area.Floor,
             'reservation_time': reservation.ReservationTime,
@@ -119,6 +119,7 @@ def reservation(car_id):
         parking_spot_id: int,
         area_name: string,
         area_floor: int,
+        parking_lot_id: int,
         parking_lot_name: string,
         reservation_time: datetime,
         expired_time: datetime, 
@@ -154,6 +155,7 @@ def reservation(car_id):
                 'parking_spot_id': parking_spot.ParkingSpotID,
                 'area_name': area.Name,
                 'area_floor': area.Floor,
+                'parking_lot_id': parking_lot.ParkingLotID,
                 'parking_lot_name': parking_lot.Name,
                 'reservation_time': reservation.ReservationTime,
                 'expired_time': reservation.ExpiredTime,

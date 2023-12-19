@@ -54,11 +54,13 @@ VALUES
 (6, 5, 1, 'General'),
 (6, 6, 0, 'General');
 
-INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword, SessionKey, SessionExporedTime, Preference, Role, Priority, Expired)
+
+
+INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword , Preference, Role, Priority, Expired)
 VALUES
-('Alice', 'alice', 'sender',  'alicesender', 'a', '2023-12-25 12:00:00', 1, 'Employee', 'Top', NULL),
-('Bob', 'bob', 'receiver', 'bobreceiver', 'b', '2023-12-25 12:00:00', 1, 'Employee', 'Normal', NULL),
-('Eve', 'eve', 'middle', 'evemiddle', 'c', '2023-12-25 12:00:00', 2, 'Attendant', 'Normal', NULL);
+('Alice', 'alice', 'sender',  'alicesender', 1, 'Employee', 'Top', NULL),
+('Bob', 'bob', 'receiver', 'bobreceiver', 1, 'Employee', 'Normal', NULL),
+('Eve', 'eve', 'middle', 'evemiddle', 2, 'Attendant', 'Normal', NULL);
 
 INSERT INTO Cars (UserID, Lisence)
 VALUES
