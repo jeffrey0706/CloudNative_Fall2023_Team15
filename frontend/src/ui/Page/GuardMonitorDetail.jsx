@@ -3,6 +3,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
+import { fakeHistory } from '../Constants';
+import GuardMonitorDetailBlock from '../Component/GuardMonitorDetailBlock';
 
 function GuardMonitorDetail() {
 
@@ -25,6 +27,11 @@ function GuardMonitorDetail() {
     <>
       <Header togglerType={TOGGLER_TYPE.EXIT} />
       <SubHeader BACK_ICON={true} LEFT_STR={section} RHS_INFO={INFO_TYPE.DATE} onBackIconClick={onBackIconClick} />
+
+      {/* for each fake History create a GuardMonitorBlock */}
+      {fakeHistory.map((history, index) => (
+        <GuardMonitorDetailBlock key={index} parking_status={history} />
+      ))}
     </>
   );
 }
