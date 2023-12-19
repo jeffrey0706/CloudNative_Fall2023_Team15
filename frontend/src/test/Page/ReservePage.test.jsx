@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
 import ReservePage from '../../ui/Page/ReservePage';
 import { expect } from '@jest/globals';
 import { API_PATTERNS, getApiType } from '../../ui/Constants';
@@ -12,7 +13,7 @@ const fakeExpiredTime = new Date(2023, 6, 7);
 const fakeAvailableTime = new Date(2023, 6, 5);
 
 const setup = () => {
-    render(<ReservePage />);
+    render(<BrowserRouter><ReservePage /></BrowserRouter>);
 };
 
 beforeAll(() => {
@@ -63,9 +64,9 @@ test.each([fakeExpiredTime, fakeAvailableTime])('Fetching correct data with time
     const parkingSpotNumberExpand = parkingSpotNumber < 10 ? '0' + parkingSpotNumber : parkingSpotNumber;
     const parkingSpotElement = await screen.findByText(areaName + parkingSpotNumberExpand + ' (Floor ' + floor + ')');
     const expiredTimeElement = await screen.findByText(endTime.toJSON());
-    const expiredElement = await waitFor(() => screen.queryByText('Expired'));
-    const reserveAvailable = await waitFor(() => screen.queryByText('Cancel the Reservation'));
-    const reserveExpired = await waitFor(() => screen.queryByText('Reserve a New One'));
+    const expiredElement = await screen.findByText('Expired');
+    const reserveAvailable = await screen.findByText('Cancel the Reservation');
+    const reserveExpired = await screen.findByText('Reserve a New One');
 
     // Assertion
     expect(axios.get).toHaveBeenCalledTimes(1);

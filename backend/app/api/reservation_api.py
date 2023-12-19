@@ -79,7 +79,7 @@ def create_reservation():
     parking_spot = available_spots[0]
 
     reservation: Reservation = Reservation(
-        CarID=data.get('car_id'),
+        CarID=car_id,
         ParkingSpotID=parking_spot.ParkingSpotID,
         ReservationTime=datetime.datetime.now(),
         ExpiredTime=datetime.datetime.now() + RESERVATION_TIME,
