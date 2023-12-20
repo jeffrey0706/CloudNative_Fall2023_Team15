@@ -14,11 +14,12 @@
 }
 
 .up_shift {
-    position: absolute;
+    /* position: absolute;
     bottom: 50vh;
-    left: 0;
+    left: 0; */
+    margin-top: 60px;
 }
 
-#loginForm .form-control:focus{
+#loginForm .form-control:focus {
     box-shadow: none;
 }
