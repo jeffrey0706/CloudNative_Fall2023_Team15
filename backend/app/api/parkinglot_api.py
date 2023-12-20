@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, session
 from typing import List
 
 from app.models import ParkingLot, Reservation, Area, Attendance, ParkingSpot
+from app import db
 
 parkinglot_bp = Blueprint('parkinglot', __name__)
 
@@ -41,10 +42,9 @@ def parking_lots():
     # query current reservation and compute current capacity
     reservations: List[Reservation] = Reservation.query.all()
     parking_spot_ids = [r.ParkingSpotID for r in reservations]
-    parking_spots: List[parking_spot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
-    area_ids = [p.AreaID for p in parking_spots]
-    areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
-    for parking_spot, area in zip(parking_spots, areas):
+    parking_spots_with_area = db.session.query(ParkingSpot, Area).join(Area).filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
+
+    for parking_spot, area in parking_spots_with_area:
         current_capacity[area.ParkingLotID] -= 1
         if parking_spot.Priority != 'Normal':
             current_handicap_capacity[area.ParkingLotID] -= 1
@@ -52,10 +52,9 @@ def parking_lots():
     # query current attendance and compute current capacity
     attendances: List[Attendance] = Attendance.query.all()
     parking_spot_ids = [r.ParkingSpotID for r in attendances]
-    parking_spots: List[ParkingSpot] = ParkingSpot.query.filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
-    area_ids = [p.AreaID for p in parking_spots]
-    areas: List[Area] = Area.query.filter(Area.AreaID.in_(area_ids)).all()
-    for parking_spot, area in zip(parking_spots, areas):
+    parking_spots_with_area = db.session.query(ParkingSpot, Area).join(Area).filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
+
+    for parking_spot, area in parking_spots_with_area:
         current_capacity[area.ParkingLotID] -= 1
         if parking_spot.Priority != 'Normal':
             current_handicap_capacity[area.ParkingLotID] -= 1
