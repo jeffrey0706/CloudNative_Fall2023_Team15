@@ -164,5 +164,5 @@ export const UserStatusTransfer = (code) => {
 }
 
 // Production constants, which may still need to be changed
-// export const BASE_URL = 'http://localhost:5000';
-export const BASE_URL = 'https://cloudnativefuncv1.azurewebsites.net';
+export const BASE_URL = 'http://localhost:5000';
+// export const BASE_URL = 'https://cloudnativefuncv1.azurewebsites.net';

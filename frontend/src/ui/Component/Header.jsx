@@ -15,7 +15,6 @@ import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { NavLink as Link } from 'react-router-dom';
-import { reservationId, userId } from '../Constants'; // TODO: Remove fake userId
 import { logout } from '../store';
 import { useDispatch } from 'react-redux';
 import { UserStatusTransfer } from '../Constants';
