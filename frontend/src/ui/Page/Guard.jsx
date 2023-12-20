@@ -21,13 +21,15 @@ function Guard() {
       .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);
 
+
   const onPKLotClick = (location) => {
-    const PKLotName = location.name;
-    navigate('/guard/monitor', { state: { PKLotName: PKLotName } })
+    const PKLotName = location.name
+    const PKLotId = location.parkinglot_id
+    navigate('/guard/monitor', { state: { PKLotName: PKLotName, PKLotId: PKLotId } })
   }
 
   const onAnalysisClick = () => {
-    navigate('/guard/analysis', { state: { AllPKLotName: fakeLocations } });
+    navigate('/guard/analysis', { state: { locations: locations } });
   }
 
   return (

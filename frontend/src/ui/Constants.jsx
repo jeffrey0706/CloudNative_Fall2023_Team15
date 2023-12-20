@@ -5,51 +5,51 @@ export const fakeLocations = [
     {
         parkinglot_id: 0,
         name: 'Parking Lot 2',
-        longitude: 122.1,  
-        latitude: 25.1,  
+        longitude: 122.1,
+        latitude: 25.1,
         current_capacity: 34,
         maximum_capacity: 70,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
         parkinglot_id: 1,
         name: 'Parking Lot 3',
-        longitude: 122.1,  
-        latitude: 25.1,  
+        longitude: 122.1,
+        latitude: 25.1,
         current_capacity: 32,
         maximum_capacity: 40,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
         parkinglot_id: 2,
         name: 'Parking Lot 4',
-        longitude: 122.1,  
-        latitude: 25.1,  
+        longitude: 122.1,
+        latitude: 25.1,
         current_capacity: 30,
         maximum_capacity: 100,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
         parkinglot_id: 3,
         name: 'Parking Lot 5',
-        longitude: 122.1,  
-        latitude: 25.1,  
+        longitude: 122.1,
+        latitude: 25.1,
         current_capacity: 28,
         maximum_capacity: 280,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
         parkinglot_id: 4,
         name: 'Parking Lot 6',
-        longitude: 122.1,  
-        latitude: 25.1,  
+        longitude: 122.1,
+        latitude: 25.1,
         current_capacity: 22,
         maximum_capacity: 75,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
@@ -57,7 +57,7 @@ export const fakeLocations = [
         name: 'Parking Lot 7',
         current_capacity: 20,
         maximum_capacity: 30,
-        current_handicap_capacity: 2,  
+        current_handicap_capacity: 2,
         maximum_handicap_capacity: 5,
     },
     {
@@ -65,7 +65,7 @@ export const fakeLocations = [
         name: 'Parking Lot 8',
         current_capacity: 3,
         maximum_capacity: 100,
-        current_handicap_capacity: 0,  
+        current_handicap_capacity: 0,
         maximum_handicap_capacity: 0,
     },
 ]
@@ -106,12 +106,23 @@ export const fakeHistory = [
         end_time: '2023-12-01 18:00:00',
     }]
 
-export const fakeGuardAnalysisData = [
-    Array.from({ length: 9 }, () => Math.floor(50 + Math.random() * 50)),
-    Array.from({ length: 9 }, () => Math.floor(40 + Math.random() * 40)),
-    Array.from({ length: 9 }, () => Math.floor(20 + Math.random() * 30)),
-    Array.from({ length: 9 }, () => Math.floor(10 + Math.random() * 20))
-]
+
+export const allFakeGuardAnalysisData = [];
+
+for (let i = 0; i < 10; i++) {
+    let row = [];
+    for (let j = 0; j < 4; j++) {
+        let component = [
+            Array.from({ length: 9 }, () => Math.floor(50 + Math.random() * 50)),
+            Array.from({ length: 9 }, () => Math.floor(40 + Math.random() * 40)),
+            Array.from({ length: 9 }, () => Math.floor(20 + Math.random() * 30)),
+            Array.from({ length: 9 }, () => Math.floor(10 + Math.random() * 20))
+        ]
+        row.push(component);
+    }
+    allFakeGuardAnalysisData.push(row);
+}
+
 
 // Testcase setup constants
 export const API_PATTERNS = {
@@ -132,9 +143,9 @@ export const getApiType = (url) => {
     return undefined;
 };
 
-export const UserStatusTransfer = (code) =>  {
+export const UserStatusTransfer = (code) => {
     switch (code) {
-        case 1: 
+        case 1:
             return "RESERVED";
         case 2:
             return "PARKED";
