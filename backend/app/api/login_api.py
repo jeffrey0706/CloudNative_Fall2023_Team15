@@ -52,5 +52,4 @@ def login():
     
     car: Car = Car.query.filter_by(UserID=user.UserID).first()
     
-    session['user_id'] = user.UserID
     return jsonify({'user_id': user.UserID, 'car_id': car.CarID if car else None})

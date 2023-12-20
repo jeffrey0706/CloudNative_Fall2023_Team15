@@ -6,3 +6,4 @@ from .parking_spot import ParkingSpot
 from .record import Record
 from .reservation import Reservation
 from .user import User
+from .session import Session

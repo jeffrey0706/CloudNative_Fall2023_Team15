@@ -11,8 +11,10 @@ def create_app(config_name='testing'):
     app = Flask(__name__)
     app.config.from_object(conf)
 
-    db.init_app(app)
+    db.metadata.clear()
     sess.init_app(app)
+    db.init_app(app)
+    
 
     app.register_blueprint(car_bp) 
     app.register_blueprint(login_bp)   
