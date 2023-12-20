@@ -65,6 +65,9 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
                 <NavItem>
                   <NavLink to={'/reservation'} tag={Link}>My Reservation</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink to={'/login'} tag={Link}>Logout</NavLink>
+                </NavItem>
               </Nav>
             </Modal>
           </>
