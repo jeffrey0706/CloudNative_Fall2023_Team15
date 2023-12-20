@@ -22,6 +22,7 @@ const FAKE_PARKING_LOT_ID = 1;
 function MyCarPage() {
     const navigate = useNavigate();
     const userId = useSelector((state) => state.login.userId);
+    const [userStatus, setUserStatus] = useState(null);
     const [myCarInfo, setMyCarInfo] = useState(INITIAL_MY_CAR_INFO); 
     const [map, setMap] = useState([]);
 
@@ -31,6 +32,7 @@ function MyCarPage() {
                 if (UserStatusTransfer(res.data.status) != "PARKED") {
                     return Promise.reject('User hasn\'t parked yet.');
                 }
+                setUserStatus(res.data.status);
 
                 const myCarPromise = API.my_car.get(userId);
                 const mapPromise = myCarPromise.then((res) => API.map.get(FAKE_PARKING_LOT_ID, res.data.area_floor)); // TODO: Change to real parking lot id
@@ -65,7 +67,7 @@ function MyCarPage() {
     
     return (
         <>
-            <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
+            <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus} />
             <div className='body-wrapper'>
                 <div>
                     <SubHeader BACK_ICON={false} LEFT_STR="My Car" RHS_INFO={INFO_TYPE.NONE} />
