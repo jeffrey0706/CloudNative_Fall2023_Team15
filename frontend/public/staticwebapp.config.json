@@ -1,12 +1,6 @@
 {
-    "routes": [
-      {
-        "route": "/login",
-        "allowedRoles": ["anonymous"]
-      }
-    ],
     "navigationFallback": {
         "rewrite": "/",
         "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
     }
-  }
+}
