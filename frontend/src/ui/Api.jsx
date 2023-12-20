@@ -2,7 +2,6 @@ import { BASE_URL } from "./Constants";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers['Access-Control-Allow-Credentials'] = 'true';
 
 const my_car = {
