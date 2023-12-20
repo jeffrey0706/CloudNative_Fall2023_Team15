@@ -11,7 +11,7 @@ function GuardMonitorDetail() {
 
   const location = useLocation();
   const { LotInfo, history } = location.state;
-  const section = LotInfo.split(" -> ")[1];
+  const section = LotInfo.split(" -> ").at(-1);
 
   const onBackIconClick = () => {
     if (window.history.state && window.history.state.idx > 0) {

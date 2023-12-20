@@ -81,8 +81,8 @@ function GuardMonitor() { // TODO: How to access the data
   const onLotClick = (event) => {
     // console.log(event.target.parentNode.id || event.target.id);
     const LotInfo = event.target.parentNode.id || event.target.id;
-    const area = LotInfo.split(" -> ")[1].substr(0, 1);
-    const number = Number(LotInfo.split(" -> ")[1].substr(1));
+    const area = LotInfo.split(" -> ").at(-1).substr(0, 1);
+    const number = Number(LotInfo.split(" -> ").at(-1).substr(1));
     const spotId = monitorMap.find((spot) => spot.area_name === area && spot.spot_number === number).spot_id;
     API.history.get(spotId)
       .then((res) => {
