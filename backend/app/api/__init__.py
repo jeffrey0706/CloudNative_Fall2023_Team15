@@ -15,6 +15,8 @@ from .exited_api import exited_bp
 from .expired_alert_api import expired_alert_bp
 from .utility_api import utility_bp
 
+from app.models import Session
+
 @car_bp.before_request
 @parkinglot_bp.before_request
 @profile_bp.before_request
@@ -29,9 +31,10 @@ from .utility_api import utility_bp
 def check_session():
     if request.method == 'OPTIONS':
         return
-    if 'user_id' not in session:
+    cookie = Session.query.filter_by(session_id=session.sid).first()
+    if cookie is None:
+        session.clear()
         return jsonify({'message': 'User not logged in'}), 401
-
 
 @car_bp.after_request
 @parkinglot_bp.after_request
