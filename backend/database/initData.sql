@@ -58,9 +58,9 @@ VALUES
 
 INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword , Preference, Role, Priority, Expired)
 VALUES
-('Alice', 'alice', 'sender',  'alicesender', 1, 'Employee', 'Top', NULL),
-('Bob', 'bob', 'receiver', 'bobreceiver', 1, 'Employee', 'Normal', NULL),
-('Eve', 'eve', 'middle', 'evemiddle', 2, 'Attendant', 'Normal', NULL);
+('Alice', 'alice', 'sender', 'bc1f78f6f37c8c990f582dc8bee31007a2885f0295a4c3a4f5dae5d6bc0c4a689afedbb0dc05f50af71d7f41e95e3cb2a55c3616ff67f5bd08d3558638087be1', 1, 'Employee', 'Top', NULL),
+('Bob', 'bob', 'receiver', 'b79ac182cb3dc585b5ded782f27308a0432895c51d2a74767badb87ac0b976f74cd04a9f6b0de520de925d11db8627a26340a5458506aab44c6c2e7dc43b240b', 1, 'Employee', 'Normal', NULL),
+('Eve', 'eve', 'middle', '845ca0231c54416853637ec8d6b237b4c7a1245a70ef236f05677da19c2dc71f99dc20ec4360f81b16ab6a37b59e4e58872ae4962064857e852f8911c631fb31', 2, 'Attendant', 'Normal', NULL);
 
 INSERT INTO Cars (UserID, Lisence)
 VALUES

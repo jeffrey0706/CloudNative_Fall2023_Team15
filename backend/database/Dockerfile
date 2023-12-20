@@ -1,6 +1,5 @@
 FROM mysql:8.0.35
 
-MAINTAINER pinya
 EXPOSE 3306
 
 RUN chown -R mysql:root /var/lib/mysql/
