@@ -74,3 +74,8 @@
     width: 1.2rem;
     height: 1.2rem;
 }
+
+.override_active {
+    color: #777E90 !important;
+    border-left: transparent 0.1875rem solid !important;
+}

@@ -33,7 +33,7 @@ def register():
     if 'username' not in data:
         return jsonify({
             'error': 'Bad Request',
-            'message': 'Missing required parameter: user_name'
+            'message': 'Missing required parameter: username'
         }), 400
     if 'password' not in data:
         return jsonify({
@@ -62,7 +62,7 @@ def register():
             'message': 'Invalid username, user already exists in database'
         }), 400
     
-    salt = ''.join([random.choice(string.ascii_letters + string.digits + string.punctuation) for n in range(6)])
+    salt = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(6)])
 
     hash = hashlib.sha512()
     hash.update(data.get('password').encode("utf-8") + salt.encode("utf-8"))
