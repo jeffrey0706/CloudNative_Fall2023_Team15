@@ -43,7 +43,7 @@ function LoginPage() {
                 navigate('/');
             }
         }
-    }, []);
+    }, [navigate, userId, userRole]);
 
     return (
         <>
