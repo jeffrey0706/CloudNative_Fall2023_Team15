@@ -54,7 +54,7 @@ function GuardMonitor() { // TODO: How to access the data
 
   const onFloorBtnClick = (event) => {
     setCurrentFloor(event.target.innerText);
-    setLotPosition(PKLotName + ' -> ' + currentFloor);
+    setLotPosition(PKLotName + ' -> ' + event.target.innerText);
   }
 
   const onBackIconClick = () => {
