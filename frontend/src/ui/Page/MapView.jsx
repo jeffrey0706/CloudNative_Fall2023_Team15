@@ -90,7 +90,7 @@ function MapView() {
                         onMarkerClick={onMarkerClick}
                         onGoogleApiLoaded={onGoogleApiLoaded}
                     />
-                    <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id == parkingLotId)} />
+                    <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === parkingLotId)} />
                     <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
                     <Button color='none' className='back-btn' onClick={onBackIconClick}>

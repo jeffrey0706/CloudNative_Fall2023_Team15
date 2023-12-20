@@ -96,7 +96,7 @@ function MainPage() {
         <div>
         <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={false} onClick={reserveButtonFunction(userStatus)} />
         {
-          (UserStatusTransfer(userStatus) === "RESERVED" || UserStatusTransfer(userStatus) === "PARKED") && 
+          (UserStatusTransfer(userStatus) === "RESERVED") && 
           <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
         }
         </div>
