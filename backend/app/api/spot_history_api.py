@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify
 from typing import List
 
 from app.models import ParkingSpot, Record, Car, Attendance
+from app import db
 
 spot_history_bp = Blueprint('spot_history', __name__)
 
@@ -20,49 +21,43 @@ def spot_history(spot_id):
         }
     ]
     '''
-    try:
-        parking_spot: ParkingSpot = ParkingSpot.query.get(spot_id)
-        
-        if parking_spot is None:
-            return jsonify({'message': 'spot id does not exist'}), 404
 
-        results = []
+    parking_spot: ParkingSpot = ParkingSpot.query.get(spot_id)
+    
+    if parking_spot is None:
+        return jsonify({'message': 'spot id does not exist'}), 404
 
-        records: List[Record] = Record.query.filter_by(ParkingSpotID=spot_id).all()
-        car_ids = [r.CarID for r in records]
-        cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
+    results = []
 
-        assert len(cars) == len(records)
+    records: List[Record] = Record.query.filter(Record.ParkingSpotID == spot_id).all()
+    car_ids = [r.CarID for r in records]
+    records_with_car = db.session.query(Record, Car).join(Car).filter(Record.CarID.in_(car_ids)).all()
 
-        records = [
-            {
-                'type': 'RECORD',
-                'user_id': c.UserID,
-                'license': c.Lisence,
-                'reservation_time': r.ReservationTime,
-                'expired_time': r.ExpiredTime,
-                'park_time': r.ParkTime,
-                'exit_time': r.ExitTime,
-            } for c, r in zip(cars, records)
-        ]
+    records = [
+        {
+            'type': 'RECORD',
+            'user_id': c.UserID,
+            'license': c.Lisence,
+            'reservation_time': r.ReservationTime,
+            'expired_time': r.ExpiredTime,
+            'park_time': r.ParkTime,
+            'exit_time': r.ExitTime,
+        } for r, c in records_with_car
+    ]
 
-        attenances: List[Attendance] = Attendance.query.filter_by(ParkingSpotID=spot_id).all()
-        car_ids = [r.CarID for r in attenances]
-        cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
+    attenances: List[Attendance] = Attendance.query.filter(Attendance.ParkingSpotID == spot_id).all()
+    car_ids = [r.CarID for r in attenances]
+    attenances_with_car = db.session.query(Attendance, Car).join(Car).filter(Attendance.CarID.in_(car_ids)).all()
 
-        assert len(cars) == len(attenances)
+    attenances = [
+        {
+            'type': 'ATTENDANCE',
+            'user_id': c.UserID,
+            'license': c.Lisence,
+            'park_time': a.ParkTime,
+            'exit_time': a.ExitTime,
+        } for a, c in attenances_with_car
+    ]
 
-        attenances = [
-            {
-                'type': 'ATTENDANCE',
-                'user_id': c.UserID,
-                'license': c.Lisence,
-                'park_time': a.ParkTime,
-                'exit_time': a.ExitTime,
-            } for c, a in zip(cars, attenances)
-        ]
-
-        results = records + attenances
-        return jsonify(results)
-    except AssertionError as e:
-        return jsonify({'message': 'length of cars is not same as length records'}), 503
+    results = records + attenances
+    return jsonify(results)
