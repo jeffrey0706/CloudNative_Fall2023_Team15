@@ -17,13 +17,13 @@ const CustomMarker = ({ position, available_num, selectedPKLot, onClick = () => 
 
   return (
     <OverlayViewF
-      key={position.name}
+      key={position.id}
       position={pos}
       mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
       getPixelPositionOffset={getPixelPositionOffset}
     >
-      <div className={`markerContainerOuter ${selectedPKLot === position.name ? 'selectedPKLotOuter' : ''}`} onClick={onClick} >
-        <div className={`markerContainerInner ${selectedPKLot === position.name ? 'selectedPKLotInner' : ''}`} >
+      <div className={`markerContainerOuter ${selectedPKLot === position.id ? 'selectedPKLotOuter' : ''}`} onClick={onClick} >
+        <div className={`markerContainerInner ${selectedPKLot === position.id ? 'selectedPKLotInner' : ''}`} >
           {available_num}
         </div>
       </div>
@@ -66,7 +66,7 @@ const MapContainer = (props) => {
       onLoad={props.onGoogleApiLoaded}
       mapContainerStyle={containerStyle}
       center={props.center}
-      zoom={13}
+      zoom={14}
       options={{
         styles: [
           {
@@ -115,7 +115,7 @@ const MapContainer = (props) => {
         <CustomMarker
           key={name}
           id={name}
-          position={{ latitude, longitude, key: name, name }}
+          position={{ latitude, longitude, key: name, id: parkinglot_id }}
           available_num={current_capacity}
           selectedPKLot={props.selectedPKLot}
           onClick={() => {
