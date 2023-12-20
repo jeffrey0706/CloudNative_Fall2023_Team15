@@ -10,7 +10,7 @@ import moment from 'moment';
 import { API } from '../Api';
 import { UserStatusTransfer } from '../Constants'; // TODO: Remove fake userId
 
-const INITIAL_MY_CAR_INFO= {
+const INITIAL_MY_CAR_INFO = {
     Location: '',
     Parking_Spot: '',
     Start_Time: '',
@@ -21,7 +21,7 @@ function MyCarPage() {
     const navigate = useNavigate();
     const userId = useSelector((state) => state.login.userId);
     const [userStatus, setUserStatus] = useState(null);
-    const [myCarInfo, setMyCarInfo] = useState(INITIAL_MY_CAR_INFO); 
+    const [myCarInfo, setMyCarInfo] = useState(INITIAL_MY_CAR_INFO);
     const [map, setMap] = useState([]);
 
     useEffect(() => {
@@ -39,6 +39,9 @@ function MyCarPage() {
                         const startTime = moment.utc(myCarRes.data.park_time).local();
                         const now = moment.utc().local();
                         const duration = moment.duration(now.diff(startTime));
+                        const dayString =
+                            duration.days() > 1 ? `${duration.days()} days ` :
+                                duration.days() > 0 ? `${duration.days()} day ` : '';
                         const hourString =
                             duration.hours() > 1 ? `${duration.hours()} hrs ` :
                                 duration.hours() > 0 ? `${duration.hours()} hr ` : '';
@@ -48,12 +51,12 @@ function MyCarPage() {
                         setMyCarInfo({
                             Location: myCarRes.data.parking_lot_name,
                             parkingArea: myCarRes.data.area_name,
-                            Parking_Spot: 
+                            Parking_Spot:
                                 myCarRes.data.area_name +
-                                myCarRes.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
+                                myCarRes.data.parking_spot_number.toLocaleString(undefined, { minimumIntegerDigits: 2 }) +
                                 ' (Floor ' + myCarRes.data.area_floor + ')',
                             Start_Time: startTime.format('YYYY/MM/DD HH:mm:ss'),
-                            Duration: duration.asMinutes() < 1 ? 'Less than 1 minute' : hourString + minuteString
+                            Duration: duration.asMinutes() < 1 ? 'Less than 1 minute' : dayString + hourString + minuteString
                         });
                         setMap(mapRes.data.filter(d => d.area_name === myCarRes.data.area_name).map(d => d.status));
                     });
