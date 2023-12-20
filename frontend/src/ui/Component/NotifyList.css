@@ -23,3 +23,8 @@
     max-height: 40vh;
     overflow-y: scroll;
 }
+
+.overtime-td {
+    /* horizontal align */
+    text-align: right;
+}

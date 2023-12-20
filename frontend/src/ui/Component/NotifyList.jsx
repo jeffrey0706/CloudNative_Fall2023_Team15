@@ -8,7 +8,7 @@ import React from 'react';
 
 
 function NotifyList({ notifications }) {
-    console.log(notifications)
+    // console.log(notifications)
 
     return (
         <Row className='loc-list-comp'>
@@ -21,7 +21,7 @@ function NotifyList({ notifications }) {
                                     <td className='name-td'>
                                         {notification.position}
                                     </td>
-                                    <td className='remain-td'>
+                                    <td className='overtime-td'>
                                         {notification.overtime}
                                     </td>
                                 </tr>

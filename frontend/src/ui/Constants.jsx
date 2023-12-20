@@ -106,8 +106,10 @@ export const fakeHistory = [
         end_time: '2023-12-01 18:00:00',
     }]
 export const fakeReservation = [
-    { position: "Parking lot 1 - 2F A03", overtime: "33hr 03min" },
-    { position: "Parking lot 2 - 4F C04", overtime: "24hr 03min" }
+    { position: "F1 - 2F A03", overtime: "33hr 03min" },
+    { position: "F2 - 4F C04", overtime: "70hr 45min" },
+    { position: "F3 - 1F B03", overtime: "28hr 33min" },
+    { position: "F2 - 4F D04", overtime: "98hr 16min" },
 ]
 
 
