@@ -27,7 +27,7 @@ function Notification() {
 
   return (
     <>
-      <Header togglerType={TOGGLER_TYPE.COLLAPSE_GUARD} />
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE_GUARD} currPage="notification" />
       <SubHeader BACK_ICON={false} LEFT_STR="Notification" RHS_INFO={INFO_TYPE.NONE} />
       <NotifyList notifications={notifications} />
     </>

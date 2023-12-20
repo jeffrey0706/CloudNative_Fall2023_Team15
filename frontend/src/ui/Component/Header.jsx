@@ -25,7 +25,7 @@ export const TOGGLER_TYPE = {
   COLLAPSE_GUARD: 2,
 };
 
-function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0 }) {
+function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage = '' }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -98,13 +98,16 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0 }) {
             <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink exact="true" to="/guard" tag={Link}>Dashboard</NavLink>
+                  <NavLink className={`${currPage === 'notification' ? 'override_active' : ''}`} exact="true" to="/guard" tag={Link}>Dashboard</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to={'/guard/notification'} tag={Link} >Notification</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
+                </NavItem>
               </Nav>
-            </Modal>
+            </Modal >
           </>
         )
       default:
