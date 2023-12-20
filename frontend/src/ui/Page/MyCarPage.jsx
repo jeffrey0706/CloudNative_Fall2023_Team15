@@ -27,8 +27,7 @@ function MyCarPage() {
         API.user_status.get(userId)
             .then((res) => {
                 if (UserStatusTransfer(res.data.status) != "PARKED") {
-                    Promise.reject('User hasn\'t parked yet.');
-                    return;
+                    return Promise.reject('User hasn\'t parked yet.');
                 }
 
                 const myCarPromise = API.my_car.get(userId);
