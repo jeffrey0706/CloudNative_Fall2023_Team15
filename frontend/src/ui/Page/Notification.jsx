@@ -16,9 +16,11 @@ function Notification() {
     API.expired_alert.get()
       .then((res) => {
         console.log(res.data)
-        setNotifications(res.data)
-        if (notifications.length === 0) {
-          setNotifications(fakeReservation)
+        if (res.data.length === 0) {
+          setNotifications(fakeReservation);
+        }
+        else {
+          setNotifications(res.data);
         }
       })
       .catch((err) => console.log(err));

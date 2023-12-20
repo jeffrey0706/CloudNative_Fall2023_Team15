@@ -71,7 +71,7 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
   }
 
   const getHomeLink = (userRole) => {
-    if (userRole.toLowerCase() == "guard") {
+    if (userRole.toLowerCase() === "guard") {
       return "/guard";
     }
     else {
