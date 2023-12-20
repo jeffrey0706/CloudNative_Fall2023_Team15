@@ -17,8 +17,6 @@ const INITIAL_MY_CAR_INFO= {
     Duration: '',
 }
 
-const FAKE_PARKING_LOT_ID = 1;
-
 function MyCarPage() {
     const navigate = useNavigate();
     const userId = useSelector((state) => state.login.userId);
@@ -35,7 +33,7 @@ function MyCarPage() {
                 setUserStatus(res.data.status);
 
                 const myCarPromise = API.my_car.get(userId);
-                const mapPromise = myCarPromise.then((res) => API.map.get(FAKE_PARKING_LOT_ID, res.data.area_floor)); // TODO: Change to real parking lot id
+                const mapPromise = myCarPromise.then((res) => API.map.get(res.data.parking_lot_id, res.data.area_floor));
                 Promise.all([myCarPromise, mapPromise])
                     .then(([myCarRes, mapRes]) => {
                         const startTime = moment.utc(myCarRes.data.park_time).local();
