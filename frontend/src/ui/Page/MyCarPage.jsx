@@ -58,7 +58,17 @@ function MyCarPage() {
                             Start_Time: startTime.format('YYYY/MM/DD HH:mm:ss'),
                             Duration: duration.asMinutes() < 1 ? 'Less than 1 minute' : dayString + hourString + minuteString
                         });
-                        setMap(mapRes.data.filter(d => d.area_name === myCarRes.data.area_name).map(d => d.status));
+                        let filteredMapRes = mapRes.data.filter(d => d.area_name === myCarRes.data.area_name).map(d => {
+                            if (d.spot_number === myCarRes.data.parking_spot_number) {
+                                return d.status
+                            }
+                            else {
+                                return 1;
+                            }
+                        }
+                        );
+                        console.log(filteredMapRes)
+                        setMap(filteredMapRes);
                     });
             })
             .catch((err) => {
