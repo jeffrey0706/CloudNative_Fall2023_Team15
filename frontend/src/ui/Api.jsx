@@ -246,12 +246,13 @@ const expired_alert = {
 }
 
 export const API = {
-    my_car: my_car,
-    parking_lots: parking_lots,
-    profile: profile,
-    reservation: reservation,
-    history: history,
-    user_status: user_status,
-    login: login,
-    map: map,
+    my_car,
+    parking_lots,
+    profile,
+    reservation,
+    history,
+    user_status,
+    login,
+    map,
+    expired_alert,
 };
