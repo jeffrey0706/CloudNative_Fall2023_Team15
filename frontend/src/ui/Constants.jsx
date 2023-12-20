@@ -105,6 +105,13 @@ export const fakeHistory = [
         start_time: '2023-12-01 12:00:00',
         end_time: '2023-12-01 18:00:00',
     }]
+export const fakeReservation = [
+    { position: "F1 - 2F A03", overtime: "33hr 03min" },
+    { position: "F2 - 4F C04", overtime: "70hr 45min" },
+    { position: "F3 - 1F B03", overtime: "28hr 33min" },
+    { position: "F2 - 4F D04", overtime: "98hr 16min" },
+]
+
 
 
 export const allFakeGuardAnalysisData = [];
@@ -157,5 +164,5 @@ export const UserStatusTransfer = (code) => {
 }
 
 // Production constants, which may still need to be changed
-// export const BASE_URL = 'http://localhost:5000';
-export const BASE_URL = 'https://cloudnativefuncv1.azurewebsites.net';
+export const BASE_URL = 'http://localhost:5000';
+// export const BASE_URL = 'https://cloudnativefuncv1.azurewebsites.net';

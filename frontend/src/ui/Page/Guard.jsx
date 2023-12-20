@@ -32,7 +32,7 @@ function Guard() {
 
   return (
     <>
-      <Header togglerType={TOGGLER_TYPE.EXIT} />
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE_GUARD} />
       <SubHeader BACK_ICON={false} LEFT_STR="Dashboard" RHS_INFO={INFO_TYPE.ANALYSIS} onAnalysisClick={onAnalysisClick} />
       <ProgressBar locations={locations} />
       <LocationList mode={LOCATION_LIST_MODE.FRACTION} locations={locations} setCurrentLocation={onPKLotClick} />

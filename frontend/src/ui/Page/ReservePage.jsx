@@ -1,15 +1,17 @@
 import './ReservePage.css'
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import ViewLotsSet from '../Component/ViewLotsSet';
 import ParkingStatus from '../Component/ParkingStatus';
 import ReserveButton from '../Component/ReserveButton';
+import ErrorModal from '../Component/ErrorModal';
 import moment from 'moment';
 import { API } from '../Api';
 import { UserStatusTransfer } from '../Constants';
+import { logout } from '../store';
 
 
 const EXPIRE_TYPE = {
@@ -43,6 +45,7 @@ const PARKING_INFO= {
 
 function ReservePage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { userId, carId } = useSelector((state) => state.login);
 
     const [reservationData, setReservationData] = useState(RESERVATION_DATA);
@@ -50,7 +53,7 @@ function ReservePage() {
     const [parkingInfo, setParkingInfo] = useState(PARKING_INFO); 
     const [expired, setExpired] = useState(EXPIRE_TYPE.RESERVED);
     const [map, setMap] = useState([]);
-
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const userStatusPromise = API.user_status.get(userId);
@@ -80,10 +83,15 @@ function ReservePage() {
                 });
             })
             .catch((err) => {
-                console.log('Error: Failed to fetch data');
-                navigate('/error');
+                if (err.response.status === 401) {
+                    dispatch(logout());
+                    navigate('/login');
+                }
+                else {
+                    navigate('/error');
+                }
             });
-    }, [carId, navigate, userId]);
+    }, [carId, userId, navigate, dispatch]);
 
     useEffect(() => {
         if (parkingInfo.parkingLotId !== '' && parkingInfo.parkingFloor !== '') {
@@ -94,21 +102,28 @@ function ReservePage() {
                     setMap(data);
                 })
                 .catch((err) => {
-                    console.log('Error: Failed to fetch data');
+                    if (err.response.status === 401) {
+                        dispatch(logout());
+                        navigate('/login');
+                    }
+                    else {
+                        navigate('/error');
+                    }
                 })
         }
-    }, [parkingInfo.parkingLotId, parkingInfo.parkingArea, parkingInfo.parkingFloor]);
+    }, [parkingInfo.parkingLotId, parkingInfo.parkingArea, parkingInfo.parkingFloor, navigate, dispatch]);
 
     const deleteRsv = () => {
         API.reservation.delete(carId)
             .then((res) => navigate('/'))
-            .catch((err) => console.log(err));
+            .catch((err) => setError(err));
     };
 
     
     return (
         <>
             <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus}/>
+            <ErrorModal error={error} setError={setError} />
             <div className='body-wrapper'>
                 <div>
                     <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />
