@@ -78,27 +78,27 @@ function MapView() {
 
     return (
         <div className='map-view-wrapper'>
-        {
-            !isLoading ?
-            (
-                <>
-                    <MapContainer
-                        API_KEY={API_KEY}
-                        locations={locations}
-                        center={getCenter(locations)}
-                        selectedPKLot={parkingLotId}
-                        onMarkerClick={onMarkerClick}
-                        onGoogleApiLoaded={onGoogleApiLoaded}
-                    />
-                    <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id == parkingLotId)} />
-                    <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+            {
+                !isLoading ?
+                    (
+                        <>
+                            <MapContainer
+                                API_KEY={API_KEY}
+                                locations={locations}
+                                center={getCenter(locations)}
+                                selectedPKLot={parkingLotId}
+                                onMarkerClick={onMarkerClick}
+                                onGoogleApiLoaded={onGoogleApiLoaded}
+                            />
+                            <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === parkingLotId)} />
+                            <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
-                    <Button color='none' className='back-btn' onClick={onBackIconClick}>
-                        <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
-                    </Button>
-                </>
-            ) : (<></>)
-        }
+                            <Button color='none' className='back-btn' onClick={onBackIconClick}>
+                                <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
+                            </Button>
+                        </>
+                    ) : (<></>)
+            }
         </div>
     );
 }
