@@ -14,6 +14,7 @@ import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css";
 import { API } from '../Api';
+import { CiBowlNoodles } from 'react-icons/ci';
 
 // import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
@@ -37,7 +38,6 @@ function MapView() {
     useEffect(() => {
         API.parking_lots.get()
             .then((res) => {
-                console.log('Parking lots: ', res.data);
                 setLocations(res.data);
             })
             .catch((err) => console.log('Error: ', err));
@@ -61,7 +61,8 @@ function MapView() {
 
     const onMarkerClick = (parkinglot_id, lat, lng) => {
         setParkingLotId(parkinglot_id);
-        mapRef?.setZoom(18);
+        console.log(mapRef, lat, lng)
+        mapRef?.setZoom(15);
         mapRef?.setCenter({ lat, lng })
     }
 
@@ -83,20 +84,20 @@ function MapView() {
 
     return (
         <div className='map-view-wrapper'>
-        {
-            (!isLoading && locations.length > 0) ?
-            (
-                <>
-                    <MapContainer
-                        API_KEY={API_KEY}
-                        locations={locations}
-                        center={getCenter(locations)}
-                        selectedPKLot={parkingLotId}
-                        onMarkerClick={onMarkerClick}
-                        onGoogleApiLoaded={onGoogleApiLoaded}
-                    />
-                    <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId))} />
-                    <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+            {
+                (!isLoading && locations.length > 0) ?
+                    (
+                        <>
+                            <MapContainer
+                                API_KEY={API_KEY}
+                                locations={locations}
+                                center={getCenter(locations)}
+                                selectedPKLot={parkingLotId}
+                                onMarkerClick={onMarkerClick}
+                                onGoogleApiLoaded={onGoogleApiLoaded}
+                            />
+                            <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId))} />
+                            <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
                             <Button color='none' className='back-btn' onClick={onBackIconClick}>
                                 <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />

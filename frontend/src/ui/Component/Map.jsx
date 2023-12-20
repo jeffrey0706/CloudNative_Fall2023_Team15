@@ -8,16 +8,17 @@ const containerStyle = {
   // overflow: 'visible !important'
 };
 
-const CustomMarker = ({ position, available_num, selectedPKLot, onClick = () => { } }) => {
+const CustomMarker = ({ position, available_num, selectedPKLot, onClick = () => { console.log("function not passed") } }) => {
   const getPixelPositionOffset = (width, height) => ({
     x: -(width / 2),
     y: -(height / 2),
   });
+  let pos = { lat: position.latitude, lng: position.longitude };
 
   return (
     <OverlayViewF
       key={position.name}
-      position={position}
+      position={pos}
       mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
       getPixelPositionOffset={getPixelPositionOffset}
     >
@@ -65,7 +66,7 @@ const MapContainer = (props) => {
       onLoad={props.onGoogleApiLoaded}
       mapContainerStyle={containerStyle}
       center={props.center}
-      zoom={15}
+      zoom={13}
       options={{
         styles: [
           {
