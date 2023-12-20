@@ -1,12 +1,12 @@
 import './MainPage.css';
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
 import ReserveButton from '../Component/ReserveButton';
+import ErrorModal from '../Component/ErrorModal';
 import { logout } from '../store';
 
 // Production API
@@ -65,7 +65,6 @@ function MainPage() {
       .catch((err) => setError(err));
   };
   const mapBtnClick = () => navigate(`/map?originalParkingLotId=${currentLocation.parkinglot_id}`);
-  const onModalClose = () => setError(null);
   const reserveButtonText = (status) => {
     switch (status) {
       case 1: // RESERVED
@@ -93,11 +92,7 @@ function MainPage() {
   return (
     <>
       <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus} />
-      {error && <Modal isOpen={error !== null} toggle={onModalClose}>
-        <ModalBody style={{ backgroundColor: 'rgb(243, 216, 218)', color: 'rgb(121, 40, 44)' }}>
-            {error.message}
-        </ModalBody>
-      </Modal>}
+      <ErrorModal error={error} setError={setError} />
       <div className='body-wrapper'>
         <div>
           <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
