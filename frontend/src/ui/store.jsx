@@ -12,10 +12,14 @@ const loginSlice = createSlice({
         login: (state, action) => {
             state.userId = action.payload.userId;
             state.carId = action.payload.carId;
+            Cookies.set('userId', action.payload.userId);
+            Cookies.set('carId', action.payload.carId);
         },
         logout: state => {
             state.userId = null;
             state.carId = null;
+            Cookies.remove('userId');
+            Cookies.remove('carId');
         },
     },
 });

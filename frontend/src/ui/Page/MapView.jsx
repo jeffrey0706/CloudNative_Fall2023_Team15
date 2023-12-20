@@ -37,11 +37,17 @@ function MapView() {
     useEffect(() => {
         API.parking_lots.get()
             .then((res) => {
+                console.log('Parking lots: ', res.data);
                 setLocations(res.data);
-                setIsLoading(false);
             })
             .catch((err) => console.log('Error: ', err));
     }, []);
+
+    useEffect(() => {
+        if (locations.length > 0) {
+            setIsLoading(false);
+        }
+    }, [locations]);
 
     const [mapRef, setMapRef] = useState(null);
     const onGoogleApiLoaded = (map) => {
@@ -79,7 +85,7 @@ function MapView() {
     return (
         <div className='map-view-wrapper'>
         {
-            !isLoading ?
+            (!isLoading && locations.length > 0) ?
             (
                 <>
                     <MapContainer
