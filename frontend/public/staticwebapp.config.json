@@ -6,6 +6,7 @@
       }
     ],
     "navigationFallback": {
-      "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+        "rewrite": "/",
+        "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
     }
   }
