@@ -11,7 +11,7 @@ export const LOT_STATUS = {
 
 function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1], onClick = () => { }, FONT_SIZE = 18 }) {
     const getStatusContent = (status, index) => {
-        let lot_code = `${SECTION}0${index + 1}`;
+        const lot_code = `${SECTION}0${index + 1}`;
         switch (status) {
             case LOT_STATUS.PARKED:
                 return <img src={CarImg} alt="Occupied" />;
@@ -21,14 +21,15 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
                         {lot_code}
                     </div>
                 );
-            case LOT_STATUS.EMPTY:
             case LOT_STATUS.OCCUPIED:
-            default:
                 return (
                     <div className="others">
                         {lot_code}
                     </div>
                 );
+            case LOT_STATUS.EMPTY:
+            default:
+                return (<div className="empty"></div>);
         }
     };
 

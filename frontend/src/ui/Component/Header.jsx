@@ -87,7 +87,7 @@ function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
         )
       case TOGGLER_TYPE.EXIT:
         return (
-          <Button color='none' className='exit-btn'>
+          <Button color='none' className='exit-btn' onClick={() => {dispatch(logout()); navigate('/login')}}>
             <RxExit size={20}/>
           </Button>
         )

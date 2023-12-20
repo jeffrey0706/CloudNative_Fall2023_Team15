@@ -1,16 +1,13 @@
+from app.models.session import Session
 from flask import session
 from flask_testing import TestCase
 from app.utils import create_app
 
-from app import db, sess
+from app import db
 
 class UnitTestSettingBase(TestCase):
     def create_app(self):
         app = create_app('testing')
-    
-        @app.before_request
-        def set_session_data():
-            session['user_id'] = 1
 
         return app
 
@@ -19,6 +16,8 @@ class UnitTestSettingBase(TestCase):
         with self.app.app_context():
             # db.metadata.clear()
             db.create_all()
+        with self.client.session_transaction() as sess:
+            sess = Session()
 
     def tearDown(self):
         with self.app.app_context():
