@@ -1,5 +1,6 @@
 import './MyCarPage.css'
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
@@ -19,6 +20,7 @@ const INITIAL_MY_CAR_INFO= {
 const FAKE_PARKING_LOT_ID = 1;
 
 function MyCarPage() {
+    const navigate = useNavigate();
     const userId = useSelector((state) => state.login.userId);
     const [myCarInfo, setMyCarInfo] = useState(INITIAL_MY_CAR_INFO); 
     const [map, setMap] = useState([]);
@@ -55,7 +57,10 @@ function MyCarPage() {
                         setMap(mapRes.data.filter(d => d.area_name === myCarRes.data.area_name).map(d => d.status));
                     });
             })
-            .catch((err) => console.log(`Error: ${err}`));
+            .catch((err) => {
+                console.log(`Error: ${err}`);
+                navigate('/error');
+            });
     }, []);
     
     return (
