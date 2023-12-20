@@ -1,24 +1,28 @@
 // import './Notification.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import NotifyList from '../Component/NotifyList';
 
 // Production API
 import { API } from '../Api';
+import { fakeReservation } from '../Constants';
 
 function Notification() {
-  const navigate = useNavigate();
 
-  // const [locations, setLocations] = useState([]);
-  // useEffect(() => {
-  //   API.parking_lots.get()
-  //     .then((res) => setLocations(res.data))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  const notifications = [{ position: "Parking lot 1 - 2F A03", overtime: "33hr 03min" }, { position: "Parking lot 2 - 4F C04", overtime: "24hr 03min" }]
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    API.expired_alert.get()
+      .then((res) => {
+        console.log(res.data)
+        setNotifications(res.data)
+        if (notifications.length === 0) {
+          setNotifications(fakeReservation)
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
 
   return (
