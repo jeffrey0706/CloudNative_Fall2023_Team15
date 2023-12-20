@@ -8,6 +8,7 @@ function ViewLotsSet({ SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1] }) {
     const [sectionImg, setSectionImg] = useState(null);
 
     useEffect(() => {
+        if (!SECTION) return;
         import(`../../assets/section${SECTION}.svg`)
             .then((sectionImgPath) => setSectionImg(sectionImgPath.default))
     }, [SECTION]);

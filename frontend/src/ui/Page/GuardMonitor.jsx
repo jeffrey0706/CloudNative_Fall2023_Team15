@@ -10,7 +10,7 @@ function GuardMonitor() { // TODO: How to access the data
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { PKLotName } = location.state || {};
+  const { PKLotName, PKLotId } = location.state || {};
 
   const layout = [['A', 'B'], ['C', 'D']];
 

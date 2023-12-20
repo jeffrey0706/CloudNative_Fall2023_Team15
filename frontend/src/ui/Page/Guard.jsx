@@ -22,13 +22,14 @@ function Guard() {
   }, []);
 
 
-  const onPKLotClick = (event) => {
-    const PKLotName = event.target.id || event.target.parentNode.id || event.target.parentNode.parentNode.id
-    navigate('/guard/monitor', { state: { PKLotName: PKLotName } })
+  const onPKLotClick = (location) => {
+    const PKLotName = location.name
+    const PKLotId = location.parkinglot_id
+    navigate('/guard/monitor', { state: { PKLotName: PKLotName, PKLotId: PKLotId } })
   }
 
   const onAnalysisClick = () => {
-    navigate('/guard/analysis', { state: { AllPKLotName: fakeLocations } });
+    navigate('/guard/analysis', { state: { locations: locations } });
   }
 
   return (

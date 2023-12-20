@@ -8,7 +8,7 @@ import { Button } from 'reactstrap';
 // import { API } from '../Api';
 
 // Testing constants
-import { fakeMapCenter, fakeLocationsCoordinate, fakeApiKey } from '../Constants';
+import { fakeApiKey } from '../Constants';
 import MapContainer from '../Component/Map';
 import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -60,7 +60,6 @@ function MapView() {
     }
 
     const onMarkerClick = (parkinglot_id, lat, lng) => {
-        // console.log('This is ->', markerId)
         setParkingLotId(parkinglot_id);
         mapRef?.setZoom(18);
         mapRef?.setCenter({ lat, lng })

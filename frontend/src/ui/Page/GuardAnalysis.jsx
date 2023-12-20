@@ -1,5 +1,5 @@
 import './GuardAnalysis.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
@@ -7,7 +7,7 @@ import SubHeader, { INFO_TYPE } from '../Component/SubHeader';
 import Floors from '../Component/Floors';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { fakeGuardAnalysisData } from '../Constants';
+import { allFakeGuardAnalysisData } from '../Constants';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -16,7 +16,8 @@ function GuardAnalysis() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { AllPKLotName } = location.state || {};
+  const { locations } = location.state || {};
+  const [fakeGuardAnalysisData, setFakeGuardAnalysisData] = useState(allFakeGuardAnalysisData[0][0]);
 
   const onBackIconClick = () => {
     if (window.history.state && window.history.state.idx > 0) {
@@ -25,12 +26,6 @@ function GuardAnalysis() {
     else {
       navigate('/', { replace: true });
     }
-  }
-
-  const floors = ['1F', '2F', '3F', '4F'];
-  const [currentFloor, setCurrentFloor] = useState(floors[0]);
-  const onFloorBtnClick = (event) => {
-    setCurrentFloor(event.target.innerText);
   }
 
   const data = {
@@ -81,7 +76,8 @@ function GuardAnalysis() {
     maintainAspectRatio: false,
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        max: 100
       }
     },
     plugins: {
@@ -96,16 +92,33 @@ function GuardAnalysis() {
     }
   };
 
+
+  const floors = ['1F', '2F', '3F', '4F'];
+  const [currentFloor, setCurrentFloor] = useState(floors[0]);
+  const onFloorBtnClick = (event) => {
+    setCurrentFloor(event.target.innerText);
+  }
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("All");
+  const [selectedItemId, setSelectedItemId] = useState(0);
 
   const toggle = () => {
     setDropdownOpen(prevState => !prevState);
   }
 
-  const handleSelect = (item) => {
-    setSelectedItem(item);
+  const handleSelect = (item_id, item_name) => {
+    setSelectedItem(item_name);
+    setSelectedItemId(item_id);
   };
+
+
+  useEffect(() => {
+    const floorIndex = parseInt(currentFloor) - 1;
+    const newData = allFakeGuardAnalysisData[selectedItemId][floorIndex];
+    setFakeGuardAnalysisData(newData);
+  }, [currentFloor, selectedItemId]);
 
   return (
     <>
@@ -119,15 +132,15 @@ function GuardAnalysis() {
           </DropdownToggle>
           <DropdownMenu className="custom-dropdown-menu">
             {selectedItem !== "All" && <>
-              <DropdownItem className="drop-down-item" key="All" onClick={(e) => handleSelect("All", e)} >All</DropdownItem>
+              <DropdownItem className="drop-down-item" key="All" onClick={() => handleSelect(0, "All")} >All</DropdownItem>
               <DropdownItem divider />
             </>
             }
-            {AllPKLotName.map((item, index) => (
-              <>
-                <DropdownItem className="drop-down-item" key={item.name} onClick={(e) => handleSelect(item.name, e)} >{item.name}</DropdownItem>
-                {index !== AllPKLotName.length - 1 && <DropdownItem divider />}
-              </>
+            {locations.map((item, index) => (
+              <div key={index}>
+                <DropdownItem className="drop-down-item" key={item.name} onClick={() => handleSelect(item.parkinglot_id, item.name)} >{item.name}</DropdownItem>
+                {index !== locations.length - 1 && <DropdownItem divider />}
+              </div>
             ))}
           </DropdownMenu>
         </Dropdown>
