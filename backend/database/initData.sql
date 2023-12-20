@@ -1,10 +1,10 @@
 USE test;
 
-INSERT INTO ParkingLots (Name, SpotCounts)
+INSERT INTO ParkingLots (Name, SpotCounts, Longitude, Latitude)
 VALUES 
-('F1', 12),
-('F2', 18),
-('F3', 6);
+('F1', 12, 121.01101130255014, 24.767768461439623),
+('F2', 18, 121.00877970463625, 24.766365616228974),
+('F3', 6, 120.9968492388658, 24.773691410943822);
 
 INSERT INTO Areas (ParkingLotID, Name, Floor)
 VALUES
