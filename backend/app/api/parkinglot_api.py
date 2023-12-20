@@ -32,9 +32,10 @@ def parking_lots():
     current_capacity = {p.ParkingLotID: p.SpotCounts for p in all_parking_lots}
 
     parking_spots: List[ParkingSpot] = ParkingSpot.query.all()
-    areas: List[Area] = Area.query.filter(Area.AreaID.in_([ps.AreaID for ps in parking_spots])).all()
+    parking_spot_ids = [ps.ParkingSpotID for ps in parking_spots]
+    parking_spots_with_area = db.session.query(ParkingSpot, Area).join(Area).filter(ParkingSpot.ParkingSpotID.in_(parking_spot_ids)).all()
     maximum_handicap_capacity = {p.ParkingLotID: 0 for p in all_parking_lots}
-    for parking_spot, area in zip(parking_spots, areas):
+    for parking_spot, area in parking_spots_with_area:
         if parking_spot.Priority != 'Normal':
             maximum_handicap_capacity[area.ParkingLotID] += 1
     current_handicap_capacity = copy.deepcopy(maximum_handicap_capacity)
