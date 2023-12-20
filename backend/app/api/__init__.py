@@ -24,8 +24,6 @@ from app.models import Session
 @spot_history_bp.before_request
 @map_bp.before_request 
 @user_status_bp.before_request
-@parked_bp.before_request
-@exited_bp.before_request
 @expired_alert_bp.before_request
 @utility_bp.before_request
 def check_session():
@@ -48,6 +46,7 @@ def check_session():
 @expired_alert_bp.after_request
 @utility_bp.after_request
 @login_bp.after_request
+@register_bp.after_request
 def add_samesite_to_cookies(response):
     # Set the SameSite attribute for all cookies
     response.headers.add('Access-Control-Allow-Credentials', 'true')
