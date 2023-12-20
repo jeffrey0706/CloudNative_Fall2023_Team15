@@ -8,8 +8,6 @@ import ProgressBar from '../Component/ProgressBar';
 
 // Production API
 import { API } from '../Api';
-// Testing constants
-import { fakeLocations } from '../Constants';
 
 function Guard() {
   const navigate = useNavigate();
@@ -18,7 +16,7 @@ function Guard() {
   useEffect(() => {
     API.parking_lots.get()
       .then((res) => setLocations(res.data))
-      .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
+      .catch((err) => console.log(err));
   }, []);
 
   const onPKLotClick = (location) => {
@@ -27,7 +25,7 @@ function Guard() {
   }
 
   const onAnalysisClick = () => {
-    navigate('/guard/analysis', { state: { AllPKLotName: fakeLocations } });
+    navigate('/guard/analysis', { state: { AllPKLotName: locations } });
   }
 
   return (

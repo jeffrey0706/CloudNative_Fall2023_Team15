@@ -27,7 +27,7 @@ function MyCarPage() {
     useEffect(() => {
         API.user_status.get(userId)
             .then((res) => {
-                if (UserStatusTransfer(res.data.status) != "PARKED") {
+                if (UserStatusTransfer(res.data.status) !== "PARKED") {
                     return Promise.reject('User hasn\'t parked yet.');
                 }
                 setUserStatus(res.data.status);
@@ -62,7 +62,7 @@ function MyCarPage() {
                 console.log(`Error: ${err}`);
                 navigate('/error');
             });
-    }, []);
+    }, [navigate, userId]);
 
     return (
         <>

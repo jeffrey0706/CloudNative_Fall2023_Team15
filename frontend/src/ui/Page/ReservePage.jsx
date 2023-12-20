@@ -83,7 +83,7 @@ function ReservePage() {
                 console.log('Error: Failed to fetch data');
                 navigate('/error');
             });
-    }, []);
+    }, [carId, navigate, userId]);
 
     useEffect(() => {
         if (parkingInfo.parkingLotId !== '' && parkingInfo.parkingFloor !== '') {

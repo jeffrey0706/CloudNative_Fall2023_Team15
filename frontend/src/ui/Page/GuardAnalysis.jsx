@@ -124,10 +124,10 @@ function GuardAnalysis() {
             </>
             }
             {AllPKLotName.map((item, index) => (
-              <>
-                <DropdownItem className="drop-down-item" key={item.name} onClick={(e) => handleSelect(item.name, e)} >{item.name}</DropdownItem>
+              <div key={index}>
+                <DropdownItem className="drop-down-item" onClick={(e) => handleSelect(item.name, e)} >{item.name}</DropdownItem>
                 {index !== AllPKLotName.length - 1 && <DropdownItem divider />}
-              </>
+              </div>
             ))}
           </DropdownMenu>
         </Dropdown>

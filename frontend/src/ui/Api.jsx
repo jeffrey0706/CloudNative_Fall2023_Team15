@@ -1,5 +1,4 @@
 import { BASE_URL } from "./Constants";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
