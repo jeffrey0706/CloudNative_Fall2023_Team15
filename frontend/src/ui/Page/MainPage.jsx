@@ -27,7 +27,7 @@ function MainPage() {
     if (!userId) {
       navigate('/login');
     }
-  }, []);
+  }, [userId, navigate]);
 
   useEffect(() => {
     if (!userId) return;
@@ -51,7 +51,7 @@ function MainPage() {
             navigate('/login');
         }
       });
-  }, []);
+  }, [dispatch, navigate, userId]);
 
   const reserve = () => {
     API.reservation.post(carId, currentLocation.parkinglot_id)

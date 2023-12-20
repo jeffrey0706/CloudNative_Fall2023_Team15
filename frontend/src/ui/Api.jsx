@@ -1,5 +1,4 @@
 import { BASE_URL } from "./Constants";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
@@ -194,6 +193,8 @@ const login = {
      * @returns {Promise}
      *  data: {  
      *  * user_id: int,  
+     *  * car_id: int,  
+     *  * user_role: string,  
      *  }
      */
     post: (username, password) => axios.post(
