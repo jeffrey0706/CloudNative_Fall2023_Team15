@@ -1,11 +1,9 @@
 from typing import List
-from flask import Blueprint, jsonify, request
-from sqlalchemy.exc import IntegrityError
+from flask import Blueprint, jsonify
 
 from datetime import datetime, timedelta
 
 from app.models import Attendance, Car, Area, ParkingSpot, ParkingLot
-from app import db
 
 expired_alert_bp = Blueprint('expired_alert', __name__)
 

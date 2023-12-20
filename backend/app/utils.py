@@ -1,18 +1,18 @@
 from flask import Flask
 from flask_cors import CORS
 
-from typing import List
-
 from app.config import config
-from app import db
+from app import db, sess
 from app.api import *
 
 def create_app(config_name='testing'):
     conf = config[config_name]
 
     app = Flask(__name__)
-    CORS(app)
     app.config.from_object(conf)
+
+    db.init_app(app)
+    sess.init_app(app)
 
     app.register_blueprint(car_bp) 
     app.register_blueprint(login_bp)   
@@ -29,6 +29,6 @@ def create_app(config_name='testing'):
     app.register_blueprint(expired_alert_bp)
     app.register_blueprint(utility_bp)
 
-    db.init_app(app)
+    CORS(app)
 
     return app
