@@ -8,17 +8,29 @@
     /* To ensure the rounded corners are visible */
 }
 
-.rounded-table * {
-    background-color: #F4F5F6 !important;
-}
-
 .car-plate {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .loc-list-tr {
-    height: 3.125rem;
+    height: 2rem;
     border-color: transparent;
+}
+
+.wrap-container {
+    width: 85%;
+    background: #F4F5F6;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.table > :not(caption) > * > * {
+    background: transparent;
+}
+
+.col {
+    padding-top: 10px;
+    padding-left: 20px;
 }

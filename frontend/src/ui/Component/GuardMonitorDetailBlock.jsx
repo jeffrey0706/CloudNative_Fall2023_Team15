@@ -8,8 +8,8 @@ import {
 
 function GuardMonitorDetailBlock({ parking_status }) {
     return (
-        <Row className='wrap-container' style={{ 'marginTop': '1.5rem' }}>
-            <Col xs={{ size: 10, offset: 1 }}>
+        <Row className='wrap-container'>
+            <Col>
                 <Table className="rounded-table">
                     <tbody>
                         {Object.keys(parking_status).map(key => (
