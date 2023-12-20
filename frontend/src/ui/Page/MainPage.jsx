@@ -2,11 +2,12 @@ import './MainPage.css';
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Header, { TOGGLER_TYPE } from '../Component/Header';
 import Location from '../Component/Location';
 import LocationList from '../Component/LocationList';
 import ReserveButton from '../Component/ReserveButton';
+import { logout } from '../store';
 
 // Production API
 import { API } from '../Api';
@@ -20,6 +21,7 @@ function MainPage() {
   const [userStatus, setUserStatus] = useState(null);
   const [error, setError] = useState(null);
   const { userId, carId } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!userId) {
@@ -42,7 +44,13 @@ function MainPage() {
         setLocations(parkingLotsRes.data);
         setUserStatus(userStatusRes.data.status);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setError(err);
+        if (err.response.status === 401) {
+            dispatch(logout());
+            navigate('/login');
+        }
+      });
   }, []);
 
   const reserve = () => {
@@ -61,10 +69,11 @@ function MainPage() {
   const reserveButtonText = (status) => {
     switch (status) {
       case 1: // RESERVED
+      case 3: // EXPIRED
         return 'My Reservation';
       case 2: // PARKED
         return 'My Car';
-      default: // NONE, EXPIRED
+      default: // NONE
         return 'Reserve';
     }
   };
@@ -96,7 +105,7 @@ function MainPage() {
         <div>
         <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={false} onClick={reserveButtonFunction(userStatus)} />
         {
-          (UserStatusTransfer(userStatus) === "RESERVED") && 
+          (UserStatusTransfer(userStatus) === "RESERVED" || UserStatusTransfer(userStatus) === "EXPIRED") && 
           <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
         }
         </div>

@@ -36,7 +36,7 @@ function Guard() {
       <Header togglerType={TOGGLER_TYPE.EXIT} />
       <SubHeader BACK_ICON={false} LEFT_STR="Dashboard" RHS_INFO={INFO_TYPE.ANALYSIS} onAnalysisClick={onAnalysisClick} />
       <ProgressBar locations={locations} />
-      <LocationList mode={LOCATION_LIST_MODE.FRACTION} locations={locations} onClick={onPKLotClick} />
+      <LocationList mode={LOCATION_LIST_MODE.FRACTION} locations={locations} setCurrentLocation={onPKLotClick} />
     </>
   );
 }
