@@ -45,6 +45,7 @@ function MyCarPage() {
                                 duration.minutes() > 0 ? `${duration.minutes()} min` : '';
                         setMyCarInfo({
                             Location: myCarRes.data.parking_lot_name,
+                            parkingArea: myCarRes.data.area_name,
                             Parking_Spot: 
                                 myCarRes.data.area_name +
                                 myCarRes.data.parking_spot_number.toLocaleString(undefined, {minimumIntegerDigits: 2}) +
@@ -57,15 +58,14 @@ function MyCarPage() {
             })
             .catch((err) => console.log(`Error: ${err}`));
     }, []);
-    
+
     return (
         <>
             <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
             <div className='body-wrapper'>
                 <div>
                     <SubHeader BACK_ICON={false} LEFT_STR="My Car" RHS_INFO={INFO_TYPE.NONE} />
-                    {/* <ViewLotsSet SECTION={parkingInfo.parkingArea} LOTs_STATUS={map} /> */}
-                    <ViewLotsSet LOTs_STATUS={map} />
+                    <ViewLotsSet SECTION={myCarInfo.parkingArea} LOTs_STATUS={map} />
                     <ParkingStatus parking_status={myCarInfo} />
                 </div>
             </div>

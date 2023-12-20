@@ -21,9 +21,8 @@ function Guard() {
       .catch(() => setLocations(fakeLocations)); // TODO: Change this for production
   }, []);
 
-
-  const onPKLotClick = (event) => {
-    const PKLotName = event.target.id || event.target.parentNode.id || event.target.parentNode.parentNode.id
+  const onPKLotClick = (location) => {
+    const PKLotName = location.name;
     navigate('/guard/monitor', { state: { PKLotName: PKLotName } })
   }
 
