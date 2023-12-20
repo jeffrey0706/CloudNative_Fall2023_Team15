@@ -12,7 +12,7 @@ function GuardMonitorDetail() {
 
   const location = useLocation();
   const { LotInfo } = location.state || {};
-  const section = LotInfo.split(" -> ")[2];
+  const section = LotInfo.split(" -> ")[1];
 
   const onBackIconClick = () => {
     if (window.history.state && window.history.state.idx > 0) {
@@ -30,8 +30,8 @@ function GuardMonitorDetail() {
 
       {/* for each fake History create a GuardMonitorBlock */}
       {fakeHistory.map((history, index) => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <GuardMonitorDetailBlock key={index} parking_status={history} />
+        <div key={index} style={{ display: "flex", justifyContent: "center" }}>
+          <GuardMonitorDetailBlock parking_status={history} />
         </div>
       ))}
     </>
