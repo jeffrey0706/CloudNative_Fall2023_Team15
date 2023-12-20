@@ -2,7 +2,6 @@
     "routes": [
       {
         "route": "/login",
-        "rewrite": "/",
         "allowedRoles": ["anonymous"]
       }
     ],
