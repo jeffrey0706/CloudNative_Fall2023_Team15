@@ -1,11 +1,9 @@
 // import './MapView.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ReserveButton from '../Component/ReserveButton';
 import { Button } from 'reactstrap';
-
-// Production API
-// import { API } from '../Api';
 
 // Testing constants
 import { fakeApiKey } from '../Constants';
@@ -18,6 +16,27 @@ import { CiBowlNoodles } from 'react-icons/ci';
 
 // import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
+
+const reserveButtonText = (status) => {
+    switch (status) {
+      case 1: // RESERVED
+      case 3: // EXPIRED
+        return 'Reserve a new one';
+      case 2: // PARKED
+        return 'My Car';
+      default: // NONE
+        return 'Reserve';
+    }
+};
+const reserveButtonOutline = (status) => {
+    switch (status) {
+    case 1: // RESERVED
+    case 3: // EXPIRED
+        return true;
+    default: // NONE
+        return false;
+    }
+};
 
 function MapView() {
 
@@ -36,22 +55,27 @@ function MapView() {
     const [isLoading, setIsLoading] = useState(true);
     const [locations, setLocations] = useState([]);
     const [center, setCenter] = useState({ lat: 0, lng: 0 });
+    const [userStatus, setUserStatus] = useState(null);
+    const { userId, carId } = useSelector((state) => state.login);
 
     useEffect(() => {
-        API.parking_lots.get()
-            .then((res) => {
-                setLocations(res.data);
+        const parkingLotsPromise = API.parking_lots.get();
+        const userStatusPromise = API.user_status.get(userId);
+        Promise.all([parkingLotsPromise, userStatusPromise])
+            .then(([parkingRes, userStatusRes]) => {
+                setUserStatus(userStatusRes.data.status);
+                setLocations(parkingRes.data);
             })
             .catch((err) => console.log('Error: ', err));
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         if (locations.length > 0) {
             setIsLoading(false);
-            let parkingLot = locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId));
+            const parkingLot = locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId));
             setCenter({ lat: parkingLot.latitude, lng: parkingLot.longitude });
         }
-    }, [locations]);
+    }, [locations, parkingLotId]);
 
     const [mapRef, setMapRef] = useState(null);
     const onGoogleApiLoaded = (map) => {
@@ -76,8 +100,26 @@ function MapView() {
             navigate('/', { replace: true });
         }
     }
-
-    const reserveBtnClick = () => navigate('/reservation');
+    const reserveButtonFunction = (status) => {
+        switch (status) {
+            case 1: // RESERVED
+            case 3: // EXPIRED
+            return () => {
+                API.reservation.delete(userId)
+                    .then(() => API.reservation.post(carId, parkingLotId))
+                    .then(() => navigate('/reservation'))
+                    .catch((err) => console.log('Error: ', err));
+            }
+            case 2: // PARKED
+            return () => navigate(`/mycar`);
+            default: // NONE
+            return () => {
+                API.reservation.post(carId, parkingLotId)
+                    .then(() => navigate('/reservation'))
+                    .catch((err) => console.log('Error: ', err));
+            };
+        }
+    };
     const getCenter = (locations) => {
         const lat = locations.reduce((acc, cur) => acc + cur.latitude, 0) / locations.length;
         const lng = locations.reduce((acc, cur) => acc + cur.longitude, 0) / locations.length;
@@ -98,7 +140,7 @@ function MapView() {
                                 onGoogleApiLoaded={onGoogleApiLoaded}
                             />
                             <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId))} />
-                            <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
+                            <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={reserveButtonOutline(userStatus)} onClick={reserveButtonFunction(userStatus)} />
 
                             <Button color='none' className='back-btn' onClick={onBackIconClick}>
                                 <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
