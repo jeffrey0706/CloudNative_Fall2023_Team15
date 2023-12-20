@@ -99,12 +99,12 @@ function MapView() {
                     <ReserveFooter location={locations.find(({ parkinglot_id }) => parkinglot_id === parkingLotId)} />
                     <ReserveButton text='Reserve' color='danger' outline={false} onClick={reserveBtnClick} />
 
-                    <Button color='none' className='back-btn' onClick={onBackIconClick}>
-                        <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
-                    </Button>
-                </>
-            ) : (<></>)
-        }
+                            <Button color='none' className='back-btn' onClick={onBackIconClick}>
+                                <IoIosArrowRoundBack style={{ color: 'white' }} size={34} />
+                            </Button>
+                        </>
+                    ) : (<></>)
+            }
         </div>
     );
 }

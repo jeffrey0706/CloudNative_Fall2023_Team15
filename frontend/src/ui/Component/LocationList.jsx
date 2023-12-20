@@ -12,7 +12,7 @@ export const LOCATION_LIST_MODE = {
     FRACTION: 1,
 }
 
-function LocationList({ mode = LOCATION_LIST_MODE.REMAIN, locations = [], setCurrentLocation = () => { } }) {
+function LocationList({ mode = LOCATION_LIST_MODE.REMAIN, locations = [], setCurrentLocation = () => { console.log("Function not passed") } }) {
 
     const getClassName = (mode) => {
         if (mode === LOCATION_LIST_MODE.REMAIN)
@@ -50,7 +50,7 @@ function LocationList({ mode = LOCATION_LIST_MODE.REMAIN, locations = [], setCur
                     <tbody>
                         {
                             locations.map((location, index) => (
-                                <tr className='loc-list-tr' key={'location' + index} id={location.name} onClick={() => setCurrentLocation(location)} >
+                                <tr className='loc-list-tr' key={'location' + index} id={location.name} onClick={(e) => setCurrentLocation(e)} >
                                     <td className='name-td'>{location.name} {mode === LOCATION_LIST_MODE.REMAIN && (location.current_handicap_capacity > 0) && <PiWheelchairFill className='disable-icon' size={16} />}</td>
                                     {showInfo(mode, location)}
                                 </tr>
