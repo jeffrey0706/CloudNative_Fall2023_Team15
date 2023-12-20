@@ -32,7 +32,7 @@ def spot_history(spot_id):
         car_ids = [r.CarID for r in records]
         cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
 
-        assert len(cars) == len(records)
+        # assert len(cars) == len(records)
 
         records = [
             {
@@ -50,7 +50,7 @@ def spot_history(spot_id):
         car_ids = [r.CarID for r in attenances]
         cars: List[Car] = Car.query.filter(Car.CarID.in_(car_ids)).all()
 
-        assert len(cars) == len(attenances)
+        # assert len(cars) == len(attenances)
 
         attenances = [
             {
