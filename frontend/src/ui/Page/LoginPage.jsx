@@ -6,7 +6,6 @@ import HeaderLogin from '../Component/HeaderLogin';
 import ReserveButton from '../Component/ReserveButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../store';
-import Cookies from 'js-cookie';
 
 // Production API
 import { API } from '../Api';
@@ -14,21 +13,35 @@ import { API } from '../Api';
 function LoginPage() {
 
     const navigate = useNavigate();
-    const user = useSelector((state) => state.login.userId);
+    const { userId, userRole } = useSelector((state) => state.login);
     const dispatch = useDispatch();
     const loginBtnClick = () => {
         const account = document.getElementById("Account").value;
         const password = document.getElementById("examplePassword").value;
         API.login.post(account, password)
             .then((res) => {
-                dispatch(login({ userId: res.data.user_id, carId: res.data.car_id, session: res.headers['set-cookie'] }));
-                navigate('/');
+                dispatch(login({
+                    userId: res.data.user_id,
+                    carId: res.data.car_id,
+                    userRole:res.data.user_role,
+                }));
+                if (res.data.user_role.toLowerCase() === 'guard') {
+                    navigate('/guard');
+                }
+                else {
+                    navigate('/');
+                }
             })
             .catch((err) => alert('Login failed\n', err));
     };
     useEffect(() => {
-        if (user) {
-            navigate('/');
+        if (userId) {
+            if (userRole.toLowerCase() === 'guard') {
+                navigate('/guard');
+            }
+            else {
+                navigate('/');
+            }
         }
     }, []);
 

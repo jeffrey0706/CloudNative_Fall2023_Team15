@@ -193,6 +193,8 @@ const login = {
      * @returns {Promise}
      *  data: {  
      *  * user_id: int,  
+     *  * car_id: int,  
+     *  * user_role: string,  
      *  }
      */
     post: (username, password) => axios.post(
