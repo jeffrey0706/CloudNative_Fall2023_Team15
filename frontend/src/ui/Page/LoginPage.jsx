@@ -6,7 +6,7 @@ import HeaderLogin from '../Component/HeaderLogin';
 import ReserveButton from '../Component/ReserveButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../store';
-
+import Cookies from 'js-cookie';
 
 // Production API
 import { API } from '../Api';
@@ -21,8 +21,8 @@ function LoginPage() {
         const password = document.getElementById("examplePassword").value;
         API.login.post(account, password)
             .then((res) => {
-                localStorage.setItem('userId', res.data.user_id);
-                localStorage.setItem('carId', res.data.car_id);
+                Cookies.set('userId', res.data.user_id);
+                Cookies.set('carId', res.data.car_id);
                 dispatch(login({ userId: res.data.user_id, carId: res.data.car_id }));
                 navigate('/');
             })

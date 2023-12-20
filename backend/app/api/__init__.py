@@ -48,6 +48,5 @@ def check_session():
 def add_samesite_to_cookies(response):
     # Set the SameSite attribute for all cookies
     response.headers.add('Access-Control-Allow-Credentials', 'true')
-    response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response

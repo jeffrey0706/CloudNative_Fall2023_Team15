@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
+import Cookies from 'js-cookie';
 
 const loginSlice = createSlice({
     name: 'login',
     initialState: {
-        userId: localStorage.getItem('userId'),
-        carId: localStorage.getItem('carId'),
+        userId: Cookies.get('userId') || null,
+        carId: Cookies.get('carId') || null,
     },
     reducers: {
         login: (state, action) => {
