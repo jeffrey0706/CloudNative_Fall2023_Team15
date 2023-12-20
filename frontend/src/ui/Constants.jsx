@@ -106,13 +106,22 @@ export const fakeHistory = [
         end_time: '2023-12-01 18:00:00',
     }]
 export const fakeReservation = [
-    { position: "F1 - 2F A03", overtime: "33hr 03min" },
-    { position: "F2 - 4F C04", overtime: "70hr 45min" },
-    { position: "F3 - 1F B03", overtime: "28hr 33min" },
-    { position: "F2 - 4F D04", overtime: "98hr 16min" },
-]
-
-
+        { parkingLot: "F1", floor: 2, area: "A", spot: 3, license: "ABC-1234", overtime: "1d 3h 3m" },
+        { parkingLot: "F2", floor: 1, area: "B", spot: 5, license: "DEF-5678", overtime: "2d 12h 45m" },
+        { parkingLot: "F3", floor: 3, area: "C", spot: 2, license: "GHI-9012", overtime: "3d 6h 18m" },
+        { parkingLot: "F4", floor: 2, area: "A", spot: 1, license: "JKL-3456", overtime: "4d 18h 59m" },
+        { parkingLot: "F5", floor: 1, area: "B", spot: 4, license: "MNO-7890", overtime: "5d 9h 32m" },
+        { parkingLot: "F6", floor: 3, area: "C", spot: 6, license: "PQR-1234", overtime: "6d 3h 5m" },
+        { parkingLot: "F7", floor: 2, area: "A", spot: 2, license: "STU-5678", overtime: "7d 14h 48m" },
+        { parkingLot: "F8", floor: 1, area: "B", spot: 3, license: "VWX-9012", overtime: "8d 8h 21m" },
+        { parkingLot: "F9", floor: 3, area: "C", spot: 5, license: "YZA-3456", overtime: "9d 1h 54m" },
+        { parkingLot: "F10", floor: 2, area: "A", spot: 4, license: "BCD-7890", overtime: "10d 17h 37m" },
+        { parkingLot: "F11", floor: 1, area: "B", spot: 1, license: "EFG-1234", overtime: "11d 11h 10m" },
+        { parkingLot: "F12", floor: 3, area: "C", spot: 3, license: "HIJ-5678", overtime: "12d 4h 43m" },
+        { parkingLot: "F13", floor: 2, area: "A", spot: 6, license: "KLM-9012", overtime: "13d 22h 26m" },
+        { parkingLot: "F14", floor: 1, area: "B", spot: 2, license: "NOP-3456", overtime: "14d 16h 59m" },
+        { parkingLot: "F15", floor: 3, area: "C", spot: 4, license: "QRS-7890", overtime: "15d 9h 32m" },
+    ];
 
 export const allFakeGuardAnalysisData = [];
 
