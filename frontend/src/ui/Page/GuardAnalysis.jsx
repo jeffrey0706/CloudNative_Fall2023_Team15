@@ -137,10 +137,10 @@ function GuardAnalysis() {
             </>
             }
             {locations.map((item, index) => (
-              <>
-                <DropdownItem className="drop-down-item" key={item.parkinglot_id} onClick={() => handleSelect(item.parkinglot_id, item.name)} >{item.name}</DropdownItem>
+              <div key={index}>
+                <DropdownItem className="drop-down-item" key={item.name} onClick={() => handleSelect(item.parkinglot_id, item.name)} >{item.name}</DropdownItem>
                 {index !== locations.length - 1 && <DropdownItem divider />}
-              </>
+              </div>
             ))}
           </DropdownMenu>
         </Dropdown>
