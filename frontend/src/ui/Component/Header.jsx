@@ -23,9 +23,10 @@ import { UserStatusTransfer } from '../Constants';
 export const TOGGLER_TYPE = {
   COLLAPSE: 0,
   EXIT: 1,
+  COLLAPSE_GUARD: 2,
 };
 
-function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
+function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -43,7 +44,7 @@ function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
     if (modal) {
       return (
         <Button color='none' className='close-btn' onClick={togglerClicked}>
-          <IoMdClose size={24}/>
+          <IoMdClose size={24} />
         </Button>
       )
     }
@@ -87,9 +88,25 @@ function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
         )
       case TOGGLER_TYPE.EXIT:
         return (
-          <Button color='none' className='exit-btn' onClick={() => {dispatch(logout()); navigate('/login')}}>
-            <RxExit size={20}/>
+          <Button color='none' className='exit-btn' onClick={() => { dispatch(logout()); navigate('/login') }}>
+            <RxExit size={20} />
           </Button>
+        )
+      case TOGGLER_TYPE.COLLAPSE_GUARD:
+        return (
+          <>
+            {showCloseBtn()}
+            <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
+              <Nav navbar>
+                <NavItem>
+                  <NavLink exact="true" to="/guard" tag={Link}>Dashboard</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to={'/guard/notification'} tag={Link} >Notification</NavLink>
+                </NavItem>
+              </Nav>
+            </Modal>
+          </>
         )
       default:
         return (<></>)
@@ -99,7 +116,7 @@ function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
   return (
     <Navbar light expand="md" className='header-nav'>
       <NavbarBrand onClick={() => navigate('/')}>
-        <FaCarSide size={20}/>
+        <FaCarSide size={20} />
         <div className='home-nav'>Quick Parking</div>
       </NavbarBrand>
       {render(togglerType)}

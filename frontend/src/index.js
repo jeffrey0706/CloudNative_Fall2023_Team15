@@ -17,6 +17,7 @@ import GuardMonitorDetail from "./ui/Page/GuardMonitorDetail";
 import GuardAnalysis from "./ui/Page/GuardAnalysis";
 import LoginPage from "./ui/Page/LoginPage";
 import ErrorPage from "./ui/Page/ErrorPage";
+import Notification from "./ui/Page/Notification";
 
 const router = createBrowserRouter([
   // Error page
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: "guard/",
     element: <Guard />,
+  },
+  {
+    path: "guard/notification/",
+    element: <Notification />,
   },
   {
     path: "guard/analysis/",
