@@ -30,7 +30,9 @@ function GuardMonitorDetail() {
 
       {/* for each fake History create a GuardMonitorBlock */}
       {fakeHistory.map((history, index) => (
-        <GuardMonitorDetailBlock key={index} parking_status={history} />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <GuardMonitorDetailBlock key={index} parking_status={history} />
+        </div>
       ))}
     </>
   );
