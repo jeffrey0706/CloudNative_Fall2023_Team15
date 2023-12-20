@@ -2,8 +2,6 @@ CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
-SET time_zone = "+08:00";
-
 CREATE TABLE ParkingLots (
     ParkingLotID int AUTO_INCREMENT,
     Name varchar(255) UNIQUE,

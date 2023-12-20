@@ -5,12 +5,12 @@ import {
   Col
 } from 'reactstrap';
 import React from 'react';
-import ViewLots, { LOT_STATUS } from '../Component/ViewLots';
+import ViewLots from '../Component/ViewLots';
 import RoadLineVertical from '../../assets/RoadLineVertical.svg';
 import RoadLineHorizontal from '../../assets/RoadLineHorizontal.svg';
 
 
-function ParkingLot({ layout = [['A', 'B'], ['C', 'D']], LotPosition, onClick = () => { } }) {
+function ParkingLot({ layout = [['A', 'B'], ['C', 'D']], LotPosition, onClick = () => { }, datas = [[[], []], [[], []]] }) {
 
   if (layout.length === 0) {
     throw new Error('Layout error, it should be a 2D array');
@@ -23,15 +23,10 @@ function ParkingLot({ layout = [['A', 'B'], ['C', 'D']], LotPosition, onClick = 
     }
   }
 
-  const render_lots = (LotPosition, sect) => {
-    let array = [];
-    for (let i = 0; i < 6; i++) {
-      let randomNumber = Math.floor(Math.random() * Object.keys(LOT_STATUS).length); // Generates a random number between 0 and 3
-      array.push(randomNumber);
-    }
+  const render_lots = (LotPosition, sect, data) => {
     return (
       <div className="wrap-lots-container-1x">
-        <ViewLots LotPosition={LotPosition} SECTION={sect} LOTs_STATUS={array} onClick={onClick} FONT_SIZE={12} />
+        <ViewLots LotPosition={LotPosition} SECTION={sect} LOTs_STATUS={data} onClick={onClick} FONT_SIZE={12} />
       </div>
     )
   }
@@ -47,7 +42,7 @@ function ParkingLot({ layout = [['A', 'B'], ['C', 'D']], LotPosition, onClick = 
               {
                 row.map((col, colIndex) => (
                   <Col key={colIndex}>
-                    {render_lots(LotPosition, col)}
+                    {render_lots(LotPosition, col, datas[rowIndex][colIndex])}
                   </Col>
                 ))
               }

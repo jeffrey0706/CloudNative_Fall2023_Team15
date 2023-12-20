@@ -228,13 +228,31 @@ const map = {
     ),
 }
 
+const expired_alert = {
+    /**
+     * @returns {Promise}
+     * data: {
+     *  * car_id: int,  
+     *  * car_license: string,  
+     *  * parking_spot_number: int,  
+     *  * area_name: string,  
+     *  * area_floor: int,  
+     *  * parking_lot_name: string,  
+     *  * park_time: datetime,  
+     *  * total_time: int (seconds),  
+     * }
+     */
+    get: () => axios.get(BASE_URL + '/expired_alert', { crossdomain: true }),
+}
+
 export const API = {
-    my_car: my_car,
-    parking_lots: parking_lots,
-    profile: profile,
-    reservation: reservation,
-    history: history,
-    user_status: user_status,
-    login: login,
-    map: map,
+    my_car,
+    parking_lots,
+    profile,
+    reservation,
+    history,
+    user_status,
+    login,
+    map,
+    expired_alert,
 };

@@ -62,13 +62,6 @@ function GuardAnalysis() {
         borderColor: 'rgb(87, 160, 229)',
         tension: 0.1
       },
-      {
-        label: 'Area D',
-        data: fakeGuardAnalysisData[3],
-        fill: false,
-        borderColor: 'rgb(247, 207, 107)',
-        tension: 0.1
-      }
     ]
   };
 

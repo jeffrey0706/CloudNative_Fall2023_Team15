@@ -31,10 +31,12 @@ function MapView() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const originalParkingLotId = new URLSearchParams(location.search).get('originalParkingLotId');
+    const originalParkingLotId = parseInt(new URLSearchParams(location.search).get('originalParkingLotId'));
     const [parkingLotId, setParkingLotId] = useState(originalParkingLotId);
     const [isLoading, setIsLoading] = useState(true);
     const [locations, setLocations] = useState([]);
+    const [center, setCenter] = useState({ lat: 0, lng: 0 });
+
     useEffect(() => {
         API.parking_lots.get()
             .then((res) => {
@@ -46,24 +48,24 @@ function MapView() {
     useEffect(() => {
         if (locations.length > 0) {
             setIsLoading(false);
+            let parkingLot = locations.find(({ parkinglot_id }) => parkinglot_id === Number(parkingLotId));
+            setCenter({ lat: parkingLot.latitude, lng: parkingLot.longitude });
         }
     }, [locations]);
 
     const [mapRef, setMapRef] = useState(null);
     const onGoogleApiLoaded = (map) => {
-        const bounds = new window.google.maps.LatLngBounds();
-        const validLocations = locations.filter(({ latitude, longitude }) => latitude && longitude);
-        validLocations.forEach(({ latitude, longitude }) => bounds.extend({ lat: latitude, lng: longitude }));
-        map.fitBounds(bounds);
-        map.setCenter(bounds.getCenter());
         setMapRef(map);
     }
 
-    const onMarkerClick = (parkinglot_id, lat, lng) => {
+    const onMarkerClick = (parkinglot_id, latitude, longitude) => {
         setParkingLotId(parkinglot_id);
-        console.log(mapRef, lat, lng)
         mapRef?.setZoom(15);
-        mapRef?.setCenter({ lat, lng })
+        setCenter({ lat: latitude, lng: longitude });
+        setTimeout(() => {
+            mapRef?.setZoom(16);
+        }, 400);
+
     }
 
     const onBackIconClick = () => {
@@ -81,7 +83,6 @@ function MapView() {
         const lng = locations.reduce((acc, cur) => acc + cur.longitude, 0) / locations.length;
         return { lat, lng };
     }
-
     return (
         <div className='map-view-wrapper'>
             {
@@ -91,7 +92,7 @@ function MapView() {
                             <MapContainer
                                 API_KEY={API_KEY}
                                 locations={locations}
-                                center={getCenter(locations)}
+                                center={center}
                                 selectedPKLot={parkingLotId}
                                 onMarkerClick={onMarkerClick}
                                 onGoogleApiLoaded={onGoogleApiLoaded}
