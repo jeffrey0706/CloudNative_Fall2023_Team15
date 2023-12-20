@@ -154,6 +154,7 @@ GET: /mycar/{user_id}
     area_name: string,
     area_floor: int,
     parking_lot_name: string,
+    parking_lot_id: int,
     park_time: datetime,
 }
 // Error code

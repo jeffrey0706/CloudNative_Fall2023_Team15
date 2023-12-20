@@ -14,6 +14,7 @@ def cars(user_id):
         area_name: string,
         area_floor: int,
         parking_lot_name: string,
+        parking_lot_id: int,
         park_time: datetime,
     }
     '''
@@ -36,6 +37,7 @@ def cars(user_id):
             'area_name': area.Name,
             'area_floor': area.Floor,
             'parking_lot_name': parking_lot.Name,
+            'parking_lot_id': parking_lot.ParkingLotID,
             'park_time': attendance.ParkTime,
         }), 200
     else:
