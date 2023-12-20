@@ -1,6 +1,4 @@
-from flask import jsonify, request
-
-from app import sess
+from flask import jsonify, request, session
 
 from .car_api import car_bp
 from .login_api import login_bp
@@ -17,6 +15,8 @@ from .exited_api import exited_bp
 from .expired_alert_api import expired_alert_bp
 from .utility_api import utility_bp
 
+from app.models import Session
+
 @car_bp.before_request
 @parkinglot_bp.before_request
 @profile_bp.before_request
@@ -31,9 +31,9 @@ from .utility_api import utility_bp
 def check_session():
     if request.method == 'OPTIONS':
         return
-    session_id = request.cookies.get('session')
-    cookie = sess.app.session_interface.sql_session_model.query.filter_by(session_id=session_id).first()
+    cookie = Session.query.filter_by(session_id=session.sid).first()
     if cookie is None:
+        session.clear()
         return jsonify({'message': 'User not logged in'}), 401
 
 @car_bp.after_request
