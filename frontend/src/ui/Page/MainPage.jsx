@@ -92,7 +92,7 @@ function MainPage() {
 
   return (
     <>
-      <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus} />
       {error && <Modal isOpen={error !== null} toggle={onModalClose}>
         <ModalBody style={{ backgroundColor: 'rgb(243, 216, 218)', color: 'rgb(121, 40, 44)' }}>
             {error.message}

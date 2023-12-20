@@ -46,6 +46,7 @@ function ReservePage() {
     const { userId, carId } = useSelector((state) => state.login);
 
     const [reservationData, setReservationData] = useState(RESERVATION_DATA);
+    const [userStatus, setUserStatus] = useState(null);
     const [parkingInfo, setParkingInfo] = useState(PARKING_INFO); 
     const [expired, setExpired] = useState(EXPIRE_TYPE.RESERVED);
     const [map, setMap] = useState([]);
@@ -62,6 +63,7 @@ function ReservePage() {
                     setExpired(EXPIRE_TYPE.EXPIRE);
                 }
 
+                setUserStatus(userStatusRes.data.status);
                 setReservationData({
                     License_plate: reservationRes.data.car_license,
                     Location: reservationRes.data.parking_lot_name,
@@ -106,7 +108,7 @@ function ReservePage() {
     
     return (
         <>
-            <Header togglerType={TOGGLER_TYPE.COLLAPSE} />
+            <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus}/>
             <div className='body-wrapper'>
                 <div>
                     <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />

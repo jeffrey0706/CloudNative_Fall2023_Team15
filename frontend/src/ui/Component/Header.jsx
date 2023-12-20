@@ -16,14 +16,18 @@ import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { NavLink as Link } from 'react-router-dom';
 import { reservationId, userId } from '../Constants'; // TODO: Remove fake userId
+import { logout } from '../store';
+import { useDispatch } from 'react-redux';
+import { UserStatusTransfer } from '../Constants';
 
 export const TOGGLER_TYPE = {
   COLLAPSE: 0,
   EXIT: 1,
 };
 
-function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
+function Header({ togglerType=TOGGLER_TYPE.COLLAPSE, userStatus=0 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const togglerClicked = () => {
     setModal(!modal);
@@ -48,6 +52,18 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
     }
   } // TODO: Consider the web version
 
+  const showCarOrReservation = (userStatus) => {
+    switch (UserStatusTransfer(userStatus)) {
+      case 'PARKED':
+        return (<NavLink to={'/mycar'} tag={Link}>My Car</NavLink>)
+      case 'RESERVED':
+      case 'EXPIRED':
+        return (<NavLink to={'/reservation'} tag={Link}>My Reservation</NavLink>)
+      default:
+        return (<></>)
+    }
+  }
+
   const render = (togglerType) => {
     switch (togglerType) {
       case TOGGLER_TYPE.COLLAPSE:
@@ -60,13 +76,10 @@ function Header({togglerType=TOGGLER_TYPE.COLLAPSE}) {
                   <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/mycar'} tag={Link}>My Car</NavLink>
+                  {showCarOrReservation(userStatus)}
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/reservation'} tag={Link}>My Reservation</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink to={'/login'} tag={Link}>Logout</NavLink>
+                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
                 </NavItem>
               </Nav>
             </Modal>

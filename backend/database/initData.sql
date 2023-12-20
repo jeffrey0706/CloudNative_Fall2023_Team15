@@ -60,7 +60,8 @@ INSERT INTO Users (UserName, Password, Salt, HashedSaltedPassword , Preference, 
 VALUES
 ('Alice', 'alice', 'sender', 'bc1f78f6f37c8c990f582dc8bee31007a2885f0295a4c3a4f5dae5d6bc0c4a689afedbb0dc05f50af71d7f41e95e3cb2a55c3616ff67f5bd08d3558638087be1', 1, 'Employee', 'Top', NULL),
 ('Bob', 'bob', 'receiver', 'b79ac182cb3dc585b5ded782f27308a0432895c51d2a74767badb87ac0b976f74cd04a9f6b0de520de925d11db8627a26340a5458506aab44c6c2e7dc43b240b', 1, 'Employee', 'Normal', NULL),
-('Eve', 'eve', 'middle', '845ca0231c54416853637ec8d6b237b4c7a1245a70ef236f05677da19c2dc71f99dc20ec4360f81b16ab6a37b59e4e58872ae4962064857e852f8911c631fb31', 2, 'Attendant', 'Normal', NULL);
+('Eve', 'eve', 'middle', '845ca0231c54416853637ec8d6b237b4c7a1245a70ef236f05677da19c2dc71f99dc20ec4360f81b16ab6a37b59e4e58872ae4962064857e852f8911c631fb31', 2, 'Attendant', 'Normal', NULL),
+('Guard', 'guard', 'guard', '331426c8886fa87b384b16de52ee5bb1219abb3a7b09114b950355f0e5f5a6b0984e16b3f7996391cb40ed5bc2a4ced106a0586748451c7d8ab46cbb73a8c36b', 2, 'Guard', 'Normal', NULL);
 
 
 INSERT INTO Cars (UserID, Lisence)
