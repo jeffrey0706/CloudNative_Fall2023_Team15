@@ -8,7 +8,7 @@ import {
 
 function GuardMonitorDetailBlock({ parking_status }) {
     return (
-        <Row className='wrap-container'>
+        <Row className='block-container'>
             <Col>
                 <Table className="rounded-table">
                     <tbody>
