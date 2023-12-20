@@ -80,10 +80,11 @@ function MainPage() {
   const reserveButtonFunction = (status) => {
     switch (status) {
       case 1: // RESERVED
+      case 3: // EXPIRED
         return () => navigate('/reservation');
       case 2: // PARKED
         return () => navigate(`/mycar`);
-      default: // NONE, EXPIRED
+      default: // NONE
         return reserve;
     }
   };
