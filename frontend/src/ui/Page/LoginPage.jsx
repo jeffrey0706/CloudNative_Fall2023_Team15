@@ -21,7 +21,7 @@ function LoginPage() {
         const password = document.getElementById("examplePassword").value;
         API.login.post(account, password)
             .then((res) => {
-                dispatch(login({ userId: res.data.user_id, carId: res.data.car_id }));
+                dispatch(login({ userId: res.data.user_id, carId: res.data.car_id, session: res.headers['set-cookie'] }));
                 navigate('/');
             })
             .catch((err) => alert('Login failed\n', err));
