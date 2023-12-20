@@ -19,13 +19,15 @@ function Guard() {
       .catch((err) => console.log(err));
   }, []);
 
+
   const onPKLotClick = (location) => {
-    const PKLotName = location.name;
-    navigate('/guard/monitor', { state: { PKLotName: PKLotName } })
+    const PKLotName = location.name
+    const PKLotId = location.parkinglot_id
+    navigate('/guard/monitor', { state: { PKLotName: PKLotName, PKLotId: PKLotId } })
   }
 
   const onAnalysisClick = () => {
-    navigate('/guard/analysis', { state: { AllPKLotName: locations } });
+    navigate('/guard/analysis', { state: { locations: locations } });
   }
 
   return (

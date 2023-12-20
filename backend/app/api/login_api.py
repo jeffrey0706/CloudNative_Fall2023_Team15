@@ -18,6 +18,7 @@ def login():
     Response
         {
             user_id: int,
+            user_role: string,
             car_id: int,
         }
     '''
@@ -52,4 +53,8 @@ def login():
     
     car: Car = Car.query.filter_by(UserID=user.UserID).first()
     
-    return jsonify({'user_id': user.UserID, 'car_id': car.CarID if car else None})
+    return jsonify({
+            'user_id': user.UserID, 
+            'user_role': user.Role,
+            'car_id': car.CarID if car else None
+        })

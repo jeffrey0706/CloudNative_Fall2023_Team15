@@ -10,7 +10,8 @@ function GuardMonitor() { // TODO: How to access the data
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { PKLotName } = location.state || {};
+  //eslint-disable-next-line no-unused-vars
+  const { PKLotName, PKLotId } = location.state || {};
 
   const layout = [['A', 'B'], ['C', 'D']];
 
