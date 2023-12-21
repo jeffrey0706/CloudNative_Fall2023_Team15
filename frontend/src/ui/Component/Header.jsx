@@ -94,7 +94,8 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
                   {showCarOrReservation(userStatus)}
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
+                  <NavLink style={{ position: 'absolute', bottom: 0 }} 
+                           to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
                 </NavItem>
               </Nav>
             </Modal>
@@ -119,10 +120,11 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
                   <NavLink to={'/guard/notification'} tag={Link} >Notification</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/guard/analysis'} tag={Link} >Analysis</NavLink>
+                  <NavLink to={'/guard/analysis'} tag={Link}>Analysis</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
+                  <NavLink style={{ position: 'absolute', bottom: 0 }} 
+                           to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
                 </NavItem>
               </Nav>
             </Modal >

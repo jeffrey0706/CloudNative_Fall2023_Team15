@@ -46,8 +46,9 @@
 .header-modal .modal-content ul {
     position: relative;
     top: 3%;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 1.25rem;
+    height: 75vh;
 }
 
 .header-modal .nav-link {
