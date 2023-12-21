@@ -142,10 +142,9 @@ function GuardMonitor() { // TODO: How to access the data
               height: "100vmin",
               width: "100vmin",
               justifyContent: "center",
-              alignItems: "center",
               display: "flex",
             }}>
-              <Spinner color='primary' style={{ height: "30vmin", width: "30vmin" }} />
+              <Spinner color='warning' style={{ height: "45vmin", width: "45vmin" }} />
             </div>
           )
           :
