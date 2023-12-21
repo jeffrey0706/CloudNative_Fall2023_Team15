@@ -86,43 +86,43 @@ function GuardMonitor() { // TODO: How to access the data
     const spotId = monitorMap.find((spot) => spot.area_name === area && spot.spot_number === number).spot_id;
     API.history.get(spotId)
       .then((res) => {
-        const compress = res.data.reduce((result, cur) => {
-          const existingGroup = result.find(group => group.id === cur.user_id);
-          if (existingGroup) {
-            existingGroup.data = {...existingGroup.data, ...cur};
-          } else {
-            result.push({
-              id: cur.user_id,
-              data: cur,
-            });
-          }
-          return result;
-        }, []);
-        const history = compress.map((d) => {
-          if (d.data.park_time && d.data.reservation_time) {
+        // const compress = res.data.reduce((result, cur) => {
+        //   const existingGroup = result.find(group => group.id === cur.user_id);
+        //   if (existingGroup) {
+        //     existingGroup.data = {...existingGroup.data, ...cur};
+        //   } else {
+        //     result.push({
+        //       id: cur.user_id,
+        //       data: cur,
+        //     });
+        //   }
+        //   return result;
+        // }, []);
+        const history = res.data.map((d) => {
+          if (d.park_time && d.reservation_time) {
             return {
-              License: d.data.license,
-              User: d.data.user_id,
-              Reservation: toLocalTime(d.data.reservation_time),
-              Expired: toLocalTime(d.data.expired_time),
-              Aparture: toLocalTime(d.data.park_time),
-              Departure: toLocalTime(d.data.exit_time),
+              License: d.license,
+              User: d.user_id,
+              Reservation: toLocalTime(d.reservation_time),
+              Expired: toLocalTime(d.expired_time),
+              Aparture: toLocalTime(d.park_time),
+              Departure: toLocalTime(d.exit_time),
             }
           }
-          else if (d.data.reservation_time) {
+          else if (d.reservation_time) {
             return {
-              License: d.data.license,
-              User: d.data.user_id,
-              Reservation: toLocalTime(d.data.reservation_time),
-              Expired: toLocalTime(d.data.expired_time),
+              License: d.license,
+              User: d.datuser_id,
+              Reservation: toLocalTime(d.reservation_time),
+              Expired: toLocalTime(d.expired_time),
             }
           }
           else {
             return {
-              License: d.data.license,
-              User: d.data.user_id,
-              Aparture: toLocalTime(d.data.park_time),
-              Departure: toLocalTime(d.data.exit_time),
+              License: d.license,
+              User: d.user_id,
+              Aparture: toLocalTime(d.park_time),
+              Departure: toLocalTime(d.exit_time),
             }
           }
         });

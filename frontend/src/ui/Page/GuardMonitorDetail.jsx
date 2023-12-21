@@ -28,11 +28,13 @@ function GuardMonitorDetail() {
       <SubHeader BACK_ICON={true} LEFT_STR={section} RHS_INFO={INFO_TYPE.DATE} onBackIconClick={onBackIconClick} />
 
       {/* for each fake History create a GuardMonitorBlock */}
-      {history.map((history, index) => (
-        <div key={index} style={{ display: "flex", justifyContent: "center" }}>
-          <GuardMonitorDetailBlock parking_status={history} />
-        </div>
-      ))}
+      <div style={{ justifyContent: "center", width: "100%", backgroundColor: "blue", overflow: "scroll" }}>
+        {history.map((history, index) => (
+          <div key={index} style={{ display: "flex", justifyContent: "center",  }}>
+            <GuardMonitorDetailBlock parking_status={history} />
+          </div>
+        ))}
+      </div>
     </>
   );
 }
