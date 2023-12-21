@@ -49,7 +49,7 @@ function NotifyList({ notifications }) {
                                         {getLocationString(notification.parkingLot, notification.floor, notification.area, notification.spot)}
                                     </td>
                                     <td className='license-td' colSpan={4}>
-                                        <i>{notification.license}</i>
+                                        <span>{notification.license}</span>
                                     </td>
                                     <td className='overtime-td' style={{ fontWeight: "500" }}>
                                         {notification.overtime}
