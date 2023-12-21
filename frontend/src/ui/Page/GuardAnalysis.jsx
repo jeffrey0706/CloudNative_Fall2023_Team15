@@ -8,6 +8,7 @@ import Floors from '../Component/Floors';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { allFakeGuardAnalysisData } from '../Constants';
+import { API } from '../Api';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -16,7 +17,7 @@ function GuardAnalysis() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { locations } = location.state || {};
+  const [locations, setLocations] = useState(location.state);
   const [fakeGuardAnalysisData, setFakeGuardAnalysisData] = useState(allFakeGuardAnalysisData[0][0]);
 
   const onBackIconClick = () => {
@@ -27,6 +28,14 @@ function GuardAnalysis() {
       navigate('/', { replace: true });
     }
   }
+
+  useEffect(() => {
+    if (!locations) {
+      API.parking_lots.get()
+        .then((res) => setLocations(res.data))
+        .catch((err) => console.log(err));
+    }
+  }, [locations]);
 
   const data = {
     labels: [
