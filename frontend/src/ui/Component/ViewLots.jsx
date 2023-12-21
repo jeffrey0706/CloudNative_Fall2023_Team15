@@ -1,6 +1,6 @@
 import './ViewLots.css';
 import React from 'react';
-import CarImg from '../../assets/Car.svg';
+import CarImg from '../../assets/Car.webp';
 
 export const LOT_STATUS = {
     EMPTY: 0,
@@ -30,7 +30,7 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
             //     );
             case LOT_STATUS.EMPTY:
             default:
-                return (<div className="others" style={{ background: 'white', border: '1px solid' }}>{lot_code}</div>);
+                return (<div className="others">{lot_code}</div>);
         }
     };
 

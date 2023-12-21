@@ -16,7 +16,7 @@
 }
 
 .others {
-    background-color: #FEFADF;
+    /* background-color: #FEFADF; */
     border: #F4D35E 2px solid;
     color: #F4D35E;
     text-align: center;
@@ -26,8 +26,8 @@
 
     font-family: Poppins;
     /* font-size: 18px; This layout is for 2 pages, so the font-size should use the inheritanced one. */
-    font-style: normal;
-    font-weight: 700;
+    /* font-style: normal; */
+    font-weight: 900;
     line-height: 140%; /* 25.2px */
     letter-spacing: 0.2px;
 }
