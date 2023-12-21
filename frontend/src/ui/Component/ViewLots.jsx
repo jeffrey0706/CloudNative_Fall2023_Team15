@@ -14,6 +14,7 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
         const lot_code = `${SECTION}0${index + 1}`;
         switch (status) {
             case LOT_STATUS.PARKED:
+            case LOT_STATUS.OCCUPIED:
                 return <img src={CarImg} alt="Occupied" />;
             case LOT_STATUS.APPROACHING:
                 return (
@@ -21,15 +22,15 @@ function ViewLots({ LotPosition, SECTION = 'A', LOTs_STATUS = [2, 2, 3, 2, 1, 1]
                         {lot_code}
                     </div>
                 );
-            case LOT_STATUS.OCCUPIED:
-                return (
-                    <div className="others">
-                        {lot_code}
-                    </div>
-                );
+            // case LOT_STATUS.OCCUPIED:
+            //     return (
+            //         <div className="others">
+            //             {lot_code}
+            //         </div>
+            //     );
             case LOT_STATUS.EMPTY:
             default:
-                return (<div className="empty"></div>);
+                return (<div className="others" style={{ background: 'white', border: '1px solid' }}>{lot_code}</div>);
         }
     };
 
