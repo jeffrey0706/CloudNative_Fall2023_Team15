@@ -54,6 +54,7 @@ function ReservePage() {
     const [expired, setExpired] = useState(EXPIRE_TYPE.RESERVED);
     const [map, setMap] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const userStatusPromise = API.user_status.get(userId);
@@ -98,7 +99,14 @@ function ReservePage() {
             API.map.get(parkingInfo.parkingLotId, parkingInfo.parkingFloor)
                 .then((res) => {
                     let { data } = res;
-                    data = data.filter(d => d.area_name === parkingInfo.parkingArea).map(d => d.status);
+                    data = data.filter(d => d.area_name === parkingInfo.parkingArea).map(d => {
+                        if (d.spot_number === parkingInfo.parkingLotId) {
+                            return d.status
+                        }
+                        else {
+                            return 0;
+                        }
+                    });
                     setMap(data);
                 })
                 .catch((err) => {
@@ -113,6 +121,12 @@ function ReservePage() {
         }
     }, [parkingInfo.parkingLotId, parkingInfo.parkingArea, parkingInfo.parkingFloor, navigate, dispatch]);
 
+    useEffect(() => {
+        if (reservationData !== RESERVATION_DATA && map.length !== 0) {
+            setLoading(false);
+        }
+    }, [reservationData, map]);
+
     const deleteRsv = () => {
         API.reservation.delete(carId)
             .then((res) => navigate('/'))
@@ -124,14 +138,16 @@ function ReservePage() {
         <>
             <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus}/>
             <ErrorModal error={error} setError={setError} />
-            <div className='body-wrapper'>
-                <div>
-                    <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />
-                    <ViewLotsSet SECTION={parkingInfo.parkingArea} LOTs_STATUS={map} />
-                    <ParkingStatus parking_status={reservationData} />
+            {!loading &&
+                <div className='body-wrapper'>
+                    <div>
+                        <SubHeader BACK_ICON={false} LEFT_STR="Reservation" RHS_INFO={expired.infoType} />
+                        <ViewLotsSet SECTION={parkingInfo.parkingArea} LOTs_STATUS={map} />
+                        <ParkingStatus parking_status={reservationData} />
+                    </div>
+                    <ReserveButton text={expired.text} color={expired.color} outline={expired.outline} onClick={deleteRsv} />
                 </div>
-                <ReserveButton text={expired.text} color={expired.color} outline={expired.outline} onClick={deleteRsv} />
-            </div>
+            }
         </>
     );
 }
