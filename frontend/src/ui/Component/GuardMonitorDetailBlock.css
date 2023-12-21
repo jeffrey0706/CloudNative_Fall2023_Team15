@@ -24,6 +24,7 @@
     border-radius: 16px;
     display: flex;
     justify-content: center;
+    margin-bottom: 12px;
 }
 
 .table > :not(caption) > * > * {
