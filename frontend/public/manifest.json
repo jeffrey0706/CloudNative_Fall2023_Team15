@@ -10,17 +10,11 @@
     {
       "src": "car_23964_1.png",
       "type": "image/png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "car_23964.png",
-      "type": "image/png",
       "sizes": "128x128"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "cookie_policy": "none"
+  "background_color": "#ffffff"
 }
