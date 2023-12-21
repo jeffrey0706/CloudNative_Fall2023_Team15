@@ -24,7 +24,7 @@ function GuardMonitorDetail() {
 
   return (
     <>
-      <Header togglerType={TOGGLER_TYPE.EXIT} />
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE_GUARD} />
       <SubHeader BACK_ICON={true} LEFT_STR={section} RHS_INFO={INFO_TYPE.DATE} onBackIconClick={onBackIconClick} />
 
       {/* for each fake History create a GuardMonitorBlock */}

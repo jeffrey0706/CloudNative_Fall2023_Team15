@@ -133,7 +133,7 @@ function GuardMonitor() { // TODO: How to access the data
 
   return (
     <>
-      <Header togglerType={TOGGLER_TYPE.EXIT} />
+      <Header togglerType={TOGGLER_TYPE.COLLAPSE_GUARD} />
       <SubHeader BACK_ICON={true} LEFT_STR={PKLotName} RHS_INFO={INFO_TYPE.NONE} onBackIconClick={onBackIconClick} />
       {
         loading ?
