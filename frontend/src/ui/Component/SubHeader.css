@@ -1,0 +1,46 @@
+.DashBoard-Header {
+    margin-bottom: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8vw;
+    height: 10vh;
+    background-color: #fff;
+}
+
+.DashBoard-Title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 0;
+    line-height: 1.2;
+    position: relative;
+}
+
+.DashBoard-Subtitle {
+    width: 100px;
+    text-align: right;
+    font-size: 0.75rem;
+}
+
+.AnalysisImg{
+    width: 70%;
+    height: 70%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.DashBoard-Title svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 5px;
+    margin-bottom: 0.25rem;
+    overflow: auto;
+}
+
+.DashBoard-Subtitle svg {
+    width: 22%;
+    height: 22%;
+    margin-bottom: 0.25rem;
+    max-width: 100%;
+    overflow: auto;
+}

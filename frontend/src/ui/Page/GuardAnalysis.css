@@ -1,0 +1,43 @@
+.line-chart-wrapper {
+    width: 90vmin;
+    margin-left: 5vmin;
+    height: 300px;
+}
+
+.dropdown-wrapper {
+    width: 86vmin;
+    margin-left: 7vmin;
+    margin-bottom: 7vmin;
+    height: 10vmin;
+    overflow: visible;
+}
+
+.dropdown-wrapper * {
+    overflow: visible;
+}
+
+.custom-dropdown-toggle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    border: rgba(0, 0, 0, 0.2) 1px solid;
+    background-color: transparent !important;
+    color: #000;
+    font-size: 1rem;
+    line-height: 3rem;
+    font-weight: 400;
+    text-align: left;
+}
+
+.custom-dropdown-menu {
+    width: 100%;
+    max-height: 50vmin;
+    overflow: scroll;
+}
+
+.custom-dropdown-menu .drop-down-item {
+    line-height: 1.5rem;
+}

@@ -27,6 +27,7 @@ replay_pid*
 /frontend/node_modules/
 /frontend/build/
 /frontend/package-lock.json
+/frontend/coverage
 
 # # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -51,3 +52,14 @@ replay_pid*
 # npm-debug.log*
 # yarn-debug.log*
 # yarn-error.log*
+
+# # python build files
+backend/build/
+backend/dist/
+backend/*.egg-info/
+
+__pycache__/
+
+.coverage
+*.db
+credentials*

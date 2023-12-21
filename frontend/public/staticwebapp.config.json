@@ -1,0 +1,14 @@
+{
+    "routes": [
+        {
+            "route": "/login",
+            "rewrite": "/",
+            "allowedRoles": ["anonymous"]
+        }
+    ],
+
+    "navigationFallback": {
+        "rewrite": "/login",
+        "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+      }
+}

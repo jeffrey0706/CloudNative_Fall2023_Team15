@@ -1,0 +1,30 @@
+.loc-list-comp {
+    width: 100%;
+    font-size: 14px;
+    font-family: Poppins;
+    /* margin: auto; */
+}
+
+.loc-list-comp .loc-list-tr {
+    height: 3.125rem;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.loc-list-comp .loc-list-tr * {
+    vertical-align: middle;
+}
+
+.loc-list-comp .disable-icon {
+    margin-left: 0.3rem;
+    color: rgb(146, 146, 146);
+}
+
+.loc-list-comp .loc-list-col {
+    max-height: 40vh;
+    overflow-y: scroll;
+}
+
+.overtime-td {
+    /* horizontal align */
+    text-align: right;
+}
