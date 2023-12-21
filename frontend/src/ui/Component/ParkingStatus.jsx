@@ -14,7 +14,7 @@ function ParkingStatus({ parking_status }) {
                     <tbody>
                         {Object.keys(parking_status).map(key => (
                             <tr className='loc-list-tr' key={key}>
-                                <td>{key.replace(/_/g, ' ')}</td>
+                                <td>{key === "parkingArea" ? "Parking Area" : key.replace(/_/g, ' ')}</td>
                                 <td>{parking_status[key]}</td>
                             </tr>
                         ))}
