@@ -12,7 +12,6 @@ import ReserveFooter from '../Component/ReserveFooter';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import "./MapView.css";
 import { API } from '../Api';
-import { CiBowlNoodles } from 'react-icons/ci';
 
 // import { API_KEY } from '../../credentials';
 // const API_KEY = 'YOU_NEED_CREDENTIALS_FILE';
@@ -120,11 +119,6 @@ function MapView() {
             };
         }
     };
-    const getCenter = (locations) => {
-        const lat = locations.reduce((acc, cur) => acc + cur.latitude, 0) / locations.length;
-        const lng = locations.reduce((acc, cur) => acc + cur.longitude, 0) / locations.length;
-        return { lat, lng };
-    }
     return (
         <div className='map-view-wrapper'>
             {

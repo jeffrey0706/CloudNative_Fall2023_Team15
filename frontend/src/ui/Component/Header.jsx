@@ -10,13 +10,13 @@ import {
   Modal,
 } from 'reactstrap';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaCarSide } from 'react-icons/fa';
 import { RxExit } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { NavLink as Link } from 'react-router-dom';
 import { logout } from '../store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserStatusTransfer } from '../Constants';
 
 export const TOGGLER_TYPE = {
@@ -25,9 +25,15 @@ export const TOGGLER_TYPE = {
   COLLAPSE_GUARD: 2,
 };
 
+const checkIsGuardPage = (currPage) => {
+  return currPage.trim("/").split("/").filter(s=>Boolean(s.trim())).length === 1;
+}
+
 function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage = '' }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const userRole = useSelector((state) => state.login.userRole);
   const [modal, setModal] = useState(false);
   const togglerClicked = () => {
     setModal(!modal);
@@ -64,6 +70,15 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
     }
   }
 
+  const getHomeLink = (userRole) => {
+    if (userRole.toLowerCase() === "guard") {
+      return "/guard";
+    }
+    else {
+      return "/";
+    }
+  }
+
   const render = (togglerType) => {
     switch (togglerType) {
       case TOGGLER_TYPE.COLLAPSE:
@@ -73,13 +88,14 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
             <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink exact="true" to="/" tag={Link}>Home</NavLink>
+                  <NavLink exact="true" to='/' tag={Link}>Home</NavLink>
                 </NavItem>
                 <NavItem>
                   {showCarOrReservation(userStatus)}
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
+                  <NavLink style={{ position: 'absolute', bottom: 0 }} 
+                           to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
                 </NavItem>
               </Nav>
             </Modal>
@@ -98,13 +114,17 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
             <Modal fullscreen onOpened={lowerBackground} isOpen={modal} toggle={togglerClicked} backdrop={false} className='header-modal'>
               <Nav navbar>
                 <NavItem>
-                  <NavLink className={`${currPage === 'notification' ? 'override_active' : ''}`} exact="true" to="/guard" tag={Link}>Dashboard</NavLink>
+                  <NavLink className={`${!checkIsGuardPage(location.pathname) ? 'override_active' : ''}`} exact="true" to="/guard" tag={Link}>Dashboard</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to={'/guard/notification'} tag={Link} >Notification</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
+                  <NavLink to={'/guard/analysis'} tag={Link}>Analysis</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink style={{ position: 'absolute', bottom: 0 }} 
+                           to={'/login'} tag={Link} onClick={() => dispatch(logout())}>Logout</NavLink>
                 </NavItem>
               </Nav>
             </Modal >
@@ -117,7 +137,7 @@ function Header({ togglerType = TOGGLER_TYPE.COLLAPSE, userStatus = 0, currPage 
 
   return (
     <Navbar light expand="md" className='header-nav'>
-      <NavbarBrand onClick={() => navigate('/')}>
+      <NavbarBrand onClick={() => navigate(getHomeLink(userRole))}>
         <FaCarSide size={20} />
         <div className='home-nav'>Quick Parking</div>
       </NavbarBrand>

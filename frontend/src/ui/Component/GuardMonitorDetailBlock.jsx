@@ -13,10 +13,9 @@ function GuardMonitorDetailBlock({ parking_status }) {
                 <Table className="rounded-table">
                     <tbody>
                         {Object.keys(parking_status).map(key => (
-                            key === 'car_plate' ?
+                            key === 'License' ?
                                 (<tr className='loc-list-tr' key={parking_status[key]}>
-                                    <td className='car-plate'>{parking_status[key]}</td>
-                                    <td></td>
+                                    <td className='car-plate' colSpan={2}>{parking_status[key]}</td>
                                 </tr>)
                                 : (<tr className='loc-list-tr' key={key}>
                                     <td>{key.replace(/_/g, ' ')}</td>
