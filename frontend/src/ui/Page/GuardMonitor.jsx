@@ -112,7 +112,7 @@ function GuardMonitor() { // TODO: How to access the data
           else if (d.reservation_time) {
             return {
               License: d.license,
-              User: d.datuser_id,
+              User: d.user_id,
               Reservation: toLocalTime(d.reservation_time),
               Expired: toLocalTime(d.expired_time),
             }
