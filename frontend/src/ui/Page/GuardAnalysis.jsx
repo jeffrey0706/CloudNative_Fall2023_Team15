@@ -17,7 +17,7 @@ function GuardAnalysis() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [locations, setLocations] = useState(location.state || []);
+  const [locations, setLocations] = useState(location.state.locations);
   const [fakeGuardAnalysisData, setFakeGuardAnalysisData] = useState(allFakeGuardAnalysisData[0][0]);
 
   const onBackIconClick = () => {
