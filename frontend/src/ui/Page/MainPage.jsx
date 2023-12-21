@@ -20,6 +20,7 @@ function MainPage() {
   const [currentLocation, setCurrentLocation] = useState({});
   const [userStatus, setUserStatus] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { userId, carId } = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ function MainPage() {
         });
         setLocations(parkingLotsRes.data);
         setUserStatus(userStatusRes.data.status);
+        setLoading(false);
       })
       .catch((err) => {
         setError(err);
@@ -93,19 +95,21 @@ function MainPage() {
     <>
       <Header togglerType={TOGGLER_TYPE.COLLAPSE} userStatus={userStatus} />
       <ErrorModal error={error} setError={setError} />
-      <div className='body-wrapper'>
-        <div>
-          <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
-          <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
-        </div>
-        <div>
-        <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={false} onClick={reserveButtonFunction(userStatus)} />
-        {
-          (UserStatusTransfer(userStatus) === "RESERVED" || UserStatusTransfer(userStatus) === "EXPIRED") && 
-          <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
-        }
-        </div>
-      </div>
+      { !loading && 
+        <div className='body-wrapper'>
+          <div>
+            <Location currentPlace={currentLocation.name} onClick={mapBtnClick} />
+            <LocationList locations={locations} setCurrentLocation={setCurrentLocation} />
+          </div>
+          <div>
+          <ReserveButton text={reserveButtonText(userStatus)} color='danger' outline={false} onClick={reserveButtonFunction(userStatus)} />
+          {
+            (UserStatusTransfer(userStatus) === "RESERVED" || UserStatusTransfer(userStatus) === "EXPIRED") && 
+            <ReserveButton text='Reserve a new one' color='danger' outline={true} onClick={newReserve} />
+          }
+          </div>
+        </div>  
+      }
     </>
   );
 }
